@@ -17,7 +17,9 @@ a lot of work to do yet to where I'm happy with it.  At this time, I
 decided that it's just too fun to keep it to myself.
 
 More info to follow:
+
 Known bugs/limitations
+
 TODO/Work in progress
 
 Quirks e.g. autopilot at Ma 2.2 at FL650 is hilariously unstable
