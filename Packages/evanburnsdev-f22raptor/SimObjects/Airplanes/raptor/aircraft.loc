@@ -1,0 +1,52 @@
+{
+  "LocalisationFile": {
+    "Version": 2,
+    "UUID": "d1d9df8c-d17b-49e6-b42d-d12939e69341",
+    "Languages": [
+      "en-US"
+    ],
+    "Strings": {
+      "AIRCRAFT.DESCRIPTION": {
+        "UUID": "26308ade-4f55-4abb-90af-45de398936c6",
+        "LastModifiedBy": "dmedina",
+        "LastModifiedDate": "2020-07-01 11:54:59",
+        "LocalizationStatus": "TranslationNeeded",
+        "Languages": {
+          "en-US": {
+            "Text": "TODO"
+          }
+        }
+      },
+      "AIRCRAFT.UI_MANUFACTURER": {
+        "UUID": "266f6590-7e20-4e0a-9fe0-0ff26d523a26",
+        "LastModifiedBy": "ajimeno",
+        "LastModifiedDate": "2020-03-08 15:45:12",
+        "Languages": {
+          "en-US": {
+            "Text": "Lockheed Martin"
+          }
+        }
+      },
+      "AIRCRAFT.UI_MODEL": {
+        "UUID": "008217b4-6a84-4436-a7c9-bd29190e78e8",
+        "LastModifiedBy": "ajimeno",
+        "LastModifiedDate": "2020-03-08 15:45:12",
+        "Languages": {
+          "en-US": {
+            "Text": "F22 Raptor"
+          }
+        }
+      },
+      "AIRCRAFT.UI_VARIATION": {
+        "UUID": "9a8d05ca-f437-4cc5-8cb3-5417920c26fb",
+        "LastModifiedBy": "ajimeno",
+        "LastModifiedDate": "2020-03-08 15:45:12",
+        "Languages": {
+          "en-US": {
+            "Text": "Lockheed Martin"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "LocalisationPackage": {
+    "Language": "en-US",
+    "Strings": {
+      "AIRCRAFT.DESCRIPTION": "TODO",
+      "AIRCRAFT.UI_MANUFACTURER": "Lockheed Martin",
+      "AIRCRAFT.UI_MODEL": "F22 Raptor",
+      "AIRCRAFT.UI_VARIATION": "Lockheed Martin"
+    }
+  }
+}
