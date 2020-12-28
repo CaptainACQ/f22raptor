@@ -1,5 +1,3 @@
-Initial commit readme...
-
 I've worked on this for 8-10 hours a day since the day
 Flight Simulator released.  This is by no means a finished
 product, but a work in progress.  I have no team... just one
@@ -17,16 +15,20 @@ a lot of work to do yet to where I'm happy with it.  At this time, I
 decided that it's just too fun to keep it to myself.
 
 Known bugs/limitations:
-* If the roll rate is increased to a realistic level for a figter, at max roll
-the jet goes to a 30+ degree AoA and stalls.  Bug seems to be MSFS related as
-I've tried all different combinations of settings and can't keep it from loosing
-control.  I have it set to a lower roll rate to keep it managable.
+* Remember that turbulance becomes a real pain at high speeds.  Per the specs
+for the F-22 listed on wikipedia and the Lockheed Martin pages, keep speeds
+within these guidelines for the best performance:
+	* Below FL300 - Less than Mach 1.2
+	* Between FL300 Less than Mach 1.8
+	* Above FL450 - Between Mach 1.8 and Mach 2.2
+	
+* If the roll rate in the flight model is increased to a realistic level for a 
+figter, at max roll the jet goes to a 30+ degree AoA and stalls.  Bug seems to 
+be MSFS related as I've tried all different combinations of settings and can't 
+keep it from loosing control.  I have it set to a lower roll rate to keep it 
+managable.
 
-TODO/Work in progress
-* Autopilot PID values need readjusted for Pitch and Roll.  Pitch shakes the
-aircraft like crazy when above Mach 1.2 below FL300 and above Mach 1.8 above
-FL300.  Roll oscillates above FL450.  Will be an easy fix, but time-consuming.
-
+TODO/Work in progress:
 * Need to start incorperating more controls into the cockpit and start arranging
 everything to match the F-22 correctly.  I plan on keeping the G3000 and
 altering it to a design that looks similar to the F-22.  A complete nav system
@@ -52,3 +54,8 @@ VTails as I just copied the ones I made for the outsides.
 * 3D model needs some more rework.  Tires need to be flattened and not look like
 baloons.  Creases need to be added to the underside of the wings.  Creases need
 to be added for gear bay doors.
+
+Fixed:
+* Autopilot PID values need readjusted for Pitch and Roll.  Pitch shakes the
+aircraft like crazy when above Mach 1.2 below FL300 and above Mach 1.8 above
+FL300.  Roll oscillates above FL450.  Will be an easy fix, but time-consuming.

@@ -1,7 +1,7 @@
 [SimVars.0]
 FlapsDegree=0000.00
 Pitch=3.0
-ZVelBodyAxis=1700
+ZVelBodyAxis=1200
 SimOnGround=False
 
 [Avionics.0]
@@ -190,13 +190,13 @@ GearsHandle=000.00
 Gear1=000.00
 Gear2=000.00
 Gear3=000.00
-YokeY=055.00
+YokeY=050.00
 YokeX=050.00
 Rudder=050.00
 LeftBrake=000.00
 RightBrake=000.00
 ParkingBrake=000.00
-ElevatorTrimPct=090.00
+ElevatorTrimPct=010.00
 RudderTrimPct=0
 AileronTrimPct=0
 AileronTrimDisabled=False
