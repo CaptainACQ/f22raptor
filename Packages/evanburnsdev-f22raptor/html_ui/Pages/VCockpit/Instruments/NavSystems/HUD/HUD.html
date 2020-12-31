@@ -1,0 +1,47 @@
+﻿<script type="text/html" id="HUD">
+    <glasscockpit-highlight id="highlight"></glasscockpit-highlight>
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+            <div id="Console">Initializing System...</div>
+            <img id="Splash" src="/Pages/VCockpit/Instruments/NavSystems/Shared/Images/Logo/Garmin.svg" />
+            <div id="HorizonContainer">
+                <map-instrument id="SyntheticVision" bing-mode="horizon" bing-id="HUD_SyntheticVision" show-overlay="false" config-path="/Pages/VCockpit/Instruments/NavSystems/HUD/"></map-instrument>
+                <glasscockpit-hud-attitude-indicator id="Horizon" background="false"></glasscockpit-hud-attitude-indicator>
+            </div>
+
+            <div id="InstrumentsContainer">
+                <glasscockpit-altimeter id="Altimeter"></glasscockpit-altimeter>
+                <glasscockpit-airspeed-indicator id="Airspeed"></glasscockpit-airspeed-indicator>
+                <div id="RadarAltitude" state="Inactive">
+                    <div id="RA_Title">
+                        RA
+                    </div>
+                    <div id="RA_Value">
+                        1080
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<link rel="stylesheet" href="HUD.css" />
+
+<script type="text/html" import-script="/JS/SimPlane.js"></script>
+
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/Shared/Map/MapInstrument.html"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/Altimeter/Altimeter.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/AirspeedIndicator/AirspeedIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/HudAttitudeIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/VerticalSpeedIndicator/VerticalSpeedIndicator.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/SearchField.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/SelectableElement.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/ContextualMenu.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/NavSystem.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/CommonPFD_MFD.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.js"></script>
+<!--<script type="text/javascript" src="/JS/debug.js"></script>-->

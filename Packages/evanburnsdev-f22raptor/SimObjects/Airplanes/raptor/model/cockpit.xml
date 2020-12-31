@@ -247,6 +247,22 @@
 				</UseTemplate>
 				<CameraTitle>MFD</CameraTitle>
 			</Component>
+			<Component ID="HUD">
+				<DefaultTemplateParameters>
+					<ID>2</ID>
+					<AS3000>AS3000</AS3000>
+					<DISPLAY>HUD</DISPLAY>
+				</DefaultTemplateParameters>
+				<OverrideTemplateParameters>
+					<POTENTIOMETER>9</POTENTIOMETER>
+				</OverrideTemplateParameters>
+
+				<UseTemplate Name="ASOBO_AS3000_Screen_Template">
+					<AMBIENT_POTENTIOMETER>16</AMBIENT_POTENTIOMETER>
+					<CIRCUIT_ID>10</CIRCUIT_ID>
+				</UseTemplate>
+				<CameraTitle>HUD</CameraTitle>
+			</Component>
 			<!-- AS580 #####################################-->
 			<Component ID="AS580">
 				<DefaultTemplateParameters>
@@ -262,6 +278,14 @@
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
 					<ID>1</ID>
 					<POTENTIOMETER>10</POTENTIOMETER>
+					<INIT_VALUE>50</INIT_VALUE>
+					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
+					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>
+				</UseTemplate>
+				<!-- HUD -->
+				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
+					<ID>2</ID>
+					<POTENTIOMETER>9</POTENTIOMETER>
 					<INIT_VALUE>50</INIT_VALUE>
 					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
 					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>

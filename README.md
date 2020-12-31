@@ -19,7 +19,7 @@ Known bugs/limitations:
 for the F-22 listed on wikipedia and the Lockheed Martin pages, keep speeds
 within these guidelines for the best performance:
 	* Below FL300 - Less than Mach 1.2
-	* Between FL300 Less than Mach 1.8
+	* Between FL300 - Less than Mach 1.8
 	* Above FL450 - Between Mach 1.8 and Mach 2.2
 	
 * If the roll rate in the flight model is increased to a realistic level for a 
@@ -59,3 +59,7 @@ Fixed:
 * Autopilot PID values need readjusted for Pitch and Roll.  Pitch shakes the
 aircraft like crazy when above Mach 1.2 below FL300 and above Mach 1.8 above
 FL300.  Roll oscillates above FL450.  Will be an easy fix, but time-consuming.
+
+Changes:
+12/28 - Further increased pitch and roll stability.
+12/30 - Added HUD Functionality
