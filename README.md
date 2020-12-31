@@ -28,6 +28,10 @@ be MSFS related as I've tried all different combinations of settings and can't
 keep it from loosing control.  I have it set to a lower roll rate to keep it 
 managable.
 
+* For lower-end graphics cards (Mine's a 1070Ti) you may see artifacts in
+the HUD text when moving.  If that's the case, set Anti-Aliasing to anything 
+except TAA(which is default).
+
 TODO/Work in progress:
 * Need to start incorperating more controls into the cockpit and start arranging
 everything to match the F-22 correctly.  I plan on keeping the G3000 and
@@ -62,6 +66,7 @@ FL300.  Roll oscillates above FL450.  Will be an easy fix, but time-consuming.
 
 Changes:
 12/28 - Further increased pitch and roll stability.
-12/30 - Added HUD Functionality
-12/31 - Cleaned up HUD
+12/30 - Added HUD Functionality.
+12/31 - Cleaned up HUD.
+12/31-2 - Forgot to clean up debug scripts.
 

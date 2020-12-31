@@ -7,11 +7,11 @@ class HUD extends NavSystem {
     get templateID() { return "HUD"; }
     connectedCallback() {
         super.connectedCallback();
-		
+		/*
 		Include.addScript("/JS/debug.js", function () {
 			g_modDebugMgr.AddConsole(null);
 		});
-		
+		*/
         this.mainPage = new HUD_MainPage();
         this.pageGroups = [
             new NavSystemPageGroup("Main", this, [

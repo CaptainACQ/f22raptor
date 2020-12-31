@@ -17,13 +17,13 @@
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.html",
-      "size": 2574,
-      "date": 132538629479913847
+      "size": 2581,
+      "date": 132538794244009538
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.js",
-      "size": 18508,
-      "date": 132538665891322149
+      "size": 18512,
+      "date": 132538794358063465
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/mapConfig.json",
