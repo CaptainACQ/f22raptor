@@ -39,11 +39,11 @@ class HudAttitudeIndicator extends HTMLElement {
         let halfPrecisionUpperLimit = 45;
         let unusualAttitudeLowerLimit = -30;
         let unusualAttitudeUpperLimit = 50;
-        let bigWidth = 120;
+        let bigWidth = 60;
         let bigHeight = 3;
-        let mediumWidth = 60;
+        let mediumWidth = 30;
         let mediumHeight = 3;
-        let smallWidth = 40;
+        let smallWidth = 20;
         let smallHeight = 2;
         let fontSize = 20;
         let angle = -maxDash;
@@ -246,22 +246,6 @@ class HudAttitudeIndicator extends HTMLElement {
         {
             let cursors = document.createElementNS(Avionics.SVG.NS, "g");
             this.root.appendChild(cursors);
-            let leftLower = document.createElementNS(Avionics.SVG.NS, "path");
-            leftLower.setAttribute("d", "M-95 0 l-5 6 l25 0 l5 -6 Z");
-            leftLower.setAttribute("fill", "#cccc00");
-            cursors.appendChild(leftLower);
-            let leftUpper = document.createElementNS(Avionics.SVG.NS, "path");
-            leftUpper.setAttribute("d", "M-95 0 l-5 -6 l25 0 l5 6 Z");
-            leftUpper.setAttribute("fill", "#ffff00");
-            cursors.appendChild(leftUpper);
-            let rightLower = document.createElementNS(Avionics.SVG.NS, "path");
-            rightLower.setAttribute("d", "M95 0 l5 6 l-25 0 l-5 -6 Z");
-            rightLower.setAttribute("fill", "#cccc00");
-            cursors.appendChild(rightLower);
-            let rightUpper = document.createElementNS(Avionics.SVG.NS, "path");
-            rightUpper.setAttribute("d", "M95 0 l5 -6 l-25 0 l-5 6 Z");
-            rightUpper.setAttribute("fill", "#ffff00");
-            cursors.appendChild(rightUpper);
             let triangleInnerLeft = document.createElementNS(Avionics.SVG.NS, "path");
             triangleInnerLeft.setAttribute("d", "M-45 15 l15 0 L0 0 Z");
             triangleInnerLeft.setAttribute("fill", "#ffff00");

@@ -63,3 +63,5 @@ FL300.  Roll oscillates above FL450.  Will be an easy fix, but time-consuming.
 Changes:
 12/28 - Further increased pitch and roll stability.
 12/30 - Added HUD Functionality
+12/31 - Cleaned up HUD
+
