@@ -255,6 +255,7 @@
 				</DefaultTemplateParameters>
 				<OverrideTemplateParameters>
 					<POTENTIOMETER>9</POTENTIOMETER>
+					<MAX_EMISSIVE_PERCENT>2</MAX_EMISSIVE_PERCENT>
 				</OverrideTemplateParameters>
 
 				<UseTemplate Name="ASOBO_AS3000_Screen_Template">
@@ -284,6 +285,7 @@
 				</UseTemplate>
 				<!-- HUD -->
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
+					<KNOB_TURN_SPEED>5</KNOB_TURN_SPEED>
 					<ID>2</ID>
 					<POTENTIOMETER>9</POTENTIOMETER>
 					<INIT_VALUE>50</INIT_VALUE>

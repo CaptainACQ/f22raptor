@@ -292,7 +292,7 @@ class HudAirspeedIndicator extends HTMLElement {
             let maMaText = document.createElementNS(Avionics.SVG.NS, "text");
             maMaText.setAttribute("x", "5");
             maMaText.setAttribute("y", "638");
-            maMaText.setAttribute("fill", "white");
+            maMaText.setAttribute("fill", "#00ff00");
             maMaText.setAttribute("font-size", "35");
             maMaText.setAttribute("font-family", "Roboto-Bold");
             maMaText.setAttribute("text-anchor", "start");
@@ -301,7 +301,7 @@ class HudAirspeedIndicator extends HTMLElement {
             this.maText = document.createElementNS(Avionics.SVG.NS, "text");
             this.maText.setAttribute("x", "195");
             this.maText.setAttribute("y", "638");
-            this.maText.setAttribute("fill", "white");
+            this.maText.setAttribute("fill", "#00ff00");
             this.maText.setAttribute("font-size", "35");
             this.maText.setAttribute("font-family", "Roboto-Bold");
             this.maText.setAttribute("text-anchor", "end");

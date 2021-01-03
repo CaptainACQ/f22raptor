@@ -42,15 +42,6 @@ rework for it is more than a one person job.
 flight plans for autopilot(most likely not), but I plan on incorperating it into
 it for a more enjoyable experience.
 
-* I plan on taking the EFIS from the G3000 and incoperating it into the HUD.
-I'll change the color from white to green and shrink it to fit the HUD correctly.
-Also need to redesign the HUD to properly resemble the dimensions of the one on
-the real aircraft.
-
-* Landing gear - the front wheel turns when turning the aircraft, but the wheels
-don't rotate when the aircraft is moving on the ground.  I'm placing that on the
-backburner until the more major problems are fixed.
-
 * Textures need created for the underside of the aircraft.  I just copied the one
 I created for the top.  I also need to create textures for the inside of the
 VTails as I just copied the ones I made for the outsides.
@@ -64,9 +55,20 @@ Fixed:
 aircraft like crazy when above Mach 1.2 below FL300 and above Mach 1.8 above
 FL300.  Roll oscillates above FL450.  Will be an easy fix, but time-consuming.
 
+* I plan on taking the EFIS from the G3000 and incoperating it into the HUD.
+I'll change the color from white to green and shrink it to fit the HUD correctly.
+Also need to redesign the HUD to properly resemble the dimensions of the one on
+the real aircraft.
+
+* Landing gear - the front wheel turns when turning the aircraft, but the wheels
+don't rotate when the aircraft is moving on the ground.  I'm placing that on the
+backburner until the more major problems are fixed.
+
 Changes:
 12/28 - Further increased pitch and roll stability.
 12/30 - Added HUD Functionality.
 12/31 - Cleaned up HUD.
 12/31-2 - Forgot to clean up debug scripts.
+1/2 - Added wheel rotation animation.  Made HUD Brighter.  Added True Heading
+	  indicator to HUD.
 

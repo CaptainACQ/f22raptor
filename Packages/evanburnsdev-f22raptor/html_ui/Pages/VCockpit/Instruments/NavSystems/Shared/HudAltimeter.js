@@ -414,7 +414,6 @@ class HudAltimeter extends HTMLElement {
             case "vspeed":
                 let vSpeed = parseFloat(newValue);
 				this.indicator.setAttribute("transform", "translate(0, " + -Math.max(Math.min(vSpeed, 2500), -2500) / 10 + ")");
-				//this.indicatorText.textContent = Math.abs(vSpeed) >= 100 ? fastToFixed(Math.round(vSpeed / 50) * 50, 0) : "";
                 let trendValue = Math.min(Math.max(250 + (vSpeed / 10) * -1.5, -50), 550);
                 this.trendElement.setAttribute("y", Math.min(trendValue, 250).toString());
                 this.trendElement.setAttribute("height", Math.abs(trendValue - 250).toString());

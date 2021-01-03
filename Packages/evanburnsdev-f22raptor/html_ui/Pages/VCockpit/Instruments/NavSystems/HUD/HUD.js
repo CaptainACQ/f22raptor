@@ -7,11 +7,11 @@ class HUD extends NavSystem {
     get templateID() { return "HUD"; }
     connectedCallback() {
         super.connectedCallback();
-		/*
+		
 		Include.addScript("/JS/debug.js", function () {
 			g_modDebugMgr.AddConsole(null);
 		});
-		*/
+		
         this.mainPage = new HUD_MainPage();
         this.pageGroups = [
             new NavSystemPageGroup("Main", this, [
@@ -41,6 +41,7 @@ class HUD_MainPage extends NavSystemPage {
         this.attitude = new HUD_Attitude();
         this.element = new NavSystemElementGroup([
             this.attitude,
+			new HUD_Heading(),
             new HUD_Airspeed(),
             new HUD_Altimeter(),
             new HUD_RadarAltitude()
@@ -67,10 +68,30 @@ class HUD_MainElement extends NavSystemElement {
     onEvent(_event) {
     }
 }
+class HUD_Heading extends NavSystemElement {
+    constructor() {
+        super(...arguments);
+    }
+    init(root) {
+        this.svg = this.gps.getChildById("Heading");
+    }
+    onEnter() {
+    }
+    onUpdate(_deltaTime) {
+        var heading = SimVar.GetSimVarValue("PLANE HEADING DEGREES TRUE", "degree");
+        if (heading) {
+            this.svg.setAttribute("heading", heading.toString());
+            //this.svg.setAttribute("heading", (heading / Math.PI * 180).toString());
+        }
+    }
+    onExit() {
+    }
+    onEvent(_event) {
+    }
+}
 class HUD_Attitude extends NavSystemElement {
     constructor() {
         super(...arguments);
-        this.vDir = new Vec2();
     }
     init(root) {
         this.svg = this.gps.getChildById("Horizon");
@@ -151,15 +172,6 @@ class HUD_Airspeed extends NavSystemElement {
             this.airspeedElement.setAttribute("mach-airspeed", machSpeed.toFixed(3));
             this.lastMachSpeed = machSpeed;
         }
-		/*
-        if (SimVar.GetSimVarValue("AUTOPILOT FLIGHT LEVEL CHANGE", "Boolean") || this.alwaysDisplaySpeed) {
-            this.airspeedElement.setAttribute("display-ref-speed", "True");
-            this.airspeedElement.setAttribute("ref-speed", SimVar.GetSimVarValue("AUTOPILOT AIRSPEED HOLD VAR", "knots"));
-        }
-        else {
-            this.airspeedElement.setAttribute("display-ref-speed", "False");
-        }
-		*/
         this.airspeedElement.setAttribute("display-ref-speed", "False");
         if (this.acceleration == NaN) {
             this.acceleration = 0;
@@ -195,7 +207,6 @@ class HUD_Altimeter extends NavSystemElement {
     constructor() {
         super(...arguments);
         this.lastAltitude = -10000;
-        //this.lastPressure = -10000;
         this.lastSelectedAltitude = -10000;
         this.selectedAltWasCaptured = false;
         this.blinkTime = 0;
@@ -222,86 +233,6 @@ class HUD_Altimeter extends NavSystemElement {
             this.lastAltitude = altitude;
         }
         this.altimeterElement.setAttribute("vspeed", fastToFixed(Simplane.getVerticalSpeed(), 1));
-		/*
-        if (SimVar.GetSimVarValue("AUTOPILOT VERTICAL HOLD", "bool")) {
-            this.altimeterElement.setAttribute("reference-vspeed", fastToFixed(SimVar.GetSimVarValue("AUTOPILOT VERTICAL HOLD VAR", "feet per minute"), 0));
-        }
-        else {
-            this.altimeterElement.setAttribute("reference-vspeed", "----");
-        }
-		*/
-        let altitudeRefActive = true;
-        if (altitudeRefActive) {
-            if (selectedAltitude != this.lastSelectedAltitude) {
-                this.altimeterElement.setAttribute("reference-altitude", selectedAltitude.toFixed(0));
-                this.lastSelectedAltitude = selectedAltitude;
-                this.selectedAltWasCaptured = false;
-            }
-            if (!this.selectedAltWasCaptured) {
-                if (Math.abs(altitude - selectedAltitude) <= 200) {
-                    this.selectedAltWasCaptured = true;
-                    if (this.alertState < 2) {
-                        this.blinkTime = 5000;
-                    }
-                    if (this.blinkTime > 0) {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "BlueText" : "Empty");
-                        this.blinkTime -= _deltaTime;
-                    }
-                    else {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
-                    }
-                }
-                else if (Math.abs(altitude - selectedAltitude) <= 1000) {
-                    if (this.alertState < 1) {
-                        this.blinkTime = 5000;
-                    }
-                    if (this.blinkTime > 0) {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "BlueBackground" : "BlueText");
-                        this.blinkTime -= _deltaTime;
-                    }
-                    else {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueBackground");
-                    }
-                }
-                else {
-                    this.alertState = 0;
-                    Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
-                }
-            }
-            else {
-                if (Math.abs(altitude - selectedAltitude) <= 200) {
-                    if (this.alertState != 2) {
-                        this.blinkTime = 5000;
-                        this.alertState = 2;
-                    }
-                    if (this.blinkTime > 0) {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "BlueText" : "Empty");
-                        this.blinkTime -= _deltaTime;
-                    }
-                    else {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
-                    }
-                }
-                else {
-                    if (this.alertState != 3) {
-                        this.blinkTime = 5000;
-                        this.gps.playInstrumentSound("tone_altitude_alert_default");
-                        this.alertState = 3;
-                    }
-                    if (this.blinkTime > 0) {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "YellowText" : "Empty");
-                        this.blinkTime -= _deltaTime;
-                    }
-                    else {
-                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "YellowText");
-                    }
-                }
-            }
-        }
-        else {
-            Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "reference-altitude", "----");
-            Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
-        }
         let cdiSource = SimVar.GetSimVarValue("GPS DRIVES NAV1", "Bool") ? 3 : SimVar.GetSimVarValue("AUTOPILOT NAV SELECTED", "Number");
         switch (cdiSource) {
             case 1:
@@ -342,26 +273,10 @@ class HUD_Altimeter extends NavSystemElement {
                 }
                 break;
         }
-		/*
-        var pressure = SimVar.GetSimVarValue("KOHLSMAN SETTING HG:" + this.altimeterIndex, "inches of mercury");
-        pressure = pressure.toFixed(2);
-        if (pressure != this.lastPressure) {
-            this.altimeterElement.setAttribute("pressure", pressure);
-            this.lastPressure = pressure;
-        }
-		*/
     }
     onExit() {
     }
     onEvent(_event) {
-        switch (_event) {
-            case "BARO_INC":
-                SimVar.SetSimVarValue("K:KOHLSMAN_INC", "number", this.altimeterIndex);
-                break;
-            case "BARO_DEC":
-                SimVar.SetSimVarValue("K:KOHLSMAN_DEC", "number", this.altimeterIndex);
-                break;
-        }
     }
 }
 class HUD_RadarAltitude extends NavSystemElement {
