@@ -71,4 +71,7 @@ Changes:
 12/31-2 - Forgot to clean up debug scripts.
 1/2 - Added wheel rotation animation.  Made HUD Brighter.  Added True Heading
 	  indicator to HUD.
+1/3 - Changed broken sound files for better ones.  Adjusted max KIAS for more
+      realistic settings.  Starting to add warnings and cautions.  Added 
+	  Warning/Caution acknowledge pushbutton.
 

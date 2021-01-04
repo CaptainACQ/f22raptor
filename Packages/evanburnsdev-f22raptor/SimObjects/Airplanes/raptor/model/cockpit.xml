@@ -615,6 +615,9 @@
 				<ID>14</ID>
 			</UseTemplate>
 		</Component>
+		<Component ID="Safety">
+			<UseTemplate Name="ASOBO_SAFETY_Push_WarningCaution_Template"/>
+		</Component>
 		<Component ID="Debug">
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATOR_DEFL"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_AOA"/>

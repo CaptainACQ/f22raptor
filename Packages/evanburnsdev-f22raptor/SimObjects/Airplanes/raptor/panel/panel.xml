@@ -568,17 +568,6 @@
 		</ColumnsGroup>
 		
 		<Text>
-			<Left>AoA:</Left>
-			<Right>
-				<Content>
-					<ToFixed precision="4">
-						<Simvar name="INCIDENCE ALPHA" unit="number"/>
-					</ToFixed>
-				</Content>
-			</Right>
-		</Text>
-		
-		<Text>
 			<Left>G-Force:</Left>
 			<Right>
 				<Content>
@@ -589,4 +578,133 @@
 			</Right>
 		</Text>
 	</EngineDisplay>
+	
+	<!-- Annunciations -->
+
+	<Annunciations>
+		<Annunciation>
+			<Type>Caution</Type>
+			<Text></Text>
+			<Condition>
+				<Simvar name="STALL WARNING" unit="Boolean"/>
+			</Condition>
+		</Annunciation>
+
+		<Annunciation>
+			<Type>Caution</Type>
+			<Text>Stress</Text>
+			<Condition>
+				<Greater>
+					<Simvar name="G FORCE" unit="number"/>
+					<Constant>9</Constant>
+				</Greater>
+			</Condition>
+		</Annunciation>
+
+		<Annunciation>
+			<Type>Warning</Type>
+			<Text>Stress</Text>
+			<Condition>
+				<Greater>
+					<Simvar name="G FORCE" unit="number"/>
+					<Constant>10</Constant>
+				</Greater>
+			</Condition>
+		</Annunciation>
+
+		<Annunciation>
+		  <Type>Warning</Type>
+		  <Text>L/G GEAR NOT DOWN</Text>
+		  <Condition>
+			<StateMachine>
+				<State id="Under" value="0">
+					<Transition to="Over">
+						<GreaterEqual>
+							<Simvar name="PLANE ALT ABOVE GROUND" unit="feet"/>
+							<Constant>1500</Constant>
+						</GreaterEqual>
+					</Transition>
+				</State>
+				<State id="Over" value="0">
+					<Transition to="Alerting">
+						<And>
+							<Lower>
+								<Simvar name="PLANE ALT ABOVE GROUND" unit="feet"/>
+								<Constant>750</Constant>
+							</Lower>
+							<Or>
+								<Lower>
+									<Simvar name="GEAR RIGHT POSITION" unit="Percent"/>
+									<Constant>100</Constant>
+								</Lower>
+								<Lower>
+									<Simvar name="GEAR CENTER POSITION" unit="Percent"/>
+									<Constant>100</Constant>
+								</Lower>
+								<Lower>
+									<Simvar name="GEAR LEFT POSITION" unit="Percent"/>
+									<Constant>100</Constant>
+								</Lower>
+							</Or>
+							<Or>
+								<GreaterEqual>
+									<Simvar name="FLAPS HANDLE INDEX" unit="number"/>
+									<Constant>3</Constant>
+								</GreaterEqual>
+								<LowerEqual>
+									<Simvar name="GENERAL ENG THROTTLE LEVER POSITION:1" unit="Percent"/>
+									<Constant>0</Constant>
+								</LowerEqual>
+							</Or>
+						</And>
+					</Transition>
+				</State>
+				<State id="Alerting" value="1">
+					<Transition to="Over">
+						<Or>
+							<GreaterEqual>
+								<Simvar name="PLANE ALT ABOVE GROUND" unit="feet"/>
+								<Constant>750</Constant>
+							</GreaterEqual>
+							<And>
+								<Equal>
+									<Simvar name="GEAR RIGHT POSITION" unit="Percent"/>
+									<Constant>100</Constant>
+								</Equal>
+								<Equal>
+									<Simvar name="GEAR CENTER POSITION" unit="Percent"/>
+									<Constant>100</Constant>
+								</Equal>
+								<Equal>
+									<Simvar name="GEAR LEFT POSITION" unit="Percent"/>
+									<Constant>100</Constant>
+								</Equal>
+							</And>
+						</Or>
+					</Transition>
+				</State>
+			</StateMachine>
+		  </Condition>
+		</Annunciation>
+
+		<Annunciation>
+		  <Type>Advisory</Type>
+		  <Text>PARK BRAKE</Text>
+		  <Condition>
+			<Simvar name="BRAKE PARKING INDICATOR" unit="Bool"/>
+		  </Condition>
+		</Annunciation>
+		
+	</Annunciations>
+	
+	
+	<VoicesAlerts>
+		<Alert>
+			<Type>SoundOnly</Type>
+			<SoundEvent>aural_overspeed</SoundEvent>
+			<Condition>
+				<Simvar name="OVERSPEED WARNING" unit="bool"/>
+			</Condition>
+		</Alert>
+	</VoicesAlerts>
 </PlaneHTMLConfig>

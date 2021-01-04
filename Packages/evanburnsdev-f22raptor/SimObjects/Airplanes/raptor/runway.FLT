@@ -14,7 +14,7 @@ Comm2Active=124.850
 Comm2Standby=124.850
 Comm3Active=124.850
 Comm3Standby=124.850
-Nav1Active=110.50
+Nav1Active=111.55
 Nav1Standby=113.90
 OBS1=360
 Nav2Active=110.50
@@ -167,10 +167,10 @@ WingLights=True
 CabinLights=False
 GlareshieldLights=False
 PedestalLights=False
-Potentiometer.7=0.5
-Potentiometer.0=1.0
-Potentiometer.11=1.0
-Potentiometer.12=0.5
+;Potentiometer.7=0.5
+;Potentiometer.0=1.0
+;Potentiometer.11=1.0
+;Potentiometer.12=0.5
 
 [AutoPilot.0]
 MasterSwitch=False
@@ -205,7 +205,7 @@ VSSlotIndex=1
 [Controls.0]
 SpoilersHandle=000.00
 SpoilersArmed=True
-FlapsHandle=010.00
+FlapsHandle=050.00
 LeftFlap=0.0
 RightFlap=0.0
 GearsHandle=000.01
@@ -215,8 +215,8 @@ Gear3=100.00
 YokeY=050.00
 YokeX=050.00
 Rudder=050.00
-LeftBrake=100.00
-RightBrake=100.00
+LeftBrake=0.00
+RightBrake=0.00
 ParkingBrake=100.00
 
 RudderTrimPct=0
