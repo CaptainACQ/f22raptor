@@ -77,3 +77,4 @@ Changes:
 * 1/4 - Exterior model update.
 * 1/16 - Revamped cockpit.  Highly customized HTML Gauges, cleaner interfaces and 
 overall better performance.
+* 1/17 - Bug fix.
