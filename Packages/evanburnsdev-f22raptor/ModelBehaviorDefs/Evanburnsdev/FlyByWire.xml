@@ -1,0 +1,18 @@
+<ModelBehaviors>
+	<Include ModelBehaviorFile="Asobo\Common.xml"/>
+	<Include ModelBehaviorFile="Asobo\Generic.xml"/>
+	
+	<Template Name="EVANBURNSDEV_FlyByWire">
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>60</FREQUENCY>
+			<UPDATE_CODE>
+				(L:XMLVAR_EBD_FBW_PITCH_STAT, Boolean) 1 and
+				(A:YOKE Y POSITION, degrees) *
+				0.01 *
+				(A:ELEVATOR TRIM POSITION, degrees) +
+				(&gt;A:ELEVATOR TRIM POSITION, degrees)
+			</UPDATE_CODE>
+		</UseTemplate>
+	</Template>
+	
+</ModelBehaviors>

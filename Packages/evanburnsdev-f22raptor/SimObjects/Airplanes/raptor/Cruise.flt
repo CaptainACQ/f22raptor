@@ -1,7 +1,7 @@
 [SimVars.0]
 FlapsDegree=0000.00
 Pitch=3.0
-ZVelBodyAxis=1900
+ZVelBodyAxis=300
 SimOnGround=False
 
 [Avionics.0]
@@ -164,7 +164,7 @@ AirspeedHold=False
 AirspeedValue=467
 MachHold=False
 MachValue=1.85
-VerticalSpeedHold=True
+VerticalSpeedHold=False
 VerticalSpeedValue=0
 RPMHold=False
 RPMValue=1.2
@@ -177,8 +177,8 @@ AutoThrottleArm=False
 GPSdrivesNAV1=True
 IsUsedForLesson=False
 ForceDisplayUI=False
-AltitudeSlotIndex=3
-SpeedSlotIndex=1
+AltitudeSlotIndex=2
+SpeedSlotIndex=2
 VSSlotIndex=2
 
 [Controls.0]
@@ -202,3 +202,4 @@ AileronTrimPct=0
 AileronTrimDisabled=False
 ElevatorTrimDisabled=False
 RudderTrimDisabled=False
+AntiSkidActive=True

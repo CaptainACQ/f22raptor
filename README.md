@@ -21,12 +21,6 @@ within these guidelines for the best performance:
 	* Below FL300 - Less than Mach 1.2
 	* Between FL300 - Less than Mach 1.8
 	* Above FL450 - Between Mach 1.8 and Mach 2.2
-	
-* If the roll rate in the flight model is increased to a realistic level for a 
-figter, at max roll the jet goes to a 30+ degree AoA and stalls.  Bug seems to 
-be MSFS related as I've tried all different combinations of settings and can't 
-keep it from loosing control.  I have it set to a lower roll rate to keep it 
-manageable.
 
 * For lower-end graphics cards (Mine's a 1070Ti) you may see artifacts in
 the HUD text when moving.  If that's the case, set Anti-Aliasing to anything 
@@ -63,6 +57,12 @@ back burner until the more major problems are fixed.
 * Textures need created for the underside of the aircraft.  I just copied the one
 I created for the top.  I also need to create textures for the inside of the
 VTails as I just copied the ones I made for the outsides.
+	
+* If the roll rate in the flight model is increased to a realistic level for a 
+figter, at max roll the jet goes to a 30+ degree AoA and stalls.  Bug seems to 
+be MSFS related as I've tried all different combinations of settings and can't 
+keep it from loosing control.  I have it set to a lower roll rate to keep it 
+manageable.
 
 Changes:
 * 12/28 - Further increased pitch and roll stability.
@@ -78,3 +78,4 @@ Changes:
 * 1/16 - Revamped cockpit.  Highly customized HTML Gauges, cleaner interfaces and 
 overall better performance.
 * 1/17 - Bug fix.
+* 1/19 - Fly By Wire added.  Cleaned up HTML Gauges.

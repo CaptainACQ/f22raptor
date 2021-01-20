@@ -123,6 +123,12 @@
 				3.14159 / (&gt;L:XMLVAR_EBD_ELEVATOR_DEFL)
 			</UPDATE_CODE>
 		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:USER INPUT ENABLED, Boolean) (&gt;L:XMLVAR_EBD_USER_INPUT_ENABLED)
+			</UPDATE_CODE>
+		</UseTemplate>
 	</Template>
 	<Template Name="EVANBURNSDEV_DEBUG_AOA">
 		<UseTemplate Name="ASOBO_GT_Update">
@@ -160,21 +166,118 @@
 
 	<Template Name="EVANBURNSDEV_DEBUG_FBW">
 		<UseTemplate Name="ASOBO_GT_Update">
-			<FREQUENCY>10</FREQUENCY>
+			<FREQUENCY>1</FREQUENCY>
 			<UPDATE_CODE>
-				(A:FLY BY WIRE ELAC SWITCH, bool) (&gt;L:XMLVAR_EBD_FBW_ELAC_SW)
+				(A:FLY BY WIRE ELAC SWITCH:1, bool) (&gt;L:XMLVAR_EBD_FBW_ELAC_SW_1)
 			</UPDATE_CODE>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Update">
-			<FREQUENCY>10</FREQUENCY>
+			<FREQUENCY>1</FREQUENCY>
 			<UPDATE_CODE>
-				(A:FLY BY WIRE FAC SWITCH, bool) (&gt;L:XMLVAR_EBD_FBW_FAC_SW)
+				(A:FLY BY WIRE FAC SWITCH:1, bool) (&gt;L:XMLVAR_EBD_FBW_FAC_SW_1)
 			</UPDATE_CODE>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Update">
-			<FREQUENCY>10</FREQUENCY>
+			<FREQUENCY>1</FREQUENCY>
 			<UPDATE_CODE>
-				(A:FLY BY WIRE SEC SWITCH, bool) (&gt;L:XMLVAR_EBD_FBW_SEC_SW)
+				(A:FLY BY WIRE SEC SWITCH:1, bool) (&gt;L:XMLVAR_EBD_FBW_SEC_SW_1)
+			</UPDATE_CODE>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE ELAC SWITCH:2, bool) (&gt;L:XMLVAR_EBD_FBW_ELAC_SW_2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE FAC SWITCH:2, bool) (&gt;L:XMLVAR_EBD_FBW_FAC_SW_2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE SEC SWITCH:2, bool) (&gt;L:XMLVAR_EBD_FBW_SEC_SW_2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE ELAC SWITCH:3, bool) (&gt;L:XMLVAR_EBD_FBW_ELAC_SW_3)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE FAC SWITCH:3, bool) (&gt;L:XMLVAR_EBD_FBW_FAC_SW_3)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE SEC SWITCH:3, bool) (&gt;L:XMLVAR_EBD_FBW_SEC_SW_3)
+			</UPDATE_CODE>
+		</UseTemplate>
+		
+		
+		
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE ELAC FAILED:1, bool) (&gt;L:XMLVAR_EBD_FBW_ELAC_FAILED_1)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE FAC FAILED:1, bool) (&gt;L:XMLVAR_EBD_FBW_FAC_FAILED_1)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE SEC FAILED:1, bool) (&gt;L:XMLVAR_EBD_FBW_SEC_FAILED_1)
+			</UPDATE_CODE>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE ELAC FAILED:2, bool) (&gt;L:XMLVAR_EBD_FBW_ELAC_FAILED_2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE FAC FAILED:2, bool) (&gt;L:XMLVAR_EBD_FBW_FAC_FAILED_2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE SEC FAILED:2, bool) (&gt;L:XMLVAR_EBD_FBW_SEC_FAILED_2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE ELAC FAILED:3, bool) (&gt;L:XMLVAR_EBD_FBW_ELAC_FAILED_3)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE FAC FAILED:3, bool) (&gt;L:XMLVAR_EBD_FBW_FAC_FAILED_3)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:FLY BY WIRE SEC FAILED:3, bool) (&gt;L:XMLVAR_EBD_FBW_SEC_FAILED_3)
 			</UPDATE_CODE>
 		</UseTemplate>
 	</Template>
