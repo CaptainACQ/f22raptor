@@ -15,10 +15,11 @@ class SMFD extends NavSystem {
 	}
     connectedCallback() {
         super.connectedCallback();
+		/*
 		Include.addScript("/JS/debug.js", function () {
 			g_modDebugMgr.AddConsole(null);
 		});
-		
+		*/
 		this.fuelElement = this.getChildById("FuelPage");
         this.EnginesElement = this.getChildById("EnginePage");
 		this.mapElem = this.getChildById("Map");
@@ -53,7 +54,6 @@ class SMFD extends NavSystem {
                 this.mapElem.style.display = "none";
                 break;
 		}
-		//this.querySelector("map-instrument").setAttribute("bing-id", "SMFD");
 				
         this.mainPage = new SMFD_MainPage();
         this.pageGroups = [
@@ -62,58 +62,18 @@ class SMFD extends NavSystem {
             ]),
         ];
 		this.mainPage.index = this.index;
-        //this.mapHtmlElem = document.getElementsByTagName("map-instrument");
-		//mapHtmlElem.setAttribute("bing-id", "SMFD");
-		
-		//this.map = SMFD_MapElement();
-		//this.map.bingId = "SFMD";
-        //this.pagesContainer = this.getChildById("RightInfos");
         this.engines = new SMFD_Engine("Engine", "EnginePage");
 		this.fuel = new SMFD_Fuel("Fuel", "FuelPage");
-		//this.map = new SMFD_MapElement();
         this.addIndependentElementContainer(new NavSystemElementContainer("SoftKeys", "SoftKeys", new TwentySoftKeys(SMFD_SoftKeyHtmlElement)));
-        //this.addIndependentElementContainer(new NavSystemElementContainer("Map", "Map", this.map));
         this.addIndependentElementContainer(this.engines);
         this.addIndependentElementContainer(this.fuel);
-		
-        
-            
-        //this.addIndependentElementContainer(new NavSystemElementContainer("Com Frequencies", "ComFreq", new AS3000_MFD_ComFrequencies()));
-        //this.addIndependentElementContainer(new NavSystemElementContainer("Navigation status", "TopRight", new AS3000_MFD_NavInfos()));
-		/*
-        this.pageGroups = [
-            new NavSystemPageGroup("MAP", this, [
-                new SMFD_MainMap()
-            ]),
-        ];
-		*/
     }
     disconnectedCallback() {
         super.disconnectedCallback();
     }
     onEvent(_event) {
         super.onEvent(_event);
-		/*
-        if (_event == "SOFTKEYS_10") {
-            this.acknowledgeInit();
-        }
-		*/
-		//console.log(_event);
     }
-	/*
-	parseXMLConfig() {
-        super.parseXMLConfig();
-		console.log("ParseXML");
-        let bingid = null;
-        if (this.instrumentXmlConfig) {
-			console.log("Got XML Config");
-            bingid = this.instrumentXmlConfig.getElementsByTagName("Bing-ID")[0];
-        }
-		if(bingid){
-			this.mainPage.index = bingid.textContent;
-		}
-    }
-	*/
     onUpdate(_deltaTime) {
         super.onUpdate(_deltaTime);
     }
@@ -156,6 +116,9 @@ class SMFD_MainPage extends NavSystemPage {
 		this.mapHtmlElem = this.gps.getChildById("Map");
 		this.fuelElement = this.gps.getChildById("FuelPage");
 		
+		//this.mapHtmlElem.setAttribute("show-roads", "false");
+        //this.mapInst = this.gps.querySelector("ebd-map-instrument");
+		//this.mapInst.showRoads = false;
 		
 		/*console.log("Bing-ID: " + this.gps.querySelector("map-instrument").getAttribute("bing-id"));
 		if(this.index){
@@ -193,15 +156,15 @@ class SMFD_MainPage extends NavSystemPage {
             new SMFD_SoftKeyElement("Page", this.switchToMenu.bind(this, this.pageMenu))
         ];
         this.map_rootMenu.elements = [
-            new SMFD_SoftKeyElement(""),
-            new SMFD_SoftKeyElement(""),
-            new SMFD_SoftKeyElement(""),
+            new SMFD_SoftKeyElement("Roads", this.showRoads.bind(this), null, this.showRoadsStatus.bind(this)),
+            new SMFD_SoftKeyElement("Terrain", this.showBing.bind(this), null, this.showBingStatus.bind(this)),
+            new SMFD_SoftKeyElement("Traffic", this.toggleTraffic.bind(this), null, this.showTrafficStatus.bind(this)),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
 			
             //new SMFD_SoftKeyElement("Active&nbsp;NAV", this.gps.computeEvent.bind(this.gps, "SoftKey_CDI"), null, this.navStatus.bind(this)),
-            new SMFD_SoftKeyElement("Map Range-", this.gps.computeEvent.bind(this.gps, "RANGE_DEC")),
-            new SMFD_SoftKeyElement("Map Range+", this.gps.computeEvent.bind(this.gps, "RANGE_INC")),
+            new SMFD_SoftKeyElement("Map Range<br/>In", this.gps.computeEvent.bind(this.gps, "RANGE_DEC")),
+            new SMFD_SoftKeyElement("Map Range<br/>Out", this.gps.computeEvent.bind(this.gps, "RANGE_INC")),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement("Page", this.switchToMenu.bind(this, this.pageMenu))
@@ -292,6 +255,37 @@ class SMFD_MainPage extends NavSystemPage {
         }
 		this.softKeys = this.rootMenu;
     }
+	showRoads(){
+		this.map.toggleRoads();
+	}
+	showRoadsStatus(){
+		if(this.map.showRoads){
+			return "On";
+		}
+		else {
+			return "Off";
+		}
+	}
+	showBing(){
+		this.map.toggleBing();
+	}
+	showBingStatus(){
+		if(this.map.showBing){
+			return "On";
+		}
+		else {
+			return "Off";
+		}
+	}
+	showTrafficStatus(){
+		if(this.map.trafficStatus())
+			return "On";
+		else
+			return "Off";
+	}
+	toggleTraffic(){
+		this.map.toggleTraffic();
+	}
 }
 class SMFD_MainElement extends NavSystemElement {
     init(root) {
@@ -340,13 +334,16 @@ class SMFD_MapElement extends MapInstrumentElement {
         this.wasOverride = false;
         this.lastMapMode = 0;
         this.lastWeatherMapMode = 0;
+		this.showRoads = false;
+		this.showBing = false;
+		this.showTraffic = true;
     }
     onUpdate(_deltaTime) {
         super.onUpdate(_deltaTime);
         let isPositionOverride = SimVar.GetSimVarValue("L:AS3000_MFD_IsPositionOverride", "number") != 0;
         if (isPositionOverride) {
             if (!this.wasOverride) {
-                this.instrument.setAttribute("bing-mode", "vfr");
+                this.instrument.setAttribute("bing-mode", "ifr");
                 this.wasOverride = true;
             }
             this.instrument.setCenter(new LatLong(SimVar.GetSimVarValue("L:AS3000_MFD_OverrideLatitude", "number"), SimVar.GetSimVarValue("L:AS3000_MFD_OverrideLongitude", "number")));
@@ -395,7 +392,39 @@ class SMFD_MapElement extends MapInstrumentElement {
     }
     onTemplateLoaded() {
 		super.onTemplateLoaded();
+        if (this.instrument) {
+			this.instrument.roadNetwork.setVisible(this.showRoads);
+			if(this.showBing)
+				this.instrument.bingMap.style.display = "block";
+			else
+				this.instrument.bingMap.style.display = "none";
+			this.instrument.showTraffic = this.showTraffic;
+        }
     }
+	toggleRoads(){
+        if (this.instrument) {
+			this.showRoads = !this.showRoads;
+			this.instrument.roadNetwork.setVisible(this.showRoads);
+        }
+	}
+	toggleBing(){
+        if (this.instrument) {
+			this.showBing = !this.showBing;
+			if(this.showBing)
+				this.instrument.bingMap.style.display = "block";
+			else
+				this.instrument.bingMap.style.display = "none";
+        }
+	}
+	toggleTraffic(){
+        if (this.instrument) {
+			this.showTraffic = !this.showTraffic;
+			this.instrument.showTraffic = this.showTraffic;
+        }
+	}
+	trafficStatus(){
+		return this.instrument.showTraffic;
+	}
 }
 class SMFD_MainMap extends NavSystemPage {
     constructor() {

@@ -64,6 +64,8 @@ ebd-map-instrument {
     text-align: center; }
   ebd-map-instrument #MapSVG, ebd-map-instrument #road-network-canvas {
     position: absolute; }
+  ebd-map-instrument #MapSVG, ebd-map-instrument #airway-network-canvas {
+    position: absolute; }
   ebd-map-instrument bing-map {
     position: absolute; }
   ebd-map-instrument #MapCursor {

@@ -24,7 +24,7 @@ class MapInstrument extends ISvgMapRootElement {
     constructor() {
         super();
         this.intersectionMaxRange = 15;
-        this.vorMaxRange = 200;
+        this.vorMaxRange = 150;
         this.ndbMaxRange = 100;
         this.minimizedIntersectionMaxRange = 0;
         this.minimizedVorMaxRange = 0;
@@ -35,7 +35,7 @@ class MapInstrument extends ISvgMapRootElement {
         this.smallCityMaxRange = 100;
         this.medCityMaxRange = 200;
         this.largeCityMaxRange = 1500;
-        this.npcAirplaneMaxRange = 60;
+        this.npcAirplaneMaxRange = 201;
         this.showRoads = true;
         this.showAirspaces = true;
         this.showAirways = true;
@@ -48,7 +48,7 @@ class MapInstrument extends ISvgMapRootElement {
         this.showCities = false;
         this.showTraffic = true;
         this.showConstraints = false;
-        this._ranges = [0.5, 1, 2, 3, 5, 10, 15, 20, 35, 50, 100, 150, 200];
+        this._ranges = [0.5, 1, 2, 3, 5, 10, 15, 20, 35, 50, 100, 150, 200, 300, 400, 600];
         this.rangeIndex = 4;
         this._declutterLevel = 0;
         this.rangeFactor = 1852;
@@ -245,12 +245,6 @@ class MapInstrument extends ISvgMapRootElement {
             else
                 this.bShowOverlay = true;
         }
-        else if (lowercaseName === "show-roads") {
-            this.showRoads = false;
-            if (newValue === "true") {
-                this.showRoads = true;
-            }
-        }
         else if (lowercaseName === "show-airspaces") {
             this.showAirspaces = false;
             if (newValue === "true") {
@@ -348,11 +342,9 @@ class MapInstrument extends ISvgMapRootElement {
             this._flightPlanManager = new FlightPlanManager(this.instrument);
         }
         let bingMapId = this.bingId;
-        //if (this.instrument.urlConfig.index)
         var parsedUrl = new URL(this.instrument.getAttribute("Url").toLowerCase());
         let index = parsedUrl.searchParams.get("index");
-            bingMapId += "_GPS" + index;
-            //bingMapId += "_GPS" + this.instrument.urlConfig.index;
+		bingMapId += "_GPS" + index;
         this.bingMap = this.getElementsByTagName("bing-map")[0];
         this.bingMap.setMode(this.eBingMode);
         this.bingMap.setReference(this.eBingRef);
@@ -385,11 +377,13 @@ class MapInstrument extends ISvgMapRootElement {
             this.mapNearestVorList = new NearestVORList(this.instrument);
             this.testAirspaceList = new NearestAirspaceList(this.instrument);
             this.roadNetwork = new SvgRoadNetworkElement();
+            this.airwayNetwork = new EBDSvgAirwayNetworkElement();
             this.cityManager = new SvgCityManager(this.navMap);
             this.airwayIterator = 0;
             this.airspaceIterator = 0;
             this.smartIterator = new SmartIterator();
             this.roadsBuffer = [];
+            this.airspaceBuffer = [];
             this.drawCounter = 0;
             this.airportLoader = new AirportLoader(this.instrument);
             this.intersectionLoader = new IntersectionLoader(this.instrument);
@@ -398,7 +392,7 @@ class MapInstrument extends ISvgMapRootElement {
             this.nearestAirspacesLoader = new NearestAirspacesLoader(this.instrument);
             this.nearestAirspacesLoader.onNewAirspaceAddedCallback = (airspace) => {
                 if (airspace) {
-                    this.roadsBuffer.push({
+                    this.airspaceBuffer.push({
                         id: 0,
                         path: airspace.segments,
                         type: airspace.type + 100,
@@ -416,7 +410,7 @@ class MapInstrument extends ISvgMapRootElement {
                     });
                 }
             };
-            this.npcAirplaneManager = new NPCAirplaneManager();
+            this.npcAirplaneManager = new EBDNPCAirplaneManager();
             this.airplaneIconElement = new SvgAirplaneElement();
             this.flightPlanElement = new SvgFlightPlanElement();
             this.flightPlanElement.source = this.flightPlanManager;
@@ -489,7 +483,7 @@ class MapInstrument extends ISvgMapRootElement {
                 let t0 = performance.now();
                 while (this.roadsBuffer.length > 0 && (performance.now() - t0 < 1)) {
                     let road = this.roadsBuffer.pop();
-                    if (road) {
+                    if (road && road.type <= 100) {
                         if (road.path.length > 100) {
                             let truncRoad = {
                                 id: 0,
@@ -499,6 +493,7 @@ class MapInstrument extends ISvgMapRootElement {
                             };
                             this.roadsBuffer.push(truncRoad);
                         }
+						//console.log("Adding Road: " + road.type);
                         this.roadNetwork.addRoad(road.path, road.type, road.lod);
                     }
                 }
@@ -508,6 +503,34 @@ class MapInstrument extends ISvgMapRootElement {
                         if (isFinite(iterator)) {
                             Coherent.call("GET_ROADS_BAG", iterator).then((roadBag) => {
                                 this.roadsBuffer.push(...roadBag);
+                            });
+                        }
+                    });
+                }
+            }
+            if (this.showAirspaces) {
+                let t0 = performance.now();
+                while (this.airspaceBuffer.length > 0 && (performance.now() - t0 < 1)) {
+                    let road = this.airspaceBuffer.pop();
+                    if (road && road.type > 100) {
+                        if (road.path.length > 100) {
+                            let truncRoad = {
+                                id: 0,
+                                path: road.path.splice(90),
+                                type: road.type,
+                                lod: road.lod
+                            };
+                            this.airspaceBuffer.push(truncRoad);
+                        }
+                        this.airwayNetwork.addRoad(road.path, road.type, road.lod);
+                    }
+                }
+                if (this.airspaceBuffer.length < 100) {
+                    Coherent.call("GET_ROADS_BAG_SIZE").then((size) => {
+                        let iterator = this.smartIterator.getIteration(size - 1);
+                        if (isFinite(iterator)) {
+                            Coherent.call("GET_ROADS_BAG", iterator).then((airBag) => {
+                                this.airspaceBuffer.push(...airBag);
                             });
                         }
                     });
@@ -655,9 +678,9 @@ class MapInstrument extends ISvgMapRootElement {
                                         let coordinatesNext = intersection.routes[i].nextWaypoint.GetInfos().coordinates;
                                         if (coordinatesNext) {
                                             let routeNextStart = new LatLong(coordinatesNext.lat, coordinatesNext.long);
-                                            this.roadNetwork.addRoad([routePrevStart, routeCoordinates, routeNextStart], 101, 8);
-                                            this.roadNetwork.addRoad([routePrevStart, routeCoordinates, routeNextStart], 101, 12);
-                                            this.roadNetwork.addRoad([routePrevStart, routeCoordinates, routeNextStart], 101, 14);
+                                            this.airwayNetwork.addRoad([routePrevStart, routeCoordinates, routeNextStart], 101, 8);
+                                            this.airwayNetwork.addRoad([routePrevStart, routeCoordinates, routeNextStart], 101, 12);
+                                            this.airwayNetwork.addRoad([routePrevStart, routeCoordinates, routeNextStart], 101, 14);
                                             intersection.airwaysDrawn = true;
                                         }
                                     }
@@ -673,13 +696,11 @@ class MapInstrument extends ISvgMapRootElement {
             }
             this.navMap.mapElements = [];
             if (!this.isDisplayingWeatherRadar() || !this.weatherHideGPS) {
-                if (this.showRoads || this.showAirways || this.showAirspaces) {
+                if (this.showRoads) {
                     this.navMap.mapElements.push(this.roadNetwork);
                 }
-                if (this.showTraffic) {
-                    if (this.getDeclutteredRange() < this.npcAirplaneMaxRange) {
-                        this.navMap.mapElements.push(...this.npcAirplaneManager.npcAirplanes);
-                    }
+                if (this.showAirways || this.showAirspaces) {
+                    this.navMap.mapElements.push(this.airwayNetwork);
                 }
                 if (this.bShowAirplane) {
                     this.navMap.mapElements.push(this.airplaneIconElement);
@@ -762,6 +783,11 @@ class MapInstrument extends ISvgMapRootElement {
                 if (this.showConstraints) {
                     for (let i = 0; i < this.constraints.length; i++) {
                         this.navMap.mapElements.push(this.constraints[i]);
+                    }
+                }
+				if (this.showTraffic) {
+                    if (this.getDeclutteredRange() < this.npcAirplaneMaxRange) {
+                        this.navMap.mapElements.push(...this.npcAirplaneManager.npcAirplanes);
                     }
                 }
                 if (this.flightPlanManager && this.bIsFlightPlanVisible) {
@@ -973,8 +999,6 @@ class MapInstrument extends ISvgMapRootElement {
                 this.navMap.svgHtmlElement.style.display = "block";
             if (this.lineCanvas)
                 this.lineCanvas.style.display = "none";
-            if (this.roadNetwork)
-                this.roadNetwork.setVisible(false);
             return;
         }
         if (this.quality == Quality.ultra || this.quality == Quality.high) {
@@ -982,30 +1006,18 @@ class MapInstrument extends ISvgMapRootElement {
                 this.navMap.svgHtmlElement.style.display = "block";
             if (this.lineCanvas)
                 this.lineCanvas.style.display = "block";
-            if (this.roadNetwork)
-                this.roadNetwork.setVisible(true);
-            this.bingMap.setVisible(this.showBingMap);
         }
         else if (this.quality == Quality.medium) {
             if (this.navMap && this.navMap.svgHtmlElement)
                 this.navMap.svgHtmlElement.style.display = "block";
             if (this.lineCanvas)
                 this.lineCanvas.style.display = "none";
-            if (this.roadNetwork)
-                this.roadNetwork.setVisible(false);
-            this.bingMap.setVisible(this.showBingMap);
         }
         else {
             if (this.navMap && this.navMap.svgHtmlElement)
                 this.navMap.svgHtmlElement.style.display = "none";
             if (this.lineCanvas)
                 this.lineCanvas.style.display = "none";
-            if (this.roadNetwork)
-                this.roadNetwork.setVisible(false);
-            if (this.quality == Quality.low || this.quality == Quality.hidden)
-                this.bingMap.setVisible(this.showBingMap);
-            else
-                this.bingMap.setVisible(false);
         }
     }
     updateInputs() {
@@ -1085,7 +1097,7 @@ class MapInstrument extends ISvgMapRootElement {
             if (this.eBingMode === EBingMode.CURSOR) {
                 this.deactivateCursor();
             }
-        }
+		}
         if (this.eBingMode === EBingMode.CURSOR) {
             let cursorSpeed = 2;
             let mapSpeed = 4;
@@ -1405,7 +1417,7 @@ class MapInstrument extends ISvgMapRootElement {
     getZoom() {
         return this.rangeIndex;
     }
-    OnMouseDown(_e) {
+	OnMouseDown(_e) {
         this.bMouseDown = true;
         this.refMousePos = { x: _e.x, y: _e.y };
     }
@@ -1438,5 +1450,4 @@ class MapInstrument extends ISvgMapRootElement {
     }
 }
 customElements.define("ebd-map-instrument", MapInstrument);
-checkAutoload();
-//# sourceMappingURL=MapInstrument.js.map
+//# sourceMappingURL=EBDMapInstrument.js.map

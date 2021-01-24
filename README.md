@@ -26,7 +26,7 @@ within these guidelines for the best performance:
 the HUD text when moving.  If that's the case, set Anti-Aliasing to anything 
 except TAA(which is default).
 
-TODO/Work in progress:
+TODO/Work in progress(Not in order):
 * Need to start incorporating more controls into the cockpit and start arranging
 everything to match the F-22 correctly.  I plan on keeping the G3000 and
 altering it to a design that looks similar to the F-22.  A complete nav system
@@ -39,6 +39,24 @@ it for a more enjoyable experience.
 * 3D model needs some more rework.  Tires need to be flattened and not look like
 balloons.  Creases need to be added to the underside of the wings.  Creases need
 to be added for gear bay doors.
+
+* Quick look cameras need updated for new cockpit.
+
+* Fly-By-Wire not very responsive, doesn't hold altitude correctly.
+
+* Taxi light toggle works but the programmatic state seems wrong somehow. That is to 
+say that SimConnect variable LIGHT TAXI ON is not working, but the event 
+TOGGLE_TAXI_LIGHTS works to toggle the actual lights properly.
+
+* Autothrottle not working as expected. 
+
+* Need to make the high speed tape move with altitude.
+
+* ILS interceptions cause oscillations.  Most likely need rollPID adjustment in ai.cfg
+
+* Fuel system needs worked into MFD's and needs to be easier to understand.
+
+* Fuel burn way too low. (Enjoying the range so fixing it is on backburner for now)
 
 Fixed:
 * Autopilot PID values need readjusted for Pitch and Roll.  Pitch shakes the
@@ -79,3 +97,6 @@ Changes:
 overall better performance.
 * 1/17 - Bug fix.
 * 1/19 - Fly By Wire added.  Cleaned up HTML Gauges.
+* 1/24 - Added air traffic tracking to SMFD Map (Real world Traffic only, bug prevents
+Offline AI traffic from displaying.  MSFS Bug Report #90082).  Made SMFD Map more MILSPEC.
+Increased map range to 600nm.

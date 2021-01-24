@@ -87,8 +87,8 @@
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/mapConfig.json",
-      "size": 2783,
-      "date": 132548591324020802
+      "size": 4386,
+      "date": 132557522843642871
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/SMFD.css",
@@ -102,8 +102,8 @@
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/SMFD.js",
-      "size": 66072,
-      "date": 132555894145825417
+      "size": 66496,
+      "date": 132559490573371403
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/SMFD_1/mapConfig.json",
@@ -167,18 +167,28 @@
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/Shared/Map/EBDMapInstrument.css",
-      "size": 2093,
-      "date": 132548786000970165
+      "size": 2193,
+      "date": 132557643913448414
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/Shared/Map/EBDMapInstrument.html",
-      "size": 5263,
-      "date": 132548856997189684
+      "size": 5610,
+      "date": 132559880133508691
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/Shared/Map/EBDMapInstrument.js",
-      "size": 63289,
-      "date": 132548901878461723
+      "size": 63957,
+      "date": 132559879712508795
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/Shared/Map/Svg/EBDSvgAirplaneElement.js",
+      "size": 12828,
+      "date": 132559879070014852
+    },
+    {
+      "path": "html_ui/Pages/VCockpit/Instruments/Shared/Map/Svg/EBDSvgAirwayNetworkElement.js",
+      "size": 1307,
+      "date": 132558535961967913
     },
     {
       "path": "ModelBehaviorDefs/Evanburnsdev/Debug.xml",
@@ -227,8 +237,8 @@
     },
     {
       "path": "SimObjects/Airplanes/raptor/cockpit.cfg",
-      "size": 4884,
-      "date": 132541773629828362
+      "size": 4883,
+      "date": 132558311210764266
     },
     {
       "path": "SimObjects/Airplanes/raptor/Cruise.flt",
