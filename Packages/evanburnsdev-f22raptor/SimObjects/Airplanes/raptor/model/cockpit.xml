@@ -151,7 +151,7 @@
 				</DefaultTemplateParameters>
 				<OverrideTemplateParameters>
 					<POTENTIOMETER>9</POTENTIOMETER>
-					<MAX_EMISSIVE_PERCENT>2</MAX_EMISSIVE_PERCENT>
+					<MAX_EMISSIVE_PERCENT>4</MAX_EMISSIVE_PERCENT>
 				</OverrideTemplateParameters>
 
 				<UseTemplate Name="ASOBO_AS3000_Screen_Template">

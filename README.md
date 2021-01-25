@@ -100,3 +100,4 @@ overall better performance.
 * 1/24 - Added air traffic tracking to SMFD Map (Real world Traffic only, bug prevents
 Offline AI traffic from displaying.  MSFS Bug Report #90082).  Made SMFD Map more MILSPEC.
 Increased map range to 600nm.
+* 1/24-2  - Added quickview camera definitions.  Lowered HUD Opacity.

@@ -13,7 +13,12 @@
     {
       "path": "en-US.locPak",
       "size": 264,
-      "date": 132555844411592615
+      "date": 132560117027326311
+    },
+    {
+      "path": "en-US.locUidPak",
+      "size": 326,
+      "date": 132560117027326311
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/FlyByWire/FlyByWire.css",
@@ -33,7 +38,7 @@
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.css",
       "size": 6012,
-      "date": 132541048365338989
+      "date": 132560115794381388
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.html",
@@ -227,8 +232,8 @@
     },
     {
       "path": "SimObjects/Airplanes/raptor/cameras.cfg",
-      "size": 22536,
-      "date": 132546138714589088
+      "size": 29292,
+      "date": 132559954470029071
     },
     {
       "path": "SimObjects/Airplanes/raptor/Climb.flt",
@@ -242,8 +247,8 @@
     },
     {
       "path": "SimObjects/Airplanes/raptor/Cruise.flt",
-      "size": 3666,
-      "date": 132555008725460825
+      "size": 3667,
+      "date": 132559950000698588
     },
     {
       "path": "SimObjects/Airplanes/raptor/engines.cfg",
@@ -257,8 +262,8 @@
     },
     {
       "path": "SimObjects/Airplanes/raptor/flight_model.cfg",
-      "size": 25756,
-      "date": 132555885676156670
+      "size": 25764,
+      "date": 132559939365589807
     },
     {
       "path": "SimObjects/Airplanes/raptor/gameplay.cfg",
@@ -273,27 +278,27 @@
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.bin",
       "size": 2629242,
-      "date": 132555844405444361
+      "date": 132560117026875611
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.gltf",
-      "size": 237257,
-      "date": 132555844405495656
+      "size": 237242,
+      "date": 132560117026925795
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.xml",
       "size": 22642,
-      "date": 132555001265582566
+      "date": 132560116951874492
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.bin",
       "size": 5019794,
-      "date": 132555844399796656
+      "date": 132560117025476606
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.gltf",
       "size": 174649,
-      "date": 132555844399796656
+      "date": 132560117025476606
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.xml",
@@ -343,7 +348,7 @@
     {
       "path": "SimObjects/Airplanes/raptor/systems.cfg",
       "size": 19740,
-      "date": 132555886679184606
+      "date": 132559939203317218
     },
     {
       "path": "SimObjects/Airplanes/raptor/taxi.flt",
@@ -353,42 +358,42 @@
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_DECALSTEXT_ALBD_TIF.PNG.DDS",
       "size": 1398256,
-      "date": 132554082291075803
+      "date": 132560113901307640
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_DECALSTEXT_ALBD_TIF.PNG.DDS.json",
       "size": 119,
-      "date": 132554082291055825
+      "date": 132560113901206893
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_DECALSTEXT_EMIS_PNG.PNG.DDS",
       "size": 699192,
-      "date": 132554082284414964
+      "date": 132560113903627688
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_DECALSTEXT_EMIS_PNG.PNG.DDS.json",
       "size": 102,
-      "date": 132554082284324953
+      "date": 132560113903526990
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_INPUTS01_ALBD_PNG.PNG.DDS",
       "size": 2796344,
-      "date": 132554082282754532
+      "date": 132560113908098249
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_INPUTS01_ALBD_PNG.PNG.DDS.json",
       "size": 102,
-      "date": 132554082282654556
+      "date": 132560113907997428
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_INPUTS02_ALBD_PNG.PNG.DDS",
       "size": 2796344,
-      "date": 132554082289274955
+      "date": 132560113899485802
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/A320NEO_COCKPIT_INPUTS02_ALBD_PNG.PNG.DDS.json",
       "size": 102,
-      "date": 132554082289184949
+      "date": 132560113899385281
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/FUSELAGE BOTTOM ALBEDO.PNG.DDS",
@@ -413,12 +418,12 @@
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/IND_EMISSIVES.PNG.DDS",
       "size": 349680,
-      "date": 132554082292045804
+      "date": 132560113901911174
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/IND_EMISSIVES.PNG.DDS.json",
       "size": 119,
-      "date": 132554082291975787
+      "date": 132560113901911174
     },
     {
       "path": "SimObjects/Airplanes/raptor/TEXTURE/LEFT_BACK_TURBINA-FACES_BASECOLOR.PNG.DDS",
