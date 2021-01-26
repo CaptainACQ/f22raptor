@@ -10,10 +10,6 @@ like the real thing.  It is extremely fun to fly though.  High speeds
 close to ground level really taxes my machine, but lowering the graphics
 settings usually fixes any dropped frames or stuttering.
 
-Please don't submit issues yet.  I'm considering this pre-alpha and have
-a lot of work to do yet to where I'm happy with it.  At this time, I
-decided that it's just too fun to keep it to myself.
-
 Known bugs/limitations:
 * Remember that turbulence becomes a real pain at high speeds.  Per the specs
 for the F-22 listed on Wikipedia and the Lockheed Martin pages, keep speeds
@@ -32,21 +28,17 @@ everything to match the F-22 correctly.  I plan on keeping the G3000 and
 altering it to a design that looks similar to the F-22.  A complete nav system
 rework for it is more than a one person job. [In-Progress]
 
+* Quick look cameras need updated for new cockpit. [Partially Complete]
+
 * I have no idea if the flight computer on the real aircraft could process
 flight plans for autopilot(most likely not), but I plan on incorporating it into
-it for a more enjoyable experience.
+it for a more enjoyable experience.  [Works but interface (TMFD) is ugly]
 
 * 3D model needs some more rework.  Tires need to be flattened and not look like
 balloons.  Creases need to be added to the underside of the wings.  Creases need
 to be added for gear bay doors.
 
-* Quick look cameras need updated for new cockpit.
-
 * Fly-By-Wire not very responsive, doesn't hold altitude correctly.
-
-* Taxi light toggle works but the programmatic state seems wrong somehow. That is to 
-say that SimConnect variable LIGHT TAXI ON is not working, but the event 
-TOGGLE_TAXI_LIGHTS works to toggle the actual lights properly.
 
 * Autothrottle not working as expected. 
 
@@ -57,6 +49,10 @@ TOGGLE_TAXI_LIGHTS works to toggle the actual lights properly.
 * Fuel system needs worked into MFD's and needs to be easier to understand.
 
 * Fuel burn way too low. (Enjoying the range so fixing it is on backburner for now)
+
+* Taxi light toggle works but the programmatic state seems wrong somehow. That is to 
+say that SimConnect variable LIGHT TAXI ON is not working, but the event 
+TOGGLE_TAXI_LIGHTS works to toggle the actual lights properly. [Game Bug]
 
 Fixed:
 * Autopilot PID values need readjusted for Pitch and Roll.  Pitch shakes the
@@ -101,3 +97,5 @@ overall better performance.
 Offline AI traffic from displaying.  MSFS Bug Report #90082).  Made SMFD Map more MILSPEC.
 Increased map range to 600nm.
 * 1/24-2  - Added quickview camera definitions.  Lowered HUD Opacity.
+8 1/25 - Cleaned up some code.  Fly-by-Wire now off by default.  AP airspeed bug
+now always displayed on PMFD.  Changes to flight model(Last Commit - Forgot to mention)

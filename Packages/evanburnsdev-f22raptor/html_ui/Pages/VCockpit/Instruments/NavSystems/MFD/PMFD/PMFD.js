@@ -119,9 +119,11 @@ class PMFD_MainPage extends NavSystemPage {
         this.attitude = new PFD_Attitude();
         this.mapInstrument = new MapInstrumentElement();
         this.aoaIndicator = new PMFD_AngleOfAttackIndicator();
+		this.pfd_airspeed = new PFD_Airspeed();
+		this.pfd_airspeed.alwaysDisplaySpeed = true;
         this.element = new NavSystemElementGroup([
             this.attitude,
-            new PFD_Airspeed(),
+            this.pfd_airspeed,
             new PFD_Altimeter(),
             this.annunciations,
             new PFD_Compass(),

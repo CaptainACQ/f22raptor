@@ -2,6 +2,16 @@
 	<Include ModelBehaviorFile="Asobo\Common.xml"/>
 	<Include ModelBehaviorFile="Asobo\Generic.xml"/>
 	
+	<Template Name="EVANBURNSDEV_FlyByWire_Initialize">
+		<UseTemplate Name="ASOBO_GT_Update">
+			<UPDATE_ONCE>True</UPDATE_ONCE>
+			<UPDATE_CODE>
+				1 1 (&gt;K:FLY_BY_WIRE_ELAC_TOGGLE)
+				1 1 (&gt;K:FLY_BY_WIRE_FAC_TOGGLE)
+				1 1 (&gt;K:FLY_BY_WIRE_SEC_TOGGLE)
+			</UPDATE_CODE>
+		</UseTemplate>
+	</Template>
 	<Template Name="EVANBURNSDEV_FlyByWire">
 		<UseTemplate Name="ASOBO_GT_Update">
 			<FREQUENCY>60</FREQUENCY>

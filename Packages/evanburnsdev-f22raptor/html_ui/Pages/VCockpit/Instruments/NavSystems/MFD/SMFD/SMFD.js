@@ -87,20 +87,13 @@ class SMFD_MainPage extends NavSystemPage {
     constructor() {
         super("Main", "Mainframe", new SMFD_MainElement());
 		this.page = "EnginePage";
-		//this.currentSoftKeys = new CurrentSoftKeys("EnginePage");
-        //this.page_display = new SMFD_Page_Display();
         this.rootMenu = new SoftKeysMenu();
         this.engine_rootMenu = new SoftKeysMenu();
         this.fuel_rootMenu = new SoftKeysMenu();
         this.map_rootMenu = new SoftKeysMenu();
         this.pageMenu = new SoftKeysMenu();
         this.EnginesElement = document.getElementById("EnginePage");
-		//this.mapHtmlElem = document.getElementByID("Map");
-        //this.otherPfdMenu = new SoftKeysMenu();
-        //this.windMenu = new SoftKeysMenu();
-		//this.mapHtmlElem = null;
         this.map = new SMFD_MapElement();
-		//this.map.bingId = "SMFD";
         this.windData = new MFD_WindData();
         this.element = new NavSystemElementGroup([
 			this.map,
@@ -109,32 +102,19 @@ class SMFD_MainPage extends NavSystemPage {
     }
     connectedCallback() {
 		super.connectedCallback();
-		//this.gps.querySelector("map-instrument").setAttribute("bing-id", "SMFD");
 	}
     init() {
         super.init();
 		this.mapHtmlElem = this.gps.getChildById("Map");
 		this.fuelElement = this.gps.getChildById("FuelPage");
 		
-		//this.mapHtmlElem.setAttribute("show-roads", "false");
-        //this.mapInst = this.gps.querySelector("ebd-map-instrument");
-		//this.mapInst.showRoads = false;
-		
-		/*console.log("Bing-ID: " + this.gps.querySelector("map-instrument").getAttribute("bing-id"));
-		if(this.index){
-			this.map.bingId = "SMFD_" + this.index.toString();
-			this.map.configPath = "/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/SMFD_" + this.index.toString();
-		}
-		this.currentSoftKeys.init(this.gps);*/
-		
         this.engine_rootMenu.elements = [
-            new SMFD_SoftKeyElement("Fly By<br/>Wire", this.fbwSetPitch.bind(this), null, this.fbwPitchStatus.bind(this)),
+            new SMFD_SoftKeyElement("Fly By<br/>Wire", this.fbwSet.bind(this), null, this.fbwStatus.bind(this)),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
 			
-            //new SMFD_SoftKeyElement("Active&nbsp;NAV", this.gps.computeEvent.bind(this.gps, "SoftKey_CDI"), null, this.navStatus.bind(this)),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
@@ -142,13 +122,12 @@ class SMFD_MainPage extends NavSystemPage {
             new SMFD_SoftKeyElement("Page", this.switchToMenu.bind(this, this.pageMenu))
         ];
         this.fuel_rootMenu.elements = [
-            new SMFD_SoftKeyElement("Fly By<br/>Wire", this.fbwSetPitch.bind(this), null, this.fbwPitchStatus.bind(this)),
+            new SMFD_SoftKeyElement("Fly By<br/>Wire", this.fbwSet.bind(this), null, this.fbwStatus.bind(this)),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
 			
-            //new SMFD_SoftKeyElement("Active&nbsp;NAV", this.gps.computeEvent.bind(this.gps, "SoftKey_CDI"), null, this.navStatus.bind(this)),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
@@ -162,7 +141,6 @@ class SMFD_MainPage extends NavSystemPage {
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
 			
-            //new SMFD_SoftKeyElement("Active&nbsp;NAV", this.gps.computeEvent.bind(this.gps, "SoftKey_CDI"), null, this.navStatus.bind(this)),
             new SMFD_SoftKeyElement("Map Range<br/>In", this.gps.computeEvent.bind(this.gps, "RANGE_DEC")),
             new SMFD_SoftKeyElement("Map Range<br/>Out", this.gps.computeEvent.bind(this.gps, "RANGE_INC")),
             new SMFD_SoftKeyElement(""),
@@ -196,18 +174,19 @@ class SMFD_MainPage extends NavSystemPage {
                 break;
 		}
         this.softKeys = this.rootMenu;
-		//this.softKeys = this.currentSoftKeys.currentMenu;
     }
     reset() {
     }
     switchToMenu(_menu) {
-		//console.log("Index = "+this.index);
-        //console.log(this.map.bingId);
         this.softKeys = _menu;
-		//this.currentSoftKeys.currentMenu;
     }
-	fbwPitchStatus(){
-		var fbwPitchBool = SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_PITCH_STAT", "Boolean");
+	fbwStatus(){
+		var fbwPitchBool = 
+			(
+				SimVar.GetSimVarValue("A:FLY BY WIRE ELAC SWITCH", "Boolean") ||
+				SimVar.GetSimVarValue("A:FLY BY WIRE FAC SWITCH", "Boolean") ||
+				SimVar.GetSimVarValue("A:FLY BY WIRE SEC SWITCH", "Boolean")
+			);
 		if(fbwPitchBool){
 			return "On";
 		}
@@ -215,22 +194,15 @@ class SMFD_MainPage extends NavSystemPage {
 			return "Off";
 		}
 	}
-	fbwSetPitch(){
+	fbwSet(){
         SimVar.SetSimVarValue(
 			"L:XMLVAR_EBD_FBW_PITCH_STAT", 
 			"Boolean", 
 			!SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_PITCH_STAT", "Boolean")
 		);
-		//SimVar.SetSimVarValue("A:USER INPUT ENABLED", "Boolean", !fbwPitchBool);
 		SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
 		SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
 		SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE:2", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE:2", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE:2", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE:3", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE:3", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE:3", "Bool", 1);
 	}
     newPage(_page) {
         switch (_page) {

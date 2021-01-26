@@ -23,6 +23,7 @@
 		
 		<Include ModelBehaviorFile="Evanburnsdev\Debug.xml"/>
 		<Include ModelBehaviorFile="Evanburnsdev\FlyByWire.xml"/>
+		<Include ModelBehaviorFile="Evanburnsdev\MFD.xml"/>
 		<!-- GLASS_COCKPIT ##############################-->
 		<Component ID="NAVSYSTEMS">
 			<DefaultTemplateParameters>
@@ -568,6 +569,9 @@
 		<Component ID="Safety">
 			<UseTemplate Name="ASOBO_SAFETY_Push_WarningCaution_Template"/>
 		</Component>
+		<Component ID="FlyByWire">
+			<UseTemplate Name="EVANBURNSDEV_FlyByWire_Initialize"/>
+		</Component>
 		<Component ID="Debug">
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATOR_DEFL"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_AOA"/>
@@ -575,10 +579,7 @@
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_CN1"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_CN2"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_FBW"/>
-			<!--<Component ID="FlyByWire">
-				<UseTemplate Name="EVANBURNSDEV_FlyByWire"/>
-			</Component>-->
-			<!--<UseTemplate Name="EVANBURNSDEV_DEBUG_FBW_SET"/>-->
+			<UseTemplate Name="EVANBURNSDEV_DEBUG_LIGHTING_TAXI"/>
 			<!--
 			<Component ID="Elev_Wheel">
 				<UseTemplate Name="ASOBO_HANDLING_Wheel_ElevatorTrim_Template">
