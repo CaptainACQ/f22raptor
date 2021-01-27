@@ -276,6 +276,7 @@
 			<FREQUENCY>1</FREQUENCY>
 			<UPDATE_CODE>
 				(A:LIGHT TAXI ON, bool) (&gt;L:XMLVAR_EBD_LIGHT_TAXI_ON)
+				(A:LIGHT TAXI, bool) (&gt;L:XMLVAR_EBD_LIGHT_TAXI)
 			</UPDATE_CODE>
 		</UseTemplate>
 	</Template>

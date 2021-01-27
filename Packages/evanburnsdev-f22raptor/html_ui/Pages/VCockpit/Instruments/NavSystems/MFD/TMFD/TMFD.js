@@ -56,9 +56,6 @@ class TMFD extends NavSystemTouch {
     get templateID() { return "TMFD"; }
     connectedCallback() {
         super.connectedCallback();
-		/*Include.addScript("/JS/debug.js", function () {
-			g_modDebugMgr.AddConsole(null);
-		});*/
         this.pagesContainer = this.getChildById("PagesDisplay");
         this.pageTitle = this.getChildById("PageTitle");
         this.pageGroups = [

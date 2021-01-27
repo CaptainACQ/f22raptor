@@ -15,11 +15,6 @@ class SMFD extends NavSystem {
 	}
     connectedCallback() {
         super.connectedCallback();
-		/*
-		Include.addScript("/JS/debug.js", function () {
-			g_modDebugMgr.AddConsole(null);
-		});
-		*/
 		this.fuelElement = this.getChildById("FuelPage");
         this.EnginesElement = this.getChildById("EnginePage");
 		this.mapElem = this.getChildById("Map");

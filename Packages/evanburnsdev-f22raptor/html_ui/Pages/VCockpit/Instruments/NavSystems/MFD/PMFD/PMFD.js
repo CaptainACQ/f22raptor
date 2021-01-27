@@ -8,9 +8,6 @@ class PMFD extends NavSystem {
     get templateID() { return "PMFD"; }
     connectedCallback() {
         super.connectedCallback();
-		/*Include.addScript("/JS/debug.js", function () {
-			g_modDebugMgr.AddConsole(null);
-		});*/
         this.mainPage = new PMFD_MainPage();
         this.pageGroups = [
             new NavSystemPageGroup("Main", this, [

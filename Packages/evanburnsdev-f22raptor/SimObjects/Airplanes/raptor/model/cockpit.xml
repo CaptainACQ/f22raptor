@@ -573,14 +573,14 @@
 			<UseTemplate Name="EVANBURNSDEV_FlyByWire_Initialize"/>
 		</Component>
 		<Component ID="Debug">
+			<UseTemplate Name="EVANBURNSDEV_DEBUG_LIGHTING_TAXI"/>
+			<!--
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATOR_DEFL"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_AOA"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_TAT"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_CN1"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_CN2"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_FBW"/>
-			<UseTemplate Name="EVANBURNSDEV_DEBUG_LIGHTING_TAXI"/>
-			<!--
 			<Component ID="Elev_Wheel">
 				<UseTemplate Name="ASOBO_HANDLING_Wheel_ElevatorTrim_Template">
 					<ANIM_NAME>lever_trimtab_elevator_key_pct</ANIM_NAME>
