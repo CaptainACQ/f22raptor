@@ -97,7 +97,7 @@ overall better performance.
 Offline AI traffic from displaying.  MSFS Bug Report #90082).  Made SMFD Map more MILSPEC.
 Increased map range to 600nm.
 * 1/24-2  - Added quickview camera definitions.  Lowered HUD Opacity.
-* 1/25 - Cleaned up some code.  Fly-by-Wire now off by default.  AP airspeed bug
-now always displayed on PMFD.  Changes to flight model(Last Commit - Forgot to mention)
+* 1/25 - Cleaned up some code.  Fly-by-Wire now off by default.  AP airspeed bug now always 
+displayed on PMFD.  Changes to flight model(Last Commit - Forgot to mention)
 * 1/27 - CTD Bug Fix.
 * 1/28 - Added Landing Gear lever.  Added brightness control for MFD Buttons/Panels
