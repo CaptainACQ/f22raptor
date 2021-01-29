@@ -198,6 +198,7 @@
 					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
 					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>
 				</UseTemplate>
+				<UseTemplate Name="EVANBURNSDEV_PMFD_Emissive_Template"/>
 				<!-- SMFD_1 -->
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
 					<POTENTIOMETER>51</POTENTIOMETER>
@@ -206,6 +207,10 @@
 					<ANIM_NAME>SMFD_1_Brt_Knob</ANIM_NAME>
 					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
 					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>
+				</UseTemplate>
+				<UseTemplate Name="EVANBURNSDEV_SMFD_Emissive_Template">
+					<POTENTIOMETER_ID>20</POTENTIOMETER_ID>
+					<PANEL_ID>1</PANEL_ID>
 				</UseTemplate>
 				<!-- SMFD_2 -->
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
@@ -216,6 +221,10 @@
 					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
 					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>
 				</UseTemplate>
+				<UseTemplate Name="EVANBURNSDEV_SMFD_Emissive_Template">
+					<POTENTIOMETER_ID>21</POTENTIOMETER_ID>
+					<PANEL_ID>2</PANEL_ID>
+				</UseTemplate>
 				<!-- SMFD_3 -->
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
 					<POTENTIOMETER>53</POTENTIOMETER>
@@ -224,6 +233,10 @@
 					<ANIM_NAME>SMFD_3_Brt_Knob</ANIM_NAME>
 					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
 					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>
+				</UseTemplate>
+				<UseTemplate Name="EVANBURNSDEV_SMFD_Emissive_Template">
+					<POTENTIOMETER_ID>22</POTENTIOMETER_ID>
+					<PANEL_ID>3</PANEL_ID>
 				</UseTemplate>
 				<!-- TMFD_1 -->
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
@@ -234,6 +247,7 @@
 					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
 					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>
 				</UseTemplate>
+				<UseTemplate Name="EVANBURNSDEV_TMFD_Emissive_Template"/>
 				<!-- TMFD_2 -->
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
 					<POTENTIOMETER>55</POTENTIOMETER>
@@ -243,6 +257,11 @@
 					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_DECREASE</ANIMTIP_0>
 					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_PILOT_DISPLAYS_INCREASE</ANIMTIP_1>
 				</UseTemplate>
+				<UseTemplate Name="EVANBURNSDEV_TMFD_Emissive_Template">
+					<POTENTIOMETER_ID>24</POTENTIOMETER_ID>
+					<PANEL_ID>2</PANEL_ID>
+				</UseTemplate>
+				
 				<!-- Panel Brightness -->
 				<UseTemplate Name="ASOBO_LIGHTING_Knob_Panel_Template">
 					<ID>1</ID>
@@ -276,6 +295,14 @@
 					<NODE_ID>Pnl_Txt_Cp_Bottom</NODE_ID> 
 					<POTENTIOMETER>11</POTENTIOMETER>
 				</UseTemplate>
+				<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+					<NODE_ID>Pnl_Txt_Cp_Engines</NODE_ID> 
+					<POTENTIOMETER>11</POTENTIOMETER>
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+					<NODE_ID>Gear_Text</NODE_ID> 
+					<POTENTIOMETER>11</POTENTIOMETER>
+				</UseTemplate>
 			</Component>
 			<Component ID="Lighting_Exterior">
 				<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Taxi_Template">
@@ -305,7 +332,43 @@
 				</UseTemplate>
 			</Component>
 		</Component>
-
+		<Component ID="GEAR">
+			<UseTemplate Name="ASOBO_LANDING_GEAR_Lever_Gear_Template">
+				<ANIM_NAME>Gear_Knob</ANIM_NAME>
+				<PART_ID>Gear_Knob</PART_ID>
+				<NODE_ID>Gear_Knob</NODE_ID>
+			</UseTemplate>
+			<Component ID="FRONT">
+				<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Template">
+					<NODE_ID>Gear_Ind_Hsng_Front_Grn</NODE_ID>
+					<GEAR_ID>0</GEAR_ID>
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Transit_Template">
+					<NODE_ID>Gear_Ind_Hsng_Front_Ylw</NODE_ID>
+					<GEAR_ID>0</GEAR_ID>
+				</UseTemplate>
+			</Component>
+			<Component ID="LEFT">
+				<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Template">
+					<NODE_ID>Gear_Ind_Hsng_Left_Grn</NODE_ID>
+					<GEAR_ID>1</GEAR_ID>
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Transit_Template">
+					<NODE_ID>Gear_Ind_Hsng_Left_Ylw</NODE_ID>
+					<GEAR_ID>1</GEAR_ID>
+				</UseTemplate>
+			</Component>
+			<Component ID="RIGHT">
+				<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Template">
+					<NODE_ID>Gear_Ind_Hsng_Right_Grn</NODE_ID>
+					<GEAR_ID>2</GEAR_ID>
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_LANDING_GEAR_Light_Transit_Template">
+					<NODE_ID>Gear_Ind_Hsng_Right_Ylw</NODE_ID>
+					<GEAR_ID>2</GEAR_ID>
+				</UseTemplate>
+			</Component>
+		</Component>
 		<Component ID="Pedestal_Fwd">
 			<UseTemplate Name="EVANBURNSDEV_THROTTLE_Commanded_N1" />
 			<!--
@@ -573,8 +636,8 @@
 			<UseTemplate Name="EVANBURNSDEV_FlyByWire_Initialize"/>
 		</Component>
 		<Component ID="Debug">
-			<UseTemplate Name="EVANBURNSDEV_DEBUG_LIGHTING_TAXI"/>
 			<!--
+			<UseTemplate Name="EVANBURNSDEV_DEBUG_LIGHTING_TAXI"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATOR_DEFL"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_AOA"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_TAT"/>

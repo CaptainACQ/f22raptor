@@ -209,4 +209,165 @@
 			</Update>
 		</Component>
 	</Template>
+
+	<Template Name="EVANBURNSDEV_20_SoftKeys_Emissive_Template">
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>001</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>002</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>003</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>004</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>005</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>006</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>007</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>008</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>009</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>010</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>011</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>012</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>013</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>014</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>015</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>016</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>017</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>018</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>019</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>020</ID>
+		</UseTemplate>
+	</Template>
+	<Template Name="EVANBURNSDEV_3_SoftKeys_Emissive_Template">
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>001</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>002</ID>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+			<ID>003</ID>
+		</UseTemplate>
+	</Template>
+	<Template Name="EVANBURNSDEV_SoftKeys_Emissive_SubTemplate">
+		<DefaultTemplateParameters>
+			<PANEL_TYPE>PMFD</PANEL_TYPE>
+			<PANEL_ID>1</PANEL_ID>
+			<ID>001</ID>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+			<NODE_ID>#PANEL_TYPE#_#PANEL_ID#_Button_#ID#</NODE_ID> 
+			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
+		</UseTemplate>
+	</Template>
+	
+
+	<Template Name="EVANBURNSDEV_PMFD_Emissive_Template">
+		<DefaultTemplateParameters>
+			<POTENTIOMETER_ID>19</POTENTIOMETER_ID>
+			<EMISSIVE_CODE>0.25</EMISSIVE_CODE>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
+			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
+			<INIT_VALUE>50</INIT_VALUE>
+			<NODE_ID>PMFD_Cnt_Knob</NODE_ID>
+			<ANIM_NAME>PMFD_Cnt_Knob</ANIM_NAME>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_DECREASE</ANIMTIP_0>
+			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_INCREASE</ANIMTIP_1>
+			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+			<NODE_ID>PMFD_Lines</NODE_ID> 
+			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_20_SoftKeys_Emissive_Template">
+			<PANEL_TYPE>PMFD</PANEL_TYPE>
+			<EMISSIVE_CODE>0.125</EMISSIVE_CODE>
+		</UseTemplate>
+	</Template>
+	<Template Name="EVANBURNSDEV_SMFD_Emissive_Template">
+		<DefaultTemplateParameters>
+			<POTENTIOMETER_ID>20</POTENTIOMETER_ID>
+			<PANEL_ID>1</PANEL_ID>
+			<EMISSIVE_CODE>0.25</EMISSIVE_CODE>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
+			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
+			<INIT_VALUE>50</INIT_VALUE>
+			<NODE_ID>SMFD_#PANEL_ID#_Cnt_Knob</NODE_ID>
+			<ANIM_NAME>SMFD_#PANEL_ID#_Cnt_KnobAction</ANIM_NAME>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_DECREASE</ANIMTIP_0>
+			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_INCREASE</ANIMTIP_1>
+			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+			<NODE_ID>SMFD_#PANEL_ID#_Lines</NODE_ID> 
+			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_20_SoftKeys_Emissive_Template">
+			<PANEL_TYPE>SMFD</PANEL_TYPE>
+			<EMISSIVE_CODE>0.125</EMISSIVE_CODE>
+		</UseTemplate>
+	</Template>
+	<Template Name="EVANBURNSDEV_TMFD_Emissive_Template">
+		<DefaultTemplateParameters>
+			<POTENTIOMETER_ID>23</POTENTIOMETER_ID>
+			<PANEL_ID>1</PANEL_ID>
+			<EMISSIVE_CODE>0.25</EMISSIVE_CODE>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
+			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
+			<INIT_VALUE>50</INIT_VALUE>
+			<NODE_ID>TMFD_#PANEL_ID#_Cnt_Knob</NODE_ID>
+			<ANIM_NAME>TMFD_#PANEL_ID#_Cnt_KnobAction</ANIM_NAME>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_DECREASE</ANIMTIP_0>
+			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_INCREASE</ANIMTIP_1>
+			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+			<NODE_ID>TMFD_#PANEL_ID#_Lines</NODE_ID> 
+			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
+		</UseTemplate>
+		<UseTemplate Name="EVANBURNSDEV_3_SoftKeys_Emissive_Template">
+			<PANEL_TYPE>TMFD</PANEL_TYPE>
+			<EMISSIVE_CODE>0.125</EMISSIVE_CODE>
+		</UseTemplate>
+	</Template>
 </ModelBehaviors>
