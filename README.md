@@ -10,6 +10,11 @@ like the real thing.  It is extremely fun to fly though.  High speeds
 close to ground level really taxes my machine, but lowering the graphics
 settings usually fixes any dropped frames or stuttering.
 
+Quality of Life Additions:
+* Two invisible knobs added.
+	* One is directly under the HUD that controls the HUD brightness.
+	* One at top-left of dashboard which controls brightness of all other displays.
+
 Known bugs/limitations:
 * Remember that turbulence becomes a real pain at high speeds.  Per the specs
 for the F-22 listed on Wikipedia and the Lockheed Martin pages, keep speeds
