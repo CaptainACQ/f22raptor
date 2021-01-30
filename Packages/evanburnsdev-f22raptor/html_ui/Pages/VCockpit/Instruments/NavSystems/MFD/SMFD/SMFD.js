@@ -32,7 +32,13 @@ class SMFD extends NavSystem {
         this.parsedUrl = new URL(this.getAttribute("Url").toLowerCase());
         this.index = this.parsedUrl.searchParams.get("index");
 		
-		switch(this.index) {
+		//let menuIndex = "empty"; //EBDDataIO.get("menuIndex" + this.index, "empty");
+		let key = "menuIndex_" + this.index;
+		let menuIndex = EBDDataIO.get(key);
+		//let menuIndex = GetStoredData("menuIndex" + this.index);
+		if(!menuIndex)
+			menuIndex = this.index;
+		switch(menuIndex) {
             case "1":
                 this.EnginesElement.style.display = "none";
                 this.fuelElement.style.display = "none";
@@ -57,6 +63,7 @@ class SMFD extends NavSystem {
             ]),
         ];
 		this.mainPage.index = this.index;
+		this.mainPage.menuIndex = menuIndex;
         this.engines = new SMFD_Engine("Engine", "EnginePage");
 		this.fuel = new SMFD_Fuel("Fuel", "FuelPage");
         this.addIndependentElementContainer(new NavSystemElementContainer("SoftKeys", "SoftKeys", new TwentySoftKeys(SMFD_SoftKeyHtmlElement)));
@@ -90,6 +97,8 @@ class SMFD_MainPage extends NavSystemPage {
         this.EnginesElement = document.getElementById("EnginePage");
         this.map = new SMFD_MapElement();
         this.windData = new MFD_WindData();
+		this.index = null;
+		this.menuIndex = null;
         this.element = new NavSystemElementGroup([
 			this.map,
 			this.windData
@@ -144,9 +153,9 @@ class SMFD_MainPage extends NavSystemPage {
         ];
 		
         this.pageMenu.elements = [
-            new SMFD_SoftKeyElement("Engines", this.newPage.bind(this, 0)),
-            new SMFD_SoftKeyElement("Fuel", this.newPage.bind(this, 1)),
-            new SMFD_SoftKeyElement("Map", this.newPage.bind(this, 2)),
+            new SMFD_SoftKeyElement("Map", this.newPage.bind(this, 1)),
+            new SMFD_SoftKeyElement("Engines", this.newPage.bind(this, 2)),
+            new SMFD_SoftKeyElement("Fuel", this.newPage.bind(this, 3)),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
 			
@@ -156,8 +165,7 @@ class SMFD_MainPage extends NavSystemPage {
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.rootMenu))
         ];
-		
-		switch(this.index) {
+		switch(this.menuIndex) {
             case "1":
 				this.rootMenu = this.map_rootMenu;
                 break;
@@ -200,24 +208,34 @@ class SMFD_MainPage extends NavSystemPage {
 		SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
 	}
     newPage(_page) {
+		//let key = `${SimVar.GetSimVarValue("ATC MODEL", "string")}.${"menuIndex_" + this.index}`;
+		//var success = SetStoredData(key, _page.toString());
+		let key = "menuIndex_" + this.index;
+		let success = EBDDataIO.set(key, _page.toString());
+		if(success == null){
+			console.log("Unable to write data: " + _page.toString() + " To: " + "menuIndex" + this.index);
+		} else {
+			console.log("Wrote Data");
+		}
+			
         switch (_page) {
-            case 0:
+            case 1:
+                this.EnginesElement.style.display = "none";
+                this.fuelElement.style.display = "none";
+                this.mapHtmlElem.style.display = "block";
+				this.rootMenu = this.map_rootMenu;
+                break;
+            case 2:
                 this.EnginesElement.style.display = "block";
 				this.rootMenu = this.engine_rootMenu;
                 this.fuelElement.style.display = "none";
                 this.mapHtmlElem.style.display = "none";
                 break;
-            case 1:
+            case 3:
                 this.EnginesElement.style.display = "none";
                 this.fuelElement.style.display = "block";
 				this.rootMenu = this.fuel_rootMenu;
                 this.mapHtmlElem.style.display = "none";
-                break;
-            case 2:
-                this.EnginesElement.style.display = "none";
-                this.fuelElement.style.display = "none";
-                this.mapHtmlElem.style.display = "block";
-				this.rootMenu = this.map_rootMenu;
                 break;
         }
 		this.softKeys = this.rootMenu;

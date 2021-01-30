@@ -303,7 +303,10 @@
 		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
 			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
-			<INIT_VALUE>50</INIT_VALUE>
+			<INIT_VALUE>
+				(E:Time of Day,enum) 3 == -40 *
+				50 +
+			</INIT_VALUE>
 			<NODE_ID>PMFD_Cnt_Knob</NODE_ID>
 			<ANIM_NAME>PMFD_Cnt_Knob</ANIM_NAME>
 			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_DECREASE</ANIMTIP_0>
@@ -328,7 +331,10 @@
 		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
 			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
-			<INIT_VALUE>50</INIT_VALUE>
+			<INIT_VALUE>
+				(E:Time of Day,enum) 3 == -40 *
+				50 +
+			</INIT_VALUE>
 			<NODE_ID>SMFD_#PANEL_ID#_Cnt_Knob</NODE_ID>
 			<ANIM_NAME>SMFD_#PANEL_ID#_Cnt_KnobAction</ANIM_NAME>
 			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_DECREASE</ANIMTIP_0>
@@ -353,7 +359,10 @@
 		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
 			<POTENTIOMETER>#POTENTIOMETER_ID#</POTENTIOMETER>
-			<INIT_VALUE>50</INIT_VALUE>
+			<INIT_VALUE>
+				(E:Time of Day,enum) 3 == -40 *
+				50 +
+			</INIT_VALUE>
 			<NODE_ID>TMFD_#PANEL_ID#_Cnt_Knob</NODE_ID>
 			<ANIM_NAME>TMFD_#PANEL_ID#_Cnt_KnobAction</ANIM_NAME>
 			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_PANEL_DECREASE</ANIMTIP_0>

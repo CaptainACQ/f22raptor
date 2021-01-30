@@ -101,3 +101,6 @@ Increased map range to 600nm.
 displayed on PMFD.  Changes to flight model(Last Commit - Forgot to mention)
 * 1/27 - CTD Bug Fix.
 * 1/28 - Added Landing Gear lever.  Added brightness control for MFD Buttons/Panels
+* 1/29 - Page settings are now saved between flights.  Panels are dimmer when sim starts at 
+night.  Display knob now controls all screens and screen button brightness.  Added two
+invisible knobs(view README for location and use).

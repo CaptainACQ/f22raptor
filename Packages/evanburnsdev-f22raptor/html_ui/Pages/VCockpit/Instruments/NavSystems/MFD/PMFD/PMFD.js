@@ -110,6 +110,7 @@ class PMFD_MainPage extends NavSystemPage {
         this.syntheticVision = false;
         this.rootMenu = new SoftKeysMenu();
         this.pfdMenu = new SoftKeysMenu();
+        this.simMenu = new SoftKeysMenu();
         this.otherPfdMenu = new SoftKeysMenu();
         this.windMenu = new SoftKeysMenu();
         this.annunciations = new PFD_Annunciations();
@@ -159,8 +160,21 @@ class PMFD_MainPage extends NavSystemPage {
             new PMFD_SoftKeyElement("Active&nbsp;NAV", this.gps.computeEvent.bind(this.gps, "SoftKey_CDI"), null, this.navStatus.bind(this)),
             new PMFD_SoftKeyElement("Traffic Inset", null, this.constElement.bind(this, false)),
             new PMFD_SoftKeyElement(""),
-            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement(""), //new PMFD_SoftKeyElement("Sim Settings", this.switchToMenu.bind(this, this.simMenu)),
             new PMFD_SoftKeyElement("PFD Settings", this.switchToMenu.bind(this, this.pfdMenu))
+        ];
+        this.simMenu.elements = [
+            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement(""),
+			
+            new PMFD_SoftKeyElement("Lights Dim", this.changeBrightness.bind(this, 0.1)),
+            new PMFD_SoftKeyElement("Lights Mid", this.changeBrightness.bind(this, 0.5)),
+            new PMFD_SoftKeyElement("Lights High", this.changeBrightness.bind(this, 1.0)),
+            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.rootMenu))
         ];
         this.pfdMenu.elements = [
             new PMFD_SoftKeyElement(""),
@@ -248,6 +262,13 @@ class PMFD_MainPage extends NavSystemPage {
                 break;
         }
     }
+	changeBrightness(_brightness){
+        SimVar.SetSimVarValue("A:LIGHT POTENTIOMETER:50", "Percent over 100", _brightness);
+		//Coherent.call("K:2:LIGHT_POTENTIOMETER_SET", 50, _brightness);
+		//Coherent.call("setValue_Number", name, unit, value, dataSource);
+		//Coherent.call("setValue_Number", "A:LIGHT POTENTIOMETER:50", "percent over 100", _brightness);
+		//console.log(SimVar.GetSimVarValue("A:LIGHT POTENTIOMETER:50", "number"));
+	}
 }
 class PMFD_MainElement extends NavSystemElement {
     init(root) {
