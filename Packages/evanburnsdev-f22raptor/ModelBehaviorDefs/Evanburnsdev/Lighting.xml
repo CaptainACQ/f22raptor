@@ -1,0 +1,202 @@
+<ModelBehaviors>	
+	<Template Name="EVANBURNSDEV_LIGHTING_Knob_Template">
+		<DefaultTemplateParameters>
+			<Condition Check="ID">
+				<True>
+					<NODE_ID>LIGHTING_Knob_Avionics_#ID#</NODE_ID>
+					<ANIM_NAME>LIGHTING_Knob_Avionics_#ID#</ANIM_NAME>
+				</True>
+				<False>
+					<NODE_ID>LIGHTING_Knob_Avionics</NODE_ID>
+					<ANIM_NAME>LIGHTING_Knob_Avionics</ANIM_NAME>
+				</False>
+			</Condition>
+			<POTENTIOMETER>9</POTENTIOMETER>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="EVANBURNSDEV_LIGHTING_Knob_SubTemplate">
+		</UseTemplate>
+	</Template>
+	
+	<Template Name="EVANBURNSDEV_LIGHTING_Knob_SubTemplate">	
+		<DefaultTemplateParameters>
+			<CLOCKWISE_CODE/>
+			<ANTICLOCKWISE_CODE/>
+			<MAX_VALUE>100</MAX_VALUE>
+			<Condition Valid="PREVENT_OFF">
+				<True>
+					<MIN_VALUE>3</MIN_VALUE>
+				</True>
+				<False>
+					<MIN_VALUE>0</MIN_VALUE>
+				</False>
+			</Condition>
+			<KNOB_TURN_SPEED>10</KNOB_TURN_SPEED>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="EVANBURNSDEV_LIGHTING_Knob_SubSubTemplate">
+			<CLOCKWISE_CODE>
+				#CLOCKWISE_CODE#
+				(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) #KNOB_TURN_SPEED# + #MAX_VALUE# min (&gt;L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 
+				(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 10 / 2 pow #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
+				(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 10 / 2 pow (&gt;L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#_VALUE) 
+			</CLOCKWISE_CODE>
+			<ANTICLOCKWISE_CODE>
+				#ANTICLOCKWISE_CODE#
+				(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) #KNOB_TURN_SPEED# - #MIN_VALUE# max (&gt;L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 
+				(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 10 / 2 pow #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
+				(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 10 / 2 pow (&gt;L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#_VALUE) 
+			</ANTICLOCKWISE_CODE>
+			<Condition Check="SIMVAR_INDEX">
+				<True>
+					<LIGHT_SIMVAR>#LIGHT_SIMVAR#:#SIMVAR_INDEX#</LIGHT_SIMVAR>
+				</True>
+				<False>
+					<SIMVAR_INDEX></SIMVAR_INDEX>
+				</False>
+			</Condition>
+		</UseTemplate>
+	</Template>
+	<Template Name="EVANBURNSDEV_LIGHTING_Knob_SubSubTemplate">
+		<DefaultTemplateParameters>
+			<ANIMREF_ID>0</ANIMREF_ID>
+			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_GENERIC_DECREASE</ANIMTIP_0>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTING_KNOB_LIGHT_GENERIC_INCREASE</ANIMTIP_1> 
+			<WWISE_EVENT>lighting_knob_generic</WWISE_EVENT>
+			<INIT_POTENTIOMETER_TO_SIMVAR>True</INIT_POTENTIOMETER_TO_SIMVAR>
+			<COUNT Process="Int">100 #KNOB_TURN_SPEED# /</COUNT>
+			<THRESHOLD_INPUT>0.00025</THRESHOLD_INPUT>
+			<THRESHOLD_MOUSE>0.005</THRESHOLD_MOUSE>
+			<Condition Check="LIGHT_SIMVAR">
+				<CUSTOM_CONDITION_OFF></CUSTOM_CONDITION_OFF>
+				<INIT_VALUE>0</INIT_VALUE>
+				<Condition Check="SIMVAR_INDEX">
+					<True>
+						<LIGHT_SIMVAR>#LIGHT_SIMVAR#:#SIMVAR_INDEX#</LIGHT_SIMVAR>
+						<INC_COUNTER/>
+						<DEC_COUNTER/>
+						<STORE_COUNTER/>
+						<INIT_COUNTER/>
+						<Condition Valid="USE_INTEGRATED_POWER_SETTING">
+							<True>
+								<CHECK_COUNTER>(A:#LIGHT_SIMVAR_POWER_SETTING#:#SIMVAR_INDEX#, Percent) 0 == and</CHECK_COUNTER>
+							</True>
+							<False>
+								<CHECK_COUNTER>(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, Percent) 0 == and</CHECK_COUNTER>
+							</False>
+						</Condition>
+					</True>
+					<False>
+						<SIMVAR_INDEX></SIMVAR_INDEX>
+						<INC_COUNTER>
+							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, Percent) 0 == if{
+								(L:XMLVAR_#LIGHT_EVENTID#_ON_Counter) 1 + (&gt;L:XMLVAR_#LIGHT_EVENTID#_ON_Counter)
+							}
+						</INC_COUNTER>
+						<STORE_COUNTER>
+							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, Percent) (&gt;O:XMLVAR_Potentiometer_PreviousFrameValue)
+						</STORE_COUNTER>
+						<DEC_COUNTER>
+							(O:XMLVAR_Potentiometer_PreviousFrameValue) 0 &gt;
+							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, Percent) 0 == and if{
+								(L:XMLVAR_#LIGHT_EVENTID#_ON_Counter) 1 - (&gt;L:XMLVAR_#LIGHT_EVENTID#_ON_Counter)
+							}
+						</DEC_COUNTER>
+						<INIT_COUNTER>
+							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, Percent) 0 &gt; if{
+								(L:XMLVAR_#LIGHT_EVENTID#_ON_Counter) 1 + (&gt;L:XMLVAR_#LIGHT_EVENTID#_ON_Counter)
+							}
+						</INIT_COUNTER>
+						<CHECK_COUNTER>
+							(L:XMLVAR_#LIGHT_EVENTID#_ON_Counter) 0 == and 
+						</CHECK_COUNTER>
+					</False>
+				</Condition>
+			</Condition>
+		</DefaultTemplateParameters>
+		<Component ID="#NODE_ID#" Node="#NODE_ID#">
+			<DefaultTemplateParameters>
+				<Condition Check="LIGHT_SIMVAR">
+					<Condition Check="NO_AUTHORITY_OVER_SWITCH_STATE">
+						<True>
+							<TURN_ON_LIGHT_CODE></TURN_ON_LIGHT_CODE>
+							<TURN_OFF_LIGHT_CODE></TURN_OFF_LIGHT_CODE>
+						</True>
+						<False>
+							<TURN_ON_LIGHT_CODE>
+								(A:#LIGHT_SIMVAR#, Bool) ! if{ #SIMVAR_INDEX# 1 (&gt;K:2:#LIGHT_EVENTID#) }
+							</TURN_ON_LIGHT_CODE>
+							<TURN_OFF_LIGHT_CODE>
+								(A:#LIGHT_SIMVAR#, Bool) 
+								#CHECK_COUNTER#
+								#CUSTOM_CONDITION_OFF# 
+								if{ #SIMVAR_INDEX# 0 (&gt;K:2:#LIGHT_EVENTID#) }
+							</TURN_OFF_LIGHT_CODE>
+						</False>
+					</Condition>
+					<Condition Valid="USE_INTEGRATED_POWER_SETTING">
+						<True>
+							<SET_POTENTIOMETER_VALUE>#SIMVAR_INDEX# (&gt;K:2:#LIGHT_EVENTID_SET_POWER_SETTING#)</SET_POTENTIOMETER_VALUE>
+						</True>
+						<False>
+							<SET_POTENTIOMETER_VALUE>#POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)</SET_POTENTIOMETER_VALUE>
+						</False>
+					</Condition>
+				</Condition>
+			</DefaultTemplateParameters>
+			<OverrideTemplateParameters>
+				<Condition Valid="USE_INTEGRATED_POWER_SETTING">
+					<POTENTIOMETER_MATCH_SIMVAR>False</POTENTIOMETER_MATCH_SIMVAR>
+				</Condition>
+			</OverrideTemplateParameters>
+			<Condition Check="INIT_VALUE">
+				<Update Once="True">
+					#INIT_VALUE# (&gt;L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 
+					(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 10 / 2 pow #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
+					(L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#) 10 / 2 pow (&gt;L:XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#_VALUE) 
+				</Update>
+			</Condition>
+			<UseTemplate Name="EVANBURNSDEV_GT_Knob_Finite_Simvar">
+				<ANIM_SIMVAR>XMLVAR_EBD_POTENTIOMETER_#POTENTIOMETER#</ANIM_SIMVAR>
+				<ANIM_SIMVAR_UNITS>Percent</ANIM_SIMVAR_UNITS>
+			</UseTemplate>
+		</Component>
+	</Template>
+	
+	<Template Name = "EVANBURNSDEV_GT_Knob_Finite_Simvar">
+		<DefaultTemplateParameters>
+			<ANIM_SIMVAR_UNITS>percent</ANIM_SIMVAR_UNITS>
+			<ANIM_SIMVAR_MIN>0</ANIM_SIMVAR_MIN>
+			<ANIM_SIMVAR_MAX>100</ANIM_SIMVAR_MAX>
+			<EXTRA_INTERACTION/>
+			<ANIMREF_ID>0</ANIMREF_ID>
+			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+			<ANIMTIP_0></ANIMTIP_0>
+			<ANIMTIP_1></ANIMTIP_1>	
+			<ANIM_LAG>100</ANIM_LAG>
+			<ANIM_WRAP>True</ANIM_WRAP>
+			<!-- Should not be overriden except from generic template -->
+		</DefaultTemplateParameters>
+
+		<UseTemplate Name = "ASOBO_GT_Anim_Code">
+			<ANIM_CODE>
+				(L:#ANIM_SIMVAR#) #ANIM_SIMVAR_MIN# - #ANIM_SIMVAR_MAX# #ANIM_SIMVAR_MIN# - / 100 * 
+			</ANIM_CODE>
+		</UseTemplate>
+		<!-- <UseTemplate Name = "ASOBO_GT_AnimTriggers_SoundEvents_Same"/> -->
+		<UseTemplate Name = "ASOBO_GT_Interaction_WheelAndContinuousLeft#EXTRA_INTERACTION#">
+			<CLOCKWISE_CODE>
+				#CLOCKWISE_CODE#
+			</CLOCKWISE_CODE>
+			<ANTICLOCKWISE_CODE>
+				#ANTICLOCKWISE_CODE#
+			</ANTICLOCKWISE_CODE>
+		</UseTemplate>
+
+		<Condition Valid="WWISE_EVENT">
+			<UseTemplate Name = "ASOBO_GT_AnimTriggers_SoundEvents_Same">
+			</UseTemplate>
+		</Condition>
+	</Template>
+</ModelBehaviors>

@@ -55,6 +55,17 @@ class SMFD extends NavSystem {
                 this.mapElem.style.display = "none";
                 break;
 		}
+		
+		// Set FBW with saved state only on index 1 so it's done only once
+		if(this.index == 1){
+			let fbwState = EBDDataIO.get("fbw");
+			console.log("FBW: " + fbwState);
+			if(fbwState != null && fbwState == "true"){
+				SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
+				SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
+				SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
+			}
+		}
 				
         this.mainPage = new SMFD_MainPage();
         this.pageGroups = [
@@ -109,6 +120,7 @@ class SMFD_MainPage extends NavSystemPage {
 	}
     init() {
         super.init();
+		
 		this.mapHtmlElem = this.gps.getChildById("Map");
 		this.fuelElement = this.gps.getChildById("FuelPage");
 		
@@ -151,6 +163,17 @@ class SMFD_MainPage extends NavSystemPage {
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement("Page", this.switchToMenu.bind(this, this.pageMenu))
         ];
+		switch(this.menuIndex) {
+            case "1":
+				this.rootMenu = this.map_rootMenu;
+                break;
+            case "2":
+				this.rootMenu = this.engine_rootMenu;
+                break;
+            case "3":
+				this.rootMenu = this.fuel_rootMenu;
+                break;
+		}
 		
         this.pageMenu.elements = [
             new SMFD_SoftKeyElement("Map", this.newPage.bind(this, 1)),
@@ -163,9 +186,19 @@ class SMFD_MainPage extends NavSystemPage {
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
-            new SMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.rootMenu))
+            new SMFD_SoftKeyElement("Back", this.backToRootMenu.bind(this))
         ];
-		switch(this.menuIndex) {
+        this.softKeys = this.rootMenu;
+    }
+    reset() {
+    }
+    switchToMenu(_menu) {
+        this.softKeys = _menu;
+    }
+	backToRootMenu(){
+		let key = "menuIndex_" + this.index;
+		let menuIndex = EBDDataIO.get(key);
+		switch (menuIndex) {
             case "1":
 				this.rootMenu = this.map_rootMenu;
                 break;
@@ -176,13 +209,8 @@ class SMFD_MainPage extends NavSystemPage {
 				this.rootMenu = this.fuel_rootMenu;
                 break;
 		}
-        this.softKeys = this.rootMenu;
-    }
-    reset() {
-    }
-    switchToMenu(_menu) {
-        this.softKeys = _menu;
-    }
+		this.softKeys = this.rootMenu;
+	}
 	fbwStatus(){
 		var fbwPitchBool = 
 			(
@@ -198,10 +226,22 @@ class SMFD_MainPage extends NavSystemPage {
 		}
 	}
 	fbwSet(){
+		let newFbwValue = 
+			!(
+				SimVar.GetSimVarValue("A:FLY BY WIRE ELAC SWITCH", "Boolean") ||
+				SimVar.GetSimVarValue("A:FLY BY WIRE FAC SWITCH", "Boolean") ||
+				SimVar.GetSimVarValue("A:FLY BY WIRE SEC SWITCH", "Boolean")
+			);
+		let success = EBDDataIO.set("fbw", newFbwValue.toString());
+		if(success == null){
+			console.log("Unable to write data: " + newFbwValue.toString() + " To: " + "fbw");
+		} else {
+			console.log("Wrote Data: " + newFbwValue.toString() + " To: " + "fbw");
+		}
         SimVar.SetSimVarValue(
 			"L:XMLVAR_EBD_FBW_PITCH_STAT", 
 			"Boolean", 
-			!SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_PITCH_STAT", "Boolean")
+			newFbwValue
 		);
 		SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
 		SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);

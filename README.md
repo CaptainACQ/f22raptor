@@ -16,6 +16,10 @@ Quality of Life Additions:
 	* One at top-left of dashboard which controls brightness of all other displays.
 
 Known bugs/limitations:
+* Panel lights don't initialize to the on position when starting sim during day. This
+causes you to have to cycle the knob to off then back up to get panel lights to function
+properly(if the sim was started during the day).
+
 * Remember that turbulence becomes a real pain at high speeds.  Per the specs
 for the F-22 listed on Wikipedia and the Lockheed Martin pages, keep speeds
 within these guidelines for the best performance:
@@ -54,10 +58,6 @@ to be added for gear bay doors.
 * Fuel system needs worked into MFD's and needs to be easier to understand.
 
 * Fuel burn way too low. (Enjoying the range so fixing it is on backburner for now)
-
-* Taxi light toggle works but the programmatic state seems wrong somehow. That is to 
-say that SimConnect variable LIGHT TAXI ON is not working, but the event 
-TOGGLE_TAXI_LIGHTS works to toggle the actual lights properly. [Game Bug]
 
 Fixed:
 * Autopilot PID values need readjusted for Pitch and Roll.  Pitch shakes the
@@ -109,3 +109,8 @@ displayed on PMFD.  Changes to flight model(Last Commit - Forgot to mention)
 * 1/29 - Page settings are now saved between flights.  Panels are dimmer when sim starts at 
 night.  Display knob now controls all screens and screen button brightness.  Added two
 invisible knobs(view README for location and use).
+* 1/30 - Fly-By-Wire settings save between flights.  Fixed bug where pressing back button
+on MFD's locked up the screen.  Wrote custom potentiometer to handle exponential functions 
+and handle values less than 1%(HUD now gets MUCH dimmer).  Moved HUD from default AS3000
+template to custom screen templates used by the MFD's(should be small improvement to 
+performance/framerate).
