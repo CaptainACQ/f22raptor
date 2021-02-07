@@ -327,4 +327,12 @@
 			</UseTemplate>
 		</Component>
 	</Template>
+	<Template Name="EVANBURNSDEV_DEBUG_ELEVATORS">
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>
+				(A:ELEVATOR POSITION, Position) (&gt;L:XMLVAR_EBD_DEBUG_ELEVATORS)
+			</UPDATE_CODE>
+		</UseTemplate>
+	</Template>
 </ModelBehaviors>

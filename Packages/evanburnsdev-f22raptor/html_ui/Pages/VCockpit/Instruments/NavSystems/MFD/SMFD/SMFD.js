@@ -61,9 +61,10 @@ class SMFD extends NavSystem {
 			let fbwState = EBDDataIO.get("fbw");
 			console.log("FBW: " + fbwState);
 			if(fbwState != null && fbwState == "true"){
-				SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
-				SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
-				SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
+				//SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
+				//SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
+				//SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
+				SimVar.SetSimVarValue("L:XMLVAR_EBD_FBW_ENABLE", "Bool", 1);
 			}
 		}
 				
@@ -212,13 +213,13 @@ class SMFD_MainPage extends NavSystemPage {
 		this.softKeys = this.rootMenu;
 	}
 	fbwStatus(){
-		var fbwPitchBool = 
-			(
+		var fbwBool = SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_ENABLE", "Boolean");
+			/*(
 				SimVar.GetSimVarValue("A:FLY BY WIRE ELAC SWITCH", "Boolean") ||
 				SimVar.GetSimVarValue("A:FLY BY WIRE FAC SWITCH", "Boolean") ||
 				SimVar.GetSimVarValue("A:FLY BY WIRE SEC SWITCH", "Boolean")
-			);
-		if(fbwPitchBool){
+			);*/
+		if(fbwBool){
 			return "On";
 		}
 		else {
@@ -226,12 +227,12 @@ class SMFD_MainPage extends NavSystemPage {
 		}
 	}
 	fbwSet(){
-		let newFbwValue = 
-			!(
+		let newFbwValue = !SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_ENABLE", "Boolean");
+			/*!(
 				SimVar.GetSimVarValue("A:FLY BY WIRE ELAC SWITCH", "Boolean") ||
 				SimVar.GetSimVarValue("A:FLY BY WIRE FAC SWITCH", "Boolean") ||
 				SimVar.GetSimVarValue("A:FLY BY WIRE SEC SWITCH", "Boolean")
-			);
+			);*/
 		let success = EBDDataIO.set("fbw", newFbwValue.toString());
 		if(success == null){
 			console.log("Unable to write data: " + newFbwValue.toString() + " To: " + "fbw");
@@ -239,13 +240,13 @@ class SMFD_MainPage extends NavSystemPage {
 			console.log("Wrote Data: " + newFbwValue.toString() + " To: " + "fbw");
 		}
         SimVar.SetSimVarValue(
-			"L:XMLVAR_EBD_FBW_PITCH_STAT", 
+			"L:XMLVAR_EBD_FBW_ENABLE", 
 			"Boolean", 
 			newFbwValue
 		);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
-		SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
+		//SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
+		//SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
+		//SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
 	}
     newPage(_page) {
 		//let key = `${SimVar.GetSimVarValue("ATC MODEL", "string")}.${"menuIndex_" + this.index}`;

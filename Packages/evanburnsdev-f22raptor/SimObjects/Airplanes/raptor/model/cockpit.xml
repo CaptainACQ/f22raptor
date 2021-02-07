@@ -699,9 +699,35 @@
 			<UseTemplate Name="ASOBO_SAFETY_Push_WarningCaution_Template"/>
 		</Component>
 		<Component ID="FlyByWire">
-			<UseTemplate Name="EVANBURNSDEV_FlyByWire_Initialize"/>
+			<UseTemplate Name="EVANBURNSDEV_FlyByWire_Initialize">
+				<REQ_PITCH_RATE>60</REQ_PITCH_RATE>
+				<PITCH_P>0.002</PITCH_P>
+				<PITCH_I>0.00002</PITCH_I>
+				<!--<PITCH_I>0.000000000003</PITCH_I>-->
+				<PITCH_D>0.05</PITCH_D>
+				<PITCH_O_MAX>0.20</PITCH_O_MAX>
+				
+				<REQ_ETRIM_RATE>20</REQ_ETRIM_RATE>
+				<ETRIM_P>0.0005</ETRIM_P>
+				<ETRIM_I>0.00002</ETRIM_I>
+				<ETRIM_D>0.1</ETRIM_D>
+				<ETRIM_O_MAX>0.13</ETRIM_O_MAX>
+
+				<REQ_ROLL_RATE>120</REQ_ROLL_RATE>
+				<ROLL_O_MAX>1</ROLL_O_MAX>
+				<ROLL_P>0.0125</ROLL_P>
+				<ROLL_I>0.000026666667</ROLL_I>
+				<ROLL_D>0.3</ROLL_D>
+
+				<!-- Yaw PIDs(Rudder) -->
+				<YAW_O_MAX>1</YAW_O_MAX>
+				<REQ_YAW_RATE>60</REQ_YAW_RATE>
+				<YAW_P>0.0075</YAW_P>
+				<YAW_D>0.036666666667</YAW_D>
+			</UseTemplate>
 		</Component>
 		<Component ID="Debug">
+			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATORS"/>
 			<!--
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_LIGHTING_TAXI"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATOR_DEFL"/>

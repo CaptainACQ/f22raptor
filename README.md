@@ -16,6 +16,9 @@ Quality of Life Additions:
 	* One at top-left of dashboard which controls brightness of all other displays.
 
 Known bugs/limitations:
+* Fly By Wire doesn't automatically disable on approach.  Make sure you disable it
+before landing.
+
 * Panel lights don't initialize to the on position when starting sim during day. This
 causes you to have to cycle the knob to off then back up to get panel lights to function
 properly(if the sim was started during the day).
@@ -47,7 +50,6 @@ it for a more enjoyable experience.  [Works but interface (TMFD) is ugly]
 balloons.  Creases need to be added to the underside of the wings.  Creases need
 to be added for gear bay doors.
 
-* Fly-By-Wire not very responsive, doesn't hold altitude correctly.
 
 * Autothrottle not working as expected. 
 
@@ -83,6 +85,8 @@ be MSFS related as I've tried all different combinations of settings and can't
 keep it from loosing control.  I have it set to a lower roll rate to keep it 
 manageable.
 
+* Fly-By-Wire not very responsive, doesn't hold altitude correctly.
+
 Changes:
 * 12/28 - Further increased pitch and roll stability.
 * 12/30 - Added HUD Functionality.
@@ -114,3 +118,4 @@ on MFD's locked up the screen.  Wrote custom potentiometer to handle exponential
 and handle values less than 1%(HUD now gets MUCH dimmer).  Moved HUD from default AS3000
 template to custom screen templates used by the MFD's(should be small improvement to 
 performance/framerate).
+* 2/6 - Complete Fly-By-Wire rewrite.
