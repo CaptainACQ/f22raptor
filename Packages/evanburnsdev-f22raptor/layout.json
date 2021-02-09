@@ -3,7 +3,12 @@
     {
       "path": "en-US.locPak",
       "size": 264,
-      "date": 132571472785638113
+      "date": 132573126950345241
+    },
+    {
+      "path": "fbw/WASM_fbw.conf",
+      "size": 1483,
+      "date": 132573096230911485
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.css",
@@ -167,8 +172,8 @@
     },
     {
       "path": "ModelBehaviorDefs/Evanburnsdev/FlyByWire.xml",
-      "size": 2505,
-      "date": 132571150637808584
+      "size": 2977,
+      "date": 132572207016349524
     },
     {
       "path": "ModelBehaviorDefs/Evanburnsdev/Lighting.xml",
@@ -222,8 +227,8 @@
     },
     {
       "path": "SimObjects/Airplanes/raptor/Cruise.flt",
-      "size": 3667,
-      "date": 132559950000698588
+      "size": 3666,
+      "date": 132573111683463767
     },
     {
       "path": "SimObjects/Airplanes/raptor/engines.cfg",
@@ -253,27 +258,27 @@
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.bin",
       "size": 2836542,
-      "date": 132571472769973842
+      "date": 132573126935316835
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.gltf",
       "size": 261411,
-      "date": 132571472773737954
+      "date": 132573126938540565
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.xml",
-      "size": 32424,
-      "date": 132571429234075072
+      "size": 32674,
+      "date": 132572295022560181
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.bin",
       "size": 5019794,
-      "date": 132571472757585592
+      "date": 132573126915705579
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.gltf",
       "size": 174649,
-      "date": 132571472761679752
+      "date": 132573126919353449
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.xml",
@@ -297,8 +302,8 @@
     },
     {
       "path": "SimObjects/Airplanes/raptor/panel/WASM_fbw.wasm",
-      "size": 703865,
-      "date": 132571445738694831
+      "size": 802869,
+      "date": 132573109180799531
     },
     {
       "path": "SimObjects/Airplanes/raptor/runway.FLT",
@@ -328,7 +333,7 @@
     {
       "path": "SimObjects/Airplanes/raptor/systems.cfg",
       "size": 19740,
-      "date": 132570555273581583
+      "date": 132572226389389237
     },
     {
       "path": "SimObjects/Airplanes/raptor/taxi.flt",

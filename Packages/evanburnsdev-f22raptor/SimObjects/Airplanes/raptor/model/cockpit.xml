@@ -707,6 +707,13 @@
 				<PITCH_D>0.05</PITCH_D>
 				<PITCH_O_MAX>0.20</PITCH_O_MAX>
 				
+				<!-- G Force PIDs(Elevators) -->
+				<REQ_G_FORCE>10</REQ_G_FORCE>
+				<G_FORCE_P>0.00025</G_FORCE_P>
+				<G_FORCE_I>0.000002</G_FORCE_I>
+				<G_FORCE_D>0.005</G_FORCE_D>
+				<G_FORCE_O_MAX>0.15</G_FORCE_O_MAX>
+				
 				<REQ_ETRIM_RATE>20</REQ_ETRIM_RATE>
 				<ETRIM_P>0.0005</ETRIM_P>
 				<ETRIM_I>0.00002</ETRIM_I>
@@ -720,10 +727,11 @@
 				<ROLL_D>0.3</ROLL_D>
 
 				<!-- Yaw PIDs(Rudder) -->
-				<YAW_O_MAX>1</YAW_O_MAX>
-				<REQ_YAW_RATE>60</REQ_YAW_RATE>
-				<YAW_P>0.0075</YAW_P>
-				<YAW_D>0.036666666667</YAW_D>
+				<!--<YAW_O_MAX>1</YAW_O_MAX>
+				<REQ_YAW_RATE>0</REQ_YAW_RATE>
+				<YAW_P>0.0015</YAW_P>
+				<YAW_I>0.00015</YAW_I>
+				<YAW_D>0.6</YAW_D>-->
 			</UseTemplate>
 		</Component>
 		<Component ID="Debug">

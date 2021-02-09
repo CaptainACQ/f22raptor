@@ -1,7 +1,7 @@
 [SimVars.0]
 FlapsDegree=0000.00
 Pitch=3.0
-ZVelBodyAxis=1900
+ZVelBodyAxis=300
 SimOnGround=False
 
 [Avionics.0]

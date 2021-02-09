@@ -4,12 +4,19 @@
 	
 	<Template Name="EVANBURNSDEV_FlyByWire_Initialize">
 		<DefaultTemplateParameters>
-			<!-- Pitch PIDs(Elevators) -->
+			<!-- Pitch Rate PIDs(Elevators) -->
 			<REQ_PITCH_RATE>40</REQ_PITCH_RATE>
 			<PITCH_P>0</PITCH_P>
 			<PITCH_I>0</PITCH_I>
 			<PITCH_D>0</PITCH_D>
 			<PITCH_O_MAX>1</PITCH_O_MAX>
+			
+			<!-- G Force PIDs(Elevators) -->
+			<REQ_G_FORCE>12</REQ_G_FORCE>
+			<G_FORCE_P>0</G_FORCE_P>
+			<G_FORCE_I>0</G_FORCE_I>
+			<G_FORCE_D>0</G_FORCE_D>
+			<G_FORCE_O_MAX>1</G_FORCE_O_MAX>
 
 			<!-- Elevator Trim PIDs -->
 			<REQ_ETRIM_RATE>0</REQ_ETRIM_RATE>
@@ -40,6 +47,11 @@
 				#PITCH_I# (&gt;L:XMLVAR_EBD_FBW_PITCH_I)
 				#PITCH_D# (&gt;L:XMLVAR_EBD_FBW_PITCH_D)
 				#PITCH_O_MAX# (&gt;L:XMLVAR_EBD_FBW_PITCH_OUTPUT_MAX)
+				#REQ_G_FORCE# (&gt;L:XMLVAR_EBD_FBW_REQ_G_FORCE)
+				#G_FORCE_P# (&gt;L:XMLVAR_EBD_FBW_G_FORCE_P)
+				#G_FORCE_I# (&gt;L:XMLVAR_EBD_FBW_G_FORCE_I)
+				#G_FORCE_D# (&gt;L:XMLVAR_EBD_FBW_G_FORCE_D)
+				#G_FORCE_O_MAX# (&gt;L:XMLVAR_EBD_FBW_G_FORCE_OUTPUT_MAX)
 				#REQ_ETRIM_RATE# (&gt;L:XMLVAR_EBD_FBW_REQ_ETRIM_RATE)
 				#ETRIM_P# (&gt;L:XMLVAR_EBD_FBW_ETRIM_P)
 				#ETRIM_I# (&gt;L:XMLVAR_EBD_FBW_ETRIM_I)

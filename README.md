@@ -119,3 +119,7 @@ and handle values less than 1%(HUD now gets MUCH dimmer).  Moved HUD from defaul
 template to custom screen templates used by the MFD's(should be small improvement to 
 performance/framerate).
 * 2/6 - Complete Fly-By-Wire rewrite.
+* 2/6 - Added G-Force pitch PID that scales in between 300 and 400 knots.  FBW now
+automatically disables below 100 knots.  Removed yaw from FBW and went back to standard
+yaw damper.  Landings with FBW are now possible.
+* 2/8 - Major improvements to Fly-By-Wire pitch control.
