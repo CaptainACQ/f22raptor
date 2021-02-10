@@ -123,3 +123,4 @@ performance/framerate).
 automatically disables below 100 knots.  Removed yaw from FBW and went back to standard
 yaw damper.  Landings with FBW are now possible.
 * 2/8 - Major improvements to Fly-By-Wire pitch control.
+* 2/9 - More Fly-By-Wire changes.  Added Yaw Damping
