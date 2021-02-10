@@ -16,9 +16,6 @@ Quality of Life Additions:
 	* One at top-left of dashboard which controls brightness of all other displays.
 
 Known bugs/limitations:
-* Fly By Wire doesn't automatically disable on approach.  Make sure you disable it
-before landing.
-
 * Panel lights don't initialize to the on position when starting sim during day. This
 causes you to have to cycle the knob to off then back up to get panel lights to function
 properly(if the sim was started during the day).
@@ -62,6 +59,9 @@ to be added for gear bay doors.
 * Fuel burn way too low. (Enjoying the range so fixing it is on backburner for now)
 
 Fixed:
+* Fly By Wire doesn't automatically disable on approach.  Make sure you disable it
+before landing.
+
 * Autopilot PID values need readjusted for Pitch and Roll.  Pitch shakes the
 aircraft like crazy when above Mach 1.2 below FL300 and above Mach 1.8 above
 FL300.  Roll oscillates above FL450.  Will be an easy fix, but time-consuming.
@@ -124,3 +124,4 @@ automatically disables below 100 knots.  Removed yaw from FBW and went back to s
 yaw damper.  Landings with FBW are now possible.
 * 2/8 - Major improvements to Fly-By-Wire pitch control.
 * 2/9 - More Fly-By-Wire changes.  Added Yaw Damping
+* 2/9 - FBW PID Adjustments, Roll input now a curve instead of linear.
