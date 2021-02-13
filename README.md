@@ -125,3 +125,4 @@ yaw damper.  Landings with FBW are now possible.
 * 2/8 - Major improvements to Fly-By-Wire pitch control.
 * 2/9 - More Fly-By-Wire changes.  Added Yaw Damping
 * 2/9 - FBW PID Adjustments, Roll input now a curve instead of linear.
+* 2/13 - Improved MFD Performance(Frame rate increase).  Multiple HUD Improvements.

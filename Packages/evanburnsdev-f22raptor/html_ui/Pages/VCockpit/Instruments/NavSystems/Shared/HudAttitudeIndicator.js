@@ -1,7 +1,8 @@
 class HudAttitudeIndicator extends HTMLElement {
     constructor() {
         super();
-        this.bankSizeRatio = -24;
+        //this.bankSizeRatio = -24;
+        this.bankSizeRatio = -20;
         this.backgroundVisible = true;
         this.flightDirectorActive = false;
         this.flightDirectorPitch = 0;
@@ -16,6 +17,7 @@ class HudAttitudeIndicator extends HTMLElement {
             "pitch",
             "bank",
             "slip_skid",
+            "aoa",
             "background",
             "flight_director-active",
             "flight_director-pitch",
@@ -200,64 +202,126 @@ class HudAttitudeIndicator extends HTMLElement {
         this.buildGraduations();
         this.flightDirector = document.createElementNS(Avionics.SVG.NS, "g");
         attitude_pitch_container.appendChild(this.flightDirector);
-        let triangleOuterLeft = document.createElementNS(Avionics.SVG.NS, "path");
-        triangleOuterLeft.setAttribute("d", "M-70 15 l25 0 L0 0 Z");
-        triangleOuterLeft.setAttribute("fill", "#d12bc7");
-        this.flightDirector.appendChild(triangleOuterLeft);
-        let triangleOuterRight = document.createElementNS(Avionics.SVG.NS, "path");
-        triangleOuterRight.setAttribute("d", "M70 15 l-25 0 L0 0 Z");
-        triangleOuterRight.setAttribute("fill", "#d12bc7");
-        this.flightDirector.appendChild(triangleOuterRight);
+        let fdCursor = document.createElementNS(Avionics.SVG.NS, "path");
+        fdCursor.setAttribute("d", "M 0 0 l 15 -10 h 20 v -4 h -20 l -15 10 l -15 -10 h -20 v 4 h 20 Z");
+        fdCursor.setAttribute("fill", "#00ff00");
+        this.flightDirector.appendChild(fdCursor);
+
+        //let triangleOuterLeft = document.createElementNS(Avionics.SVG.NS, "path");
+        //triangleOuterLeft.setAttribute("d", "M-70 15 l25 0 L0 0 Z");
+        //triangleOuterLeft.setAttribute("fill", "#d12bc7");
+        //this.flightDirector.appendChild(triangleOuterLeft);
+        //let triangleOuterRight = document.createElementNS(Avionics.SVG.NS, "path");
+        //triangleOuterRight.setAttribute("d", "M70 15 l-25 0 L0 0 Z");
+        //triangleOuterRight.setAttribute("fill", "#d12bc7");
+        //this.flightDirector.appendChild(triangleOuterRight);
         {
+            let attitude_bank_container = document.createElementNS(Avionics.SVG.NS, "svg");
+            attitude_bank_container.setAttribute("width", "230");
+            attitude_bank_container.setAttribute("height", "230");
+            attitude_bank_container.setAttribute("x", "-115");
+            attitude_bank_container.setAttribute("y", "-245");
+            attitude_bank_container.setAttribute("viewBox", "-100 -53 200 106");
+            this.root.appendChild(attitude_bank_container);
+
+            let clippath = document.createElementNS(Avionics.SVG.NS, "clipPath");
+            clippath.setAttributeNS(null, "id", "clip");
+            attitude_bank_container.appendChild(clippath);
+
+            let cliprect = document.createElementNS(Avionics.SVG.NS, "rect");
+            cliprect.setAttribute("x", "-31");
+            cliprect.setAttribute("y", "-54");
+            cliprect.setAttribute("width", "62");
+            cliprect.setAttribute("height", "12");
+            //cliprect.setAttribute("stroke", "#00ff00");
+            //cliprect.setAttribute("stroke-width", "1");
+            clippath.appendChild(cliprect);
+            attitude_bank_container.setAttribute("clip-path", "url(#clip)");
+
             this.attitude_bank = document.createElementNS(Avionics.SVG.NS, "g");
-            this.root.appendChild(this.attitude_bank);
+            attitude_bank_container.appendChild(this.attitude_bank);
             let topTriangle = document.createElementNS(Avionics.SVG.NS, "path");
-            topTriangle.setAttribute("d", "M0 -170 l-20 -30 l40 0 Z");
-            topTriangle.setAttribute("fill", "white");
+            topTriangle.setAttribute("d", "M0 -50 l-2 -3 l4 0 Z");
+            topTriangle.setAttribute("stroke", "#00ff00");
+            topTriangle.setAttribute("stroke-width", "1");
             this.attitude_bank.appendChild(topTriangle);
+
+            let bottomTriangle = document.createElementNS(Avionics.SVG.NS, "path");
+            bottomTriangle.setAttribute("d", "M 0 -50 l -2 3 l 4 0 Z");
+            bottomTriangle.setAttribute("stroke", "#00ff00");
+            bottomTriangle.setAttribute("stroke-width", "1");
+            attitude_bank_container.appendChild(bottomTriangle);
             let bigDashes = [-60, -30, 30, 60];
             let smallDashes = [-45, -20, -10, 10, 20, 45];
-            let radius = 160;
-            let width = 4;
-            let height = 30;
+            let radius = 50;
+            let width = 1;
+            let height = 6;
             for (let i = 0; i < bigDashes.length; i++) {
                 let dash = document.createElementNS(Avionics.SVG.NS, "rect");
                 dash.setAttribute("x", (-width / 2).toString());
                 dash.setAttribute("y", (-radius - height).toString());
                 dash.setAttribute("height", height.toString());
                 dash.setAttribute("width", width.toString());
-                dash.setAttribute("fill", "white");
+                dash.setAttribute("stroke", "#00ff00");
+                dash.setAttribute("stroke-width", "1");
                 dash.setAttribute("transform", "rotate(" + bigDashes[i] + ",0,0)");
                 this.attitude_bank.appendChild(dash);
             }
-            width = 4;
-            height = 20;
+            width = 1;
+            height = 3;
             for (let i = 0; i < smallDashes.length; i++) {
                 let dash = document.createElementNS(Avionics.SVG.NS, "rect");
                 dash.setAttribute("x", (-width / 2).toString());
                 dash.setAttribute("y", (-radius - height).toString());
                 dash.setAttribute("height", height.toString());
                 dash.setAttribute("width", width.toString());
-                dash.setAttribute("fill", "white");
+                dash.setAttribute("fill", "#00ff00");
                 dash.setAttribute("transform", "rotate(" + smallDashes[i] + ",0,0)");
                 this.attitude_bank.appendChild(dash);
             }
         }
         {
+
+            this.movableCursor = document.createElementNS(Avionics.SVG.NS, "g");
+            this.root.appendChild(this.movableCursor);
+
+            this.cursorCircle = document.createElementNS(Avionics.SVG.NS, "path");
+            this.cursorCircle.setAttribute("d", "M -0 -10 A 10 10 0 1 1 -1 -10 Z");
+            this.cursorCircle.setAttribute("fill", "none");
+            this.cursorCircle.setAttribute("stroke", "#00ff00");
+            this.cursorCircle.setAttribute("stroke-width", "2");
+            this.movableCursor.appendChild(this.cursorCircle);
+            let cursorLines = [-90, 0, 90];
+            let radius = 10;
+            let width = 1;
+            let height = 15;
+            for(let i = 0; i < cursorLines.length; i++){
+                let dash = document.createElementNS(Avionics.SVG.NS, "rect");
+                dash.setAttribute("x", (-width / 2).toString());
+                dash.setAttribute("y", (-radius - height).toString());
+                dash.setAttribute("height", height.toString());
+                dash.setAttribute("width", width.toString());
+                dash.setAttribute("fill", "#00ff00");
+                dash.setAttribute("transform", "rotate(" + cursorLines[i] + ",0,0)");
+                this.movableCursor.appendChild(dash);
+            }
             let cursors = document.createElementNS(Avionics.SVG.NS, "g");
             this.root.appendChild(cursors);
-            let triangleInnerLeft = document.createElementNS(Avionics.SVG.NS, "path");
-            triangleInnerLeft.setAttribute("d", "M-45 15 l15 0 L0 0 Z");
-            triangleInnerLeft.setAttribute("fill", "#ffff00");
-            cursors.appendChild(triangleInnerLeft);
-            let triangleInnerRight = document.createElementNS(Avionics.SVG.NS, "path");
-            triangleInnerRight.setAttribute("d", "M45 15 l-15 0 L0 0 Z");
-            triangleInnerRight.setAttribute("fill", "#ffff00");
-            cursors.appendChild(triangleInnerRight);
-            let topTriangle = document.createElementNS(Avionics.SVG.NS, "path");
-            topTriangle.setAttribute("d", "M0 -170 l-13 20 l26 0 Z");
-            topTriangle.setAttribute("fill", "white");
-            this.root.appendChild(topTriangle);
+            let centerCursor = document.createElementNS(Avionics.SVG.NS, "path");
+            centerCursor.setAttribute("d", "M 0 0 l 15 -10 h 20 v 4 h -20 l -15 10 l -15 -10 h -20 v -4 h 20 Z");
+            //centerCursor = setAttribute("d", "M-45 15 l15 0 L0 0 Z");
+            //centerCursor.setAttribute("fill", "#00ff00");
+            centerCursor.setAttribute("stroke", "#00ff00");
+            centerCursor.setAttribute("stroke-width", "1");
+            cursors.appendChild(centerCursor);
+            //let triangleInnerLeft = document.createElementNS(Avionics.SVG.NS, "path");
+            //triangleInnerLeft.setAttribute("d", "M-45 15 l15 0 L0 0 Z");
+            //triangleInnerLeft.setAttribute("fill", "#00ff00");
+            //cursors.appendChild(triangleInnerLeft);
+            //let triangleInnerRight = document.createElementNS(Avionics.SVG.NS, "path");
+            //triangleInnerRight.setAttribute("d", "M45 15 l-15 0 L0 0 Z");
+            //triangleInnerRight.setAttribute("fill", "#00ff00");
+            //cursors.appendChild(triangleInnerRight);
             this.slipSkid = document.createElementNS(Avionics.SVG.NS, "path");
             this.slipSkid.setAttribute("d", "M-20 -140 L-16 -146 L16 -146 L20 -140 Z");
             this.slipSkid.setAttribute("fill", "white");
@@ -284,6 +348,9 @@ class HudAttitudeIndicator extends HTMLElement {
                 break;
             case "slip_skid":
                 this.slipSkidValue = parseFloat(newValue);
+                break;
+            case "aoa":
+                this.aoa = parseFloat(newValue);
                 break;
             case "background":
                 if (newValue == "false")
@@ -316,8 +383,12 @@ class HudAttitudeIndicator extends HTMLElement {
             this.attitude_pitch.setAttribute("transform", "rotate(" + this.bank + ", 0, 0) translate(0," + (this.pitch * this.bankSizeRatio) + ")");
         if (this.attitude_bank)
             this.attitude_bank.setAttribute("transform", "rotate(" + this.bank + ", 0, 0)");
-        if (this.slipSkid)
-            this.slipSkid.setAttribute("transform", "translate(" + (this.slipSkidValue * 40) + ", 0)");
+        //if (this.slipSkid)
+            //this.slipSkid.setAttribute("transform", "translate(" + (this.slipSkidValue * 40) + ", 0)");
+        //    this.movableCursor.setAttribute("transform", "translate(" + (this.slipSkidValue * 40) + " " + (-1 * this.aoa * this.bankSizeRatio) + ")");
+        if (this.aoa){
+            this.movableCursor.setAttribute("transform", "translate(" + (this.slipSkidValue * 40) + " " + (-1 * this.aoa * this.bankSizeRatio) + ")");
+        }
         if (this.horizonTop) {
             if (this.backgroundVisible) {
                 this.horizonTop.setAttribute("fill", this.horizonTopColor);

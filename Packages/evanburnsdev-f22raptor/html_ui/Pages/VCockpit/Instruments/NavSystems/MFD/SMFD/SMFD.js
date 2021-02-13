@@ -15,27 +15,24 @@ class SMFD extends NavSystem {
 	}
     connectedCallback() {
         super.connectedCallback();
+        this.maxUpdateBudget = 12;
 		this.fuelElement = this.getChildById("FuelPage");
         this.EnginesElement = this.getChildById("EnginePage");
-		this.mapElem = this.getChildById("Map");
-		this.mapHtmlElem = document.createElement("ebd-map-instrument");
-		this.mapHtmlElem.setAttribute("bing-id", "MFD");
-		this.mapHtmlElem.setAttribute("config-path", "/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/");
-		this.mapHtmlElem.setAttribute("hide-flightplan-if-bushtrip", "true");
-		this.mapElem.appendChild(this.mapHtmlElem);
+        this.mapElem = this.getChildById("Map");
 		
 		this.windHtmlElem = document.createElement("glasscockpit-wind-data");
 		this.windHtmlElem.setAttribute("id", "WindData");
 		this.mapElem.appendChild(this.windHtmlElem);
+        
+        this.engines = new SMFD_Engine("Engine", "EnginePage");
+		this.fuel = new SMFD_Fuel("Fuel", "FuelPage");
 		
 		// Set up initial Pages
         this.parsedUrl = new URL(this.getAttribute("Url").toLowerCase());
         this.index = this.parsedUrl.searchParams.get("index");
 		
-		//let menuIndex = "empty"; //EBDDataIO.get("menuIndex" + this.index, "empty");
 		let key = "menuIndex_" + this.index;
 		let menuIndex = EBDDataIO.get(key);
-		//let menuIndex = GetStoredData("menuIndex" + this.index);
 		if(!menuIndex)
 			menuIndex = this.index;
 		switch(menuIndex) {
@@ -43,16 +40,26 @@ class SMFD extends NavSystem {
                 this.EnginesElement.style.display = "none";
                 this.fuelElement.style.display = "none";
                 this.mapElem.style.display = "block";
+                this.mapElem = this.getChildById("Map");
+                this.mapHtmlElem = document.createElement("ebd-map-instrument");
+                this.mapHtmlElem.setAttribute("bing-id", "MFD");
+                this.mapHtmlElem.setAttribute("config-path", "/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/");
+                this.mapHtmlElem.setAttribute("hide-flightplan-if-bushtrip", "true");
+                this.mapElem.appendChild(this.mapHtmlElem);
+                //this.fuel.enabled = false;
+                //this.engines.enabled = false;
                 break;
             case "2":
                 this.EnginesElement.style.display = "block";
                 this.fuelElement.style.display = "none";
                 this.mapElem.style.display = "none";
+                //this.fuel.enabled = false;
                 break;
             case "3":
                 this.EnginesElement.style.display = "none";
                 this.fuelElement.style.display = "block";
                 this.mapElem.style.display = "none";
+                //this.engines.enabled = false;
                 break;
 		}
 		
@@ -61,9 +68,6 @@ class SMFD extends NavSystem {
 			let fbwState = EBDDataIO.get("fbw");
 			console.log("FBW: " + fbwState);
 			if(fbwState != null && fbwState == "true"){
-				//SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
-				//SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
-				//SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
 				SimVar.SetSimVarValue("L:XMLVAR_EBD_FBW_ENABLE", "Bool", 1);
 			}
 		}
@@ -76,8 +80,6 @@ class SMFD extends NavSystem {
         ];
 		this.mainPage.index = this.index;
 		this.mainPage.menuIndex = menuIndex;
-        this.engines = new SMFD_Engine("Engine", "EnginePage");
-		this.fuel = new SMFD_Fuel("Fuel", "FuelPage");
         this.addIndependentElementContainer(new NavSystemElementContainer("SoftKeys", "SoftKeys", new TwentySoftKeys(SMFD_SoftKeyHtmlElement)));
         this.addIndependentElementContainer(this.engines);
         this.addIndependentElementContainer(this.fuel);
@@ -107,22 +109,41 @@ class SMFD_MainPage extends NavSystemPage {
         this.map_rootMenu = new SoftKeysMenu();
         this.pageMenu = new SoftKeysMenu();
         this.EnginesElement = document.getElementById("EnginePage");
-        this.map = new SMFD_MapElement();
-        this.windData = new MFD_WindData();
 		this.index = null;
 		this.menuIndex = null;
-        this.element = new NavSystemElementGroup([
-			this.map,
-			this.windData
-        ]);
+        this.map = null;
+        this.windData = null;
+        this.element = null;
     }
     connectedCallback() {
 		super.connectedCallback();
 	}
     init() {
         super.init();
+
+        // Disable pages that aren't displayed after init
+		switch(this.menuIndex) {
+            case "1":  // Map
+                this.map = new SMFD_MapElement();
+                this.windData = new MFD_WindData();
+                this.element = new NavSystemElementGroup([
+                    this.map,
+                    this.windData
+                ]);
+                this.gps.computeEvent("DISABLE_FUEL_PAGE");
+                this.gps.computeEvent("DISABLE_ENGINE_PAGE");
+                break;
+            case "2":  // Engines
+                this.gps.computeEvent("DISABLE_FUEL_PAGE");
+                this.gps.computeEvent("ENABLE_ENGINE_PAGE");
+                break;
+            case "3":  // Fuel
+                this.gps.computeEvent("ENABLE_FUEL_PAGE");
+                this.gps.computeEvent("DISABLE_ENGINE_PAGE");
+                break;
+		}
 		
-		this.mapHtmlElem = this.gps.getChildById("Map");
+		this.mapElem = this.gps.getChildById("Map");
 		this.fuelElement = this.gps.getChildById("FuelPage");
 		
         this.engine_rootMenu.elements = [
@@ -214,11 +235,6 @@ class SMFD_MainPage extends NavSystemPage {
 	}
 	fbwStatus(){
 		var fbwBool = SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_ENABLE", "Boolean");
-			/*(
-				SimVar.GetSimVarValue("A:FLY BY WIRE ELAC SWITCH", "Boolean") ||
-				SimVar.GetSimVarValue("A:FLY BY WIRE FAC SWITCH", "Boolean") ||
-				SimVar.GetSimVarValue("A:FLY BY WIRE SEC SWITCH", "Boolean")
-			);*/
 		if(fbwBool){
 			return "On";
 		}
@@ -228,11 +244,6 @@ class SMFD_MainPage extends NavSystemPage {
 	}
 	fbwSet(){
 		let newFbwValue = !SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_ENABLE", "Boolean");
-			/*!(
-				SimVar.GetSimVarValue("A:FLY BY WIRE ELAC SWITCH", "Boolean") ||
-				SimVar.GetSimVarValue("A:FLY BY WIRE FAC SWITCH", "Boolean") ||
-				SimVar.GetSimVarValue("A:FLY BY WIRE SEC SWITCH", "Boolean")
-			);*/
 		let success = EBDDataIO.set("fbw", newFbwValue.toString());
 		if(success == null){
 			console.log("Unable to write data: " + newFbwValue.toString() + " To: " + "fbw");
@@ -244,13 +255,8 @@ class SMFD_MainPage extends NavSystemPage {
 			"Boolean", 
 			newFbwValue
 		);
-		//SimVar.SetSimVarValue("K:FLY_BY_WIRE_ELAC_TOGGLE", "Bool", 1);
-		//SimVar.SetSimVarValue("K:FLY_BY_WIRE_FAC_TOGGLE", "Bool", 1);
-		//SimVar.SetSimVarValue("K:FLY_BY_WIRE_SEC_TOGGLE", "Bool", 1);
 	}
     newPage(_page) {
-		//let key = `${SimVar.GetSimVarValue("ATC MODEL", "string")}.${"menuIndex_" + this.index}`;
-		//var success = SetStoredData(key, _page.toString());
 		let key = "menuIndex_" + this.index;
 		let success = EBDDataIO.set(key, _page.toString());
 		if(success == null){
@@ -260,23 +266,75 @@ class SMFD_MainPage extends NavSystemPage {
 		}
 			
         switch (_page) {
-            case 1:
+            case 1: // Switch to Map Page
                 this.EnginesElement.style.display = "none";
                 this.fuelElement.style.display = "none";
-                this.mapHtmlElem.style.display = "block";
+                this.mapElem.style.display = "block";
+
+                // Add and start ebd-map-instrument class
+                if(document.getElementsByTagName("ebd-map-instrument").length == 0){
+                    console.log("Loading Map");
+                    let mapHtmlElem = document.createElement("ebd-map-instrument");
+                    mapHtmlElem.setAttribute("bing-id", "MFD");
+                    mapHtmlElem.setAttribute("config-path", "/Pages/VCockpit/Instruments/NavSystems/MFD/SMFD/");
+                    mapHtmlElem.setAttribute("hide-flightplan-if-bushtrip", "true");
+                    this.mapElem.appendChild(mapHtmlElem);
+                    this.map = new SMFD_MapElement();
+                    this.windData = new MFD_WindData();
+                    this.element = new NavSystemElementGroup([
+                        this.map,
+                        this.windData
+                    ]);
+
+                    // Disable other pages
+                    this.gps.computeEvent("DISABLE_FUEL_PAGE");
+                    this.gps.computeEvent("DISABLE_ENGINE_PAGE");
+                }
+
+                // Update Menu
 				this.rootMenu = this.map_rootMenu;
                 break;
-            case 2:
+            case 2: // Switch to Engines Page
                 this.EnginesElement.style.display = "block";
-				this.rootMenu = this.engine_rootMenu;
                 this.fuelElement.style.display = "none";
-                this.mapHtmlElem.style.display = "none";
+                this.mapElem.style.display = "none";
+
+                // Stop and remove ebd-map-instrument class
+                this.mapHtmlElems = document.getElementsByTagName("ebd-map-instrument");
+                for(let i = 0; i < this.mapHtmlElems.length; i++){
+                    this.mapHtmlElems[i].parentNode.removeChild(this.mapHtmlElems[i]);
+                    this.map = null;
+                    this.windData = null;
+                    this.element = null;
+                }
+
+                // Enable Engine Page and Disable Fuel Page
+                this.gps.computeEvent("DISABLE_FUEL_PAGE");
+                this.gps.computeEvent("ENABLE_ENGINE_PAGE");
+
+                // Update Menu
+				this.rootMenu = this.engine_rootMenu;
                 break;
-            case 3:
+            case 3: // Switch to Fuel Page
                 this.EnginesElement.style.display = "none";
                 this.fuelElement.style.display = "block";
+                this.mapElem.style.display = "none";
+
+                // Stop and remove ebd-map-instrument class
+                this.mapHtmlElems = document.getElementsByTagName("ebd-map-instrument");
+                for(let i = 0; i < this.mapHtmlElems.length; i++){
+                    this.mapHtmlElems[i].parentNode.removeChild(this.mapHtmlElems[i]);
+                    this.map = null;
+                    this.windData = null;
+                    this.element = null;
+                }
+
+                // Enable Fuel page and disable Engine Page
+                this.gps.computeEvent("ENABLE_FUEL_PAGE");
+                this.gps.computeEvent("DISABLE_ENGINE_PAGE");
+
+                // Update Menu
 				this.rootMenu = this.fuel_rootMenu;
-                this.mapHtmlElem.style.display = "none";
                 break;
         }
 		this.softKeys = this.rootMenu;
@@ -304,7 +362,7 @@ class SMFD_MainPage extends NavSystemPage {
 		}
 	}
 	showTrafficStatus(){
-		if(this.map.trafficStatus())
+		if(this.map.showTraffic)
 			return "On";
 		else
 			return "Off";
@@ -325,7 +383,6 @@ class SMFD_MainElement extends NavSystemElement {
     onEvent(_event) {
     }
 }
-
 class SMFD_SoftKeyHtmlElement extends SoftKeyHtmlElement {
     constructor(_elem) {
         super(_elem);
@@ -527,6 +584,7 @@ class SMFD_Engine extends NavSystemElementContainer {
         this.allEnginesReady = false;
         this.widthSet = false;
         this.xmlEngineDisplay = null;
+        this.enabled = true;
     }
     init() {
         super.init();
@@ -676,11 +734,13 @@ class SMFD_Engine extends NavSystemElementContainer {
         }
     }
     onUpdate(_deltaTime) {
-        super.onUpdate(_deltaTime);
-        if (this.xmlEngineDisplay) {
-            this.xmlEngineDisplay.update(_deltaTime);
+        if(this.enabled){
+            super.onUpdate(_deltaTime);
+            if (this.xmlEngineDisplay) {
+                this.xmlEngineDisplay.update(_deltaTime);
+            }
+            this.updateWidth();
         }
-        this.updateWidth();
     }
     onSoundEnd(_eventId) {
         if (this.xmlEngineDisplay) {
@@ -691,6 +751,14 @@ class SMFD_Engine extends NavSystemElementContainer {
         super.onEvent(_event);
         if (this.xmlEngineDisplay) {
             this.xmlEngineDisplay.onEvent(_event);
+            if( _event === "DISABLE_ENGINE_PAGE") {
+                console.log("Disabled Engine Page");
+                this.enabled = false;
+            }
+            else if(_event === "ENABLE_ENGINE_PAGE"){
+                console.log("Enabled Engine Page");
+                this.enabled = true;
+            }
         }
     }
     updateWidth() {
@@ -955,6 +1023,7 @@ class SMFD_Fuel extends NavSystemElementContainer {
         this.allEnginesReady = false;
         this.widthSet = false;
         this.xmlEngineDisplay = null;
+        this.enabled = true;
     }
     init() {
         super.init();
@@ -1104,11 +1173,13 @@ class SMFD_Fuel extends NavSystemElementContainer {
         }
     }
     onUpdate(_deltaTime) {
-        super.onUpdate(_deltaTime);
-        if (this.xmlEngineDisplay) {
-            this.xmlEngineDisplay.update(_deltaTime);
+        if(this.enabled){
+            super.onUpdate(_deltaTime);
+            if (this.xmlEngineDisplay) {
+                this.xmlEngineDisplay.update(_deltaTime);
+            }
+            this.updateWidth();
         }
-        this.updateWidth();
     }
     onSoundEnd(_eventId) {
         if (this.xmlEngineDisplay) {
@@ -1119,6 +1190,14 @@ class SMFD_Fuel extends NavSystemElementContainer {
         super.onEvent(_event);
         if (this.xmlEngineDisplay) {
             this.xmlEngineDisplay.onEvent(_event);
+            if( _event === "DISABLE_FUEL_PAGE") {
+                console.log("Disabled Fuel Page");
+                this.enabled = false;
+            }
+            else if(_event === "ENABLE_FUEL_PAGE"){
+                console.log("Enabled Fuel Page");
+                this.enabled = true;
+            }
         }
     }
     updateWidth() {
