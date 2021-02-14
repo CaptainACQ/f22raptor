@@ -34,20 +34,24 @@ class HudAltimeter extends HTMLElement {
             background.setAttribute("y", "50");
             background.setAttribute("width", "50");
             background.setAttribute("height", "400");
-            background.setAttribute("fill", "#1a1d21");
-            background.setAttribute("fill-opacity", "0.25");
+            background.setAttribute("stroke", "#00ff00");
+            background.setAttribute("stroke-width", "5");
+            background.setAttribute("fill", "#000f00");
+            //background.setAttribute("fill-opacity", "0.25");
             this.verticalDeviationGroup.appendChild(background);
             let topBackground = document.createElementNS(Avionics.SVG.NS, "rect");
             topBackground.setAttribute("x", "-50");
             topBackground.setAttribute("y", "0");
             topBackground.setAttribute("width", "50");
             topBackground.setAttribute("height", "50");
-            topBackground.setAttribute("fill", "#1a1d21");
+            topBackground.setAttribute("stroke", "#00ff00");
+            topBackground.setAttribute("stroke-width", "5");
+            topBackground.setAttribute("fill", "#000f00");
             this.verticalDeviationGroup.appendChild(topBackground);
             this.verticalDeviationText = document.createElementNS(Avionics.SVG.NS, "text");
             this.verticalDeviationText.setAttribute("x", "-25");
             this.verticalDeviationText.setAttribute("y", "40");
-            this.verticalDeviationText.setAttribute("fill", "#d12bc7");
+            this.verticalDeviationText.setAttribute("fill", "#00ff00");
             this.verticalDeviationText.setAttribute("font-size", "45");
             this.verticalDeviationText.setAttribute("font-family", "Roboto-Bold");
             this.verticalDeviationText.setAttribute("text-anchor", "middle");
@@ -59,23 +63,23 @@ class HudAltimeter extends HTMLElement {
                     grad.setAttribute("cx", "-25");
                     grad.setAttribute("cy", (250 + 66 * i).toString());
                     grad.setAttribute("r", "6");
-                    grad.setAttribute("stroke", "white");
+                    grad.setAttribute("stroke", "#00ff00");
                     grad.setAttribute("stroke-width", "3");
-                    grad.setAttribute("fill-opacity", "0");
+                    //grad.setAttribute("fill-opacity", "0");
                     this.verticalDeviationGroup.appendChild(grad);
                 }
             }
             this.chevronBug = document.createElementNS(Avionics.SVG.NS, "polygon");
             this.chevronBug.setAttribute("points", "-45,250 -10,230 -10,240 -25,250 -10,260 -10,270");
-            this.chevronBug.setAttribute("fill", "#d12bc7");
+            this.chevronBug.setAttribute("fill", "#00ff00");
             this.verticalDeviationGroup.appendChild(this.chevronBug);
             this.diamondBug = document.createElementNS(Avionics.SVG.NS, "polygon");
             this.diamondBug.setAttribute("points", "-40,250 -25,235 -10,250 -25,265");
-            this.diamondBug.setAttribute("fill", "#10c210");
+            this.diamondBug.setAttribute("fill", "#00ff00");
             this.verticalDeviationGroup.appendChild(this.diamondBug);
             this.hollowDiamondBug = document.createElementNS(Avionics.SVG.NS, "polygon");
             this.hollowDiamondBug.setAttribute("points", "-40,250 -25,235 -10,250 -25,265 -25,255 -20,250 -25,245 -30,250 -25,255 -25,265");
-            this.hollowDiamondBug.setAttribute("fill", "#DFDFDF");
+            this.hollowDiamondBug.setAttribute("fill", "#00df00");
             this.verticalDeviationGroup.appendChild(this.hollowDiamondBug);
         }
         {
@@ -84,8 +88,10 @@ class HudAltimeter extends HTMLElement {
             background.setAttribute("y", "-50");
             background.setAttribute("width", "200");
             background.setAttribute("height", "600");
-            background.setAttribute("fill", "#1a1d21");
-            background.setAttribute("fill-opacity", "0.25");
+            background.setAttribute("fill", "#000100");
+            background.setAttribute("stroke", "#00ff00");
+            background.setAttribute("stroke-width", "5");
+            //background.setAttribute("fill-opacity", "0.25");
             this.root.appendChild(background);
             let graduationSvg = document.createElementNS(Avionics.SVG.NS, "svg");
             graduationSvg.setAttribute("x", "0");
@@ -106,12 +112,12 @@ class HudAltimeter extends HTMLElement {
                     mainGrad.setAttribute("y", fastToFixed(center - 2 + i * graduationSize, 0));
                     mainGrad.setAttribute("height", "4");
                     mainGrad.setAttribute("width", "40");
-                    mainGrad.setAttribute("fill", "white");
+                    mainGrad.setAttribute("fill", "#00ff00");
                     this.graduationGroup.appendChild(mainGrad);
                     let gradText = document.createElementNS(Avionics.SVG.NS, "text");
                     gradText.setAttribute("x", "50");
                     gradText.setAttribute("y", fastToFixed(center + 16 + i * graduationSize, 0));
-                    gradText.setAttribute("fill", "white");
+                    gradText.setAttribute("fill", "#00ff00");
                     gradText.setAttribute("font-size", "45");
                     gradText.setAttribute("font-family", "Roboto-Bold");
                     gradText.textContent = "XXXX";
@@ -123,7 +129,7 @@ class HudAltimeter extends HTMLElement {
                         grad.setAttribute("y", fastToFixed(center - 2 + i * graduationSize + j * (graduationSize / 5), 0));
                         grad.setAttribute("height", "4");
                         grad.setAttribute("width", "15");
-                        grad.setAttribute("fill", "white");
+                        grad.setAttribute("fill", "#00ff00");
                         this.graduationGroup.appendChild(grad);
                     }
                 }
@@ -133,15 +139,15 @@ class HudAltimeter extends HTMLElement {
             this.trendElement.setAttribute("y", "-50");
             this.trendElement.setAttribute("width", "8");
             this.trendElement.setAttribute("height", "0");
-            this.trendElement.setAttribute("fill", "#d12bc7");
+            this.trendElement.setAttribute("fill", "#00ff00");
             this.root.appendChild(this.trendElement);
             this.groundLine = document.createElementNS(Avionics.SVG.NS, "g");
             this.groundLine.setAttribute("transform", "translate(0, 700)");
             graduationSvg.appendChild(this.groundLine);
             {
                 let background = document.createElementNS(Avionics.SVG.NS, "rect");
-                background.setAttribute("fill", "#654222");
-                background.setAttribute("stroke", "white");
+                background.setAttribute("fill", "#00cf00");
+                background.setAttribute("stroke", "#00ff00");
                 background.setAttribute("stroke-width", "4");
                 background.setAttribute("x", "0");
                 background.setAttribute("y", "0");
@@ -157,7 +163,7 @@ class HudAltimeter extends HTMLElement {
                 this.groundLine.appendChild(groundLineSvg);
                 for (let i = -5; i <= 25; i++) {
                     let line = document.createElementNS(Avionics.SVG.NS, "rect");
-                    line.setAttribute("fill", "white");
+                    line.setAttribute("fill", "#00ff00");
                     line.setAttribute("x", "0");
                     line.setAttribute("y", (-50 + i * 30).toString());
                     line.setAttribute("width", "200");
@@ -168,7 +174,9 @@ class HudAltimeter extends HTMLElement {
             }
             let cursor = document.createElementNS(Avionics.SVG.NS, "path");
             cursor.setAttribute("d", "M0 " + center + " L30 " + (center - 40) + " L130 " + (center - 40) + " L130 " + (center - 60) + " L200 " + (center - 60) + " L200 " + (center + 60) + " L130 " + (center + 60) + " L130 " + (center + 40) + " L30 " + (center + 40) + "Z");
-            cursor.setAttribute("fill", "#1a1d21");
+            cursor.setAttribute("fill", "#000100");
+            cursor.setAttribute("stroke", "#00ff00");
+            cursor.setAttribute("stroke-width", "2");
             graduationSvg.appendChild(cursor);
             let cursorBaseSvg = document.createElementNS(Avionics.SVG.NS, "svg");
             cursorBaseSvg.setAttribute("x", "30");
@@ -181,7 +189,7 @@ class HudAltimeter extends HTMLElement {
                 this.digit1Top = document.createElementNS(Avionics.SVG.NS, "text");
                 this.digit1Top.setAttribute("x", "16");
                 this.digit1Top.setAttribute("y", "-1");
-                this.digit1Top.setAttribute("fill", "white");
+                this.digit1Top.setAttribute("fill", "#00ff00");
                 this.digit1Top.setAttribute("font-size", "50");
                 this.digit1Top.setAttribute("font-family", "Roboto-Bold");
                 this.digit1Top.textContent = "X";
@@ -189,7 +197,7 @@ class HudAltimeter extends HTMLElement {
                 this.digit1Bot = document.createElementNS(Avionics.SVG.NS, "text");
                 this.digit1Bot.setAttribute("x", "16");
                 this.digit1Bot.setAttribute("y", "57");
-                this.digit1Bot.setAttribute("fill", "white");
+                this.digit1Bot.setAttribute("fill", "#00ff00");
                 this.digit1Bot.setAttribute("font-size", "50");
                 this.digit1Bot.setAttribute("font-family", "Roboto-Bold");
                 this.digit1Bot.textContent = "X";
@@ -197,7 +205,7 @@ class HudAltimeter extends HTMLElement {
                 this.digit2Top = document.createElementNS(Avionics.SVG.NS, "text");
                 this.digit2Top.setAttribute("x", "44");
                 this.digit2Top.setAttribute("y", "-1");
-                this.digit2Top.setAttribute("fill", "white");
+                this.digit2Top.setAttribute("fill", "#00ff00");
                 this.digit2Top.setAttribute("font-size", "50");
                 this.digit2Top.setAttribute("font-family", "Roboto-Bold");
                 this.digit2Top.textContent = "X";
@@ -205,7 +213,7 @@ class HudAltimeter extends HTMLElement {
                 this.digit2Bot = document.createElementNS(Avionics.SVG.NS, "text");
                 this.digit2Bot.setAttribute("x", "44");
                 this.digit2Bot.setAttribute("y", "57");
-                this.digit2Bot.setAttribute("fill", "white");
+                this.digit2Bot.setAttribute("fill", "#00ff00");
                 this.digit2Bot.setAttribute("font-size", "50");
                 this.digit2Bot.setAttribute("font-family", "Roboto-Bold");
                 this.digit2Bot.textContent = "X";
@@ -213,7 +221,7 @@ class HudAltimeter extends HTMLElement {
                 this.digit3Top = document.createElementNS(Avionics.SVG.NS, "text");
                 this.digit3Top.setAttribute("x", "72");
                 this.digit3Top.setAttribute("y", "-1");
-                this.digit3Top.setAttribute("fill", "white");
+                this.digit3Top.setAttribute("fill", "#00ff00");
                 this.digit3Top.setAttribute("font-size", "50");
                 this.digit3Top.setAttribute("font-family", "Roboto-Bold");
                 this.digit3Top.textContent = "X";
@@ -221,7 +229,7 @@ class HudAltimeter extends HTMLElement {
                 this.digit3Bot = document.createElementNS(Avionics.SVG.NS, "text");
                 this.digit3Bot.setAttribute("x", "72");
                 this.digit3Bot.setAttribute("y", "57");
-                this.digit3Bot.setAttribute("fill", "white");
+                this.digit3Bot.setAttribute("fill", "#00ff00");
                 this.digit3Bot.setAttribute("font-size", "50");
                 this.digit3Bot.setAttribute("font-family", "Roboto-Bold");
                 this.digit3Bot.textContent = "X";
@@ -242,7 +250,7 @@ class HudAltimeter extends HTMLElement {
                     let digit = document.createElementNS(Avionics.SVG.NS, "text");
                     digit.setAttribute("x", "7");
                     digit.setAttribute("y", (27 + 45 * i).toString());
-                    digit.setAttribute("fill", "white");
+                    digit.setAttribute("fill", "#00ff00");
                     digit.setAttribute("font-size", "50");
                     digit.setAttribute("font-family", "Roboto-Bold");
                     digit.textContent = "XX";
@@ -255,23 +263,27 @@ class HudAltimeter extends HTMLElement {
 			let verticalSpeedGroup = document.createElementNS(Avionics.SVG.NS, "g");
 			verticalSpeedGroup.setAttribute("id", "VerticalSpeed");
 			this.root.appendChild(verticalSpeedGroup);
-			let background = document.createElementNS(Avionics.SVG.NS, "path");
-			background.setAttribute("d", "M200 0 L200 500 L275 500 L275 300 L210 250 L275 200 L275 0 Z");
-			background.setAttribute("fill", "#1a1d21");
-			background.setAttribute("fill-opacity", "0.25");
-			verticalSpeedGroup.appendChild(background);
-			let dashes = [-200, -150, -100, -50, 50, 100, 150, 200];
-			let height = 3;
+			//let background = document.createElementNS(Avionics.SVG.NS, "path");
+			//background.setAttribute("d", "M 0 0 l 0 500 l -75 0 l 0 -200 l 65 -50 l -65 -50 l 0 -200 Z");
+			//background.setAttribute("fill", "#000100");
+			//background.setAttribute("fill-opacity", "0.25");
+			//verticalSpeedGroup.appendChild(background);
+			let dashes = [-200, -100, 0, 100, 200];
+			let height = 20;
 			let width = 10;
 			let fontSize = 30;
 			for (let i = 0; i < dashes.length; i++) {
 				let rect = document.createElementNS(Avionics.SVG.NS, "rect");
-				rect.setAttribute("x", "200");
+				//rect.setAttribute("x", (-40-((dashes[i] % 100) == 0 ? 2 * width : width)).toString());
+				rect.setAttribute("x", "230");
 				rect.setAttribute("y", (250 - dashes[i] - height / 2).toString());
 				rect.setAttribute("height", height.toString());
 				rect.setAttribute("width", ((dashes[i] % 100) == 0 ? 2 * width : width).toString());
-				rect.setAttribute("fill", "white");
+				rect.setAttribute("fill", "000f00");
+                rect.setAttribute("stroke", "#00ff00");
+                rect.setAttribute("stroke-width", "4");
 				verticalSpeedGroup.appendChild(rect);
+                /*
 				if ((dashes[i] % 100) == 0) {
 					let text = document.createElementNS(Avionics.SVG.NS, "text");
 					text.textContent = (dashes[i] / 100).toString();
@@ -282,15 +294,44 @@ class HudAltimeter extends HTMLElement {
 					text.setAttribute("font-family", "Roboto-Bold");
 					verticalSpeedGroup.appendChild(text);
 				}
+                */
 			}
 			{
 				this.indicator = document.createElementNS(Avionics.SVG.NS, "g");
 				verticalSpeedGroup.appendChild(this.indicator);
-				let indicatorBackground = document.createElementNS(Avionics.SVG.NS, "path");
-				indicatorBackground.setAttribute("d", "M210 250 L235 275 L330 275 L330 225 L235 225 Z");
-				indicatorBackground.setAttribute("fill", "#FFFFFF");
+				let indicatorBackground = document.createElementNS(Avionics.SVG.NS, "rect");
+				indicatorBackground.setAttribute("x", "210");
+				indicatorBackground.setAttribute("y", "240");
+				indicatorBackground.setAttribute("height", "20");
+				indicatorBackground.setAttribute("width", "60");
+				indicatorBackground.setAttribute("fill", "000f00");
+                indicatorBackground.setAttribute("stroke", "#00ff00");
+                indicatorBackground.setAttribute("stroke-width", "4");
+				//indicatorBackground.setAttribute("d", "M210 250 L235 275 L330 275 L330 225 L235 225 Z");
+				//indicatorBackground.setAttribute("fill", "#00ff00");
 				this.indicator.appendChild(indicatorBackground);
 			}
+            {
+                this.vsNumber = document.createElementNS(Avionics.SVG.NS, "text");
+                this.vsNumber.textContent = "----";
+                this.vsNumber.setAttribute("y", "590");
+                this.vsNumber.setAttribute("x", "140");
+                this.vsNumber.setAttribute("fill", "#00ff00");
+                this.vsNumber.setAttribute("font-size", "42");
+                this.vsNumber.setAttribute("font-family", "Roboto-Bold");
+                this.vsNumber.setAttribute("text-anchor", "end");
+                this.root.appendChild(this.vsNumber);
+                let vsText = document.createElementNS(Avionics.SVG.NS, "text");
+                vsText.textContent = "VS";
+                vsText.setAttribute("y", "590");
+                vsText.setAttribute("x", "170");
+                vsText.setAttribute("fill", "#00ff00");
+                vsText.setAttribute("font-size", "24");
+                vsText.setAttribute("font-family", "Roboto-Bold");
+                vsText.setAttribute("text-anchor", "end");
+                this.root.appendChild(vsText);
+
+            }
 		}
     }
     attributeChangedCallback(name, oldValue, newValue) {
@@ -417,6 +458,7 @@ class HudAltimeter extends HTMLElement {
                 let trendValue = Math.min(Math.max(250 + (vSpeed / 10) * -1.5, -50), 550);
                 this.trendElement.setAttribute("y", Math.min(trendValue, 250).toString());
                 this.trendElement.setAttribute("height", Math.abs(trendValue - 250).toString());
+                this.vsNumber.textContent = fastToFixed(vSpeed, 0).toString();
                 break;
             case "vertical-deviation-mode":
                 switch (newValue) {

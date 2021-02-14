@@ -75,8 +75,10 @@ class HudAirspeedIndicator extends HTMLElement {
             background.setAttribute("y", "0");
             background.setAttribute("width", "200");
             background.setAttribute("height", "600");
-            background.setAttribute("fill", "#1a1d21");
-            background.setAttribute("fill-opacity", "0.25");
+            background.setAttribute("stroke", "#00ff00");
+            background.setAttribute("stroke-width", "5");
+            background.setAttribute("fill", "#000100");
+            //background.setAttribute("fill-opacity", "0");
             this.root.appendChild(background);
             this.centerSvg = document.createElementNS(Avionics.SVG.NS, "svg");
             this.centerSvg.setAttribute("x", "0");
@@ -96,28 +98,28 @@ class HudAirspeedIndicator extends HTMLElement {
                         this.redElement.setAttribute("y", "-1");
                         this.redElement.setAttribute("width", "25");
                         this.redElement.setAttribute("height", "0");
-                        this.redElement.setAttribute("fill", "red");
+                        this.redElement.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(this.redElement);
                         this.yellowElement = document.createElementNS(Avionics.SVG.NS, "rect");
                         this.yellowElement.setAttribute("x", "175");
                         this.yellowElement.setAttribute("y", "-1");
-                        this.yellowElement.setAttribute("width", "25");
+                        this.yellowElement.setAttribute("width", "12.5");
                         this.yellowElement.setAttribute("height", "0");
-                        this.yellowElement.setAttribute("fill", "yellow");
+                        this.yellowElement.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(this.yellowElement);
                         this.greenElement = document.createElementNS(Avionics.SVG.NS, "rect");
-                        this.greenElement.setAttribute("x", "175");
+                        this.greenElement.setAttribute("x", "193.75");
                         this.greenElement.setAttribute("y", "-1");
-                        this.greenElement.setAttribute("width", "25");
+                        this.greenElement.setAttribute("width", "6.25");
                         this.greenElement.setAttribute("height", "0");
-                        this.greenElement.setAttribute("fill", "green");
+                        this.greenElement.setAttribute("fill", "#003f00");
                         this.centerGroup.appendChild(this.greenElement);
                         this.flapsElement = document.createElementNS(Avionics.SVG.NS, "rect");
                         this.flapsElement.setAttribute("x", "187.5");
                         this.flapsElement.setAttribute("y", "-1");
-                        this.flapsElement.setAttribute("width", "12.5");
+                        this.flapsElement.setAttribute("width", "6.25");
                         this.flapsElement.setAttribute("height", "0");
-                        this.flapsElement.setAttribute("fill", "white");
+                        this.flapsElement.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(this.flapsElement);
                         let dashSvg = document.createElementNS(Avionics.SVG.NS, "svg");
                         dashSvg.setAttribute("id", "DASH");
@@ -134,7 +136,7 @@ class HudAirspeedIndicator extends HTMLElement {
                         startBg.setAttribute("y", "-935");
                         startBg.setAttribute("width", "25");
                         startBg.setAttribute("height", "800");
-                        startBg.setAttribute("fill", "white");
+                        startBg.setAttribute("fill", "#00ff00");
                         this.startElement.appendChild(startBg);
                         for (let i = 0; i <= 32; i++) {
                             let redLine = document.createElementNS(Avionics.SVG.NS, "rect");
@@ -143,7 +145,7 @@ class HudAirspeedIndicator extends HTMLElement {
                             redLine.setAttribute("width", "25");
                             redLine.setAttribute("height", "12.5");
                             redLine.setAttribute("transform", "skewY(-30)");
-                            redLine.setAttribute("fill", "red");
+                            redLine.setAttribute("fill", "#00ff00");
                             this.startElement.appendChild(redLine);
                         }
                         this.endElement = document.createElementNS(Avionics.SVG.NS, "g");
@@ -153,7 +155,7 @@ class HudAirspeedIndicator extends HTMLElement {
                         endBg.setAttribute("y", "-900");
                         endBg.setAttribute("width", "25");
                         endBg.setAttribute("height", "800");
-                        endBg.setAttribute("fill", "white");
+                        endBg.setAttribute("fill", "#00ff00");
                         this.endElement.appendChild(endBg);
                         for (let i = 0; i <= 32; i++) {
                             let redLine = document.createElementNS(Avionics.SVG.NS, "rect");
@@ -162,7 +164,7 @@ class HudAirspeedIndicator extends HTMLElement {
                             redLine.setAttribute("width", "25");
                             redLine.setAttribute("height", "12.5");
                             redLine.setAttribute("transform", "skewY(-30)");
-                            redLine.setAttribute("fill", "red");
+                            redLine.setAttribute("fill", "#00ff00");
                             this.endElement.appendChild(redLine);
                         }
                     }
@@ -175,7 +177,7 @@ class HudAirspeedIndicator extends HTMLElement {
                         grad.setAttribute("y", (298 + 100 * i).toString());
                         grad.setAttribute("height", "4");
                         grad.setAttribute("width", "50");
-                        grad.setAttribute("fill", "white");
+                        grad.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(grad);
                         if (i != 0) {
                             let halfGrad = document.createElementNS(Avionics.SVG.NS, "rect");
@@ -183,14 +185,14 @@ class HudAirspeedIndicator extends HTMLElement {
                             halfGrad.setAttribute("y", (298 + 100 * i + (i < 0 ? 50 : -50)).toString());
                             halfGrad.setAttribute("height", "4");
                             halfGrad.setAttribute("width", "25");
-                            halfGrad.setAttribute("fill", "black");
+                            halfGrad.setAttribute("fill", "#00ff00");
                             this.centerGroup.appendChild(halfGrad);
                         }
                         let gradText = document.createElementNS(Avionics.SVG.NS, "text");
                         gradText.setAttribute("x", "140");
                         gradText.setAttribute("y", (320 + 100 * i).toString());
-                        gradText.setAttribute("fill", "white");
-                        gradText.setAttribute("font-size", "50");
+                        gradText.setAttribute("fill", "#00ff00");
+                        gradText.setAttribute("font-size", "40");
                         gradText.setAttribute("text-anchor", "end");
                         gradText.setAttribute("font-family", "Roboto-Bold");
                         gradText.setAttribute("letter-spacing", "12");
@@ -201,19 +203,23 @@ class HudAirspeedIndicator extends HTMLElement {
                     let center = 300;
                     this.selectedSpeedBug = document.createElementNS(Avionics.SVG.NS, "polygon");
                     this.selectedSpeedBug.setAttribute("points", "200, " + (center - 20) + " 180, " + (center - 20) + " 180, " + (center - 15) + " 190, " + center + " 180, " + (center + 15) + " 180, " + (center + 20) + " 200, " + (center + 20));
-                    this.selectedSpeedBug.setAttribute("fill", "#36c8d2");
+                    //this.selectedSpeedBug.setAttribute("fill", "#36c8d2");
+                    //this.selectedSpeedBug.setAttribute("stroke", "#00ff00");
+                    //this.selectedSpeedBug.setAttribute("stroke-width", "1");
                     this.centerSvg.appendChild(this.selectedSpeedBug);
                 }
-                this.cursor = document.createElementNS(Avionics.SVG.NS, "polygon");
-                this.cursor.setAttribute("points", "200,300 170,260 150,260 150,240 100,240 100,260 0,260 0,340 100,340 100,360 150,360 150,340 170,340");
-                this.cursor.setAttribute("fill", "#1a1d21");
-                this.root.appendChild(this.cursor);
+                let cursor = document.createElementNS(Avionics.SVG.NS, "path");
+                cursor.setAttribute("d", "M 200 300 L 170 260 L 150 260 L 150 240 L 100 240 L 100 260 L 0 260 L 0 340 L 100 340 L 100 360 L 150 360 L 150 340 L 170 340 Z");
+                cursor.setAttribute("stroke", "#00ff00");
+                cursor.setAttribute("stroke-width", "2");
+                cursor.setAttribute("fill", "#000100");
+                this.root.appendChild(cursor);
                 this.trendElement = document.createElementNS(Avionics.SVG.NS, "rect");
                 this.trendElement.setAttribute("x", "200");
                 this.trendElement.setAttribute("y", "-1");
                 this.trendElement.setAttribute("width", "8");
                 this.trendElement.setAttribute("height", "0");
-                this.trendElement.setAttribute("fill", "#d12bc7");
+                this.trendElement.setAttribute("fill", "#00ff00");
                 this.root.appendChild(this.trendElement);
                 let baseCursorSvg = document.createElementNS(Avionics.SVG.NS, "svg");
                 baseCursorSvg.setAttribute("x", "0");
@@ -226,7 +232,7 @@ class HudAirspeedIndicator extends HTMLElement {
                     this.digit1Top = document.createElementNS(Avionics.SVG.NS, "text");
                     this.digit1Top.setAttribute("x", "28");
                     this.digit1Top.setAttribute("y", "-1");
-                    this.digit1Top.setAttribute("fill", "white");
+                    this.digit1Top.setAttribute("fill", "#00ff00");
                     this.digit1Top.setAttribute("font-size", "50");
                     this.digit1Top.setAttribute("font-family", "Roboto-Bold");
                     this.digit1Top.textContent = "-";
@@ -234,7 +240,7 @@ class HudAirspeedIndicator extends HTMLElement {
                     this.digit1Bot = document.createElementNS(Avionics.SVG.NS, "text");
                     this.digit1Bot.setAttribute("x", "28");
                     this.digit1Bot.setAttribute("y", "55");
-                    this.digit1Bot.setAttribute("fill", "white");
+                    this.digit1Bot.setAttribute("fill", "#00ff00");
                     this.digit1Bot.setAttribute("font-size", "50");
                     this.digit1Bot.setAttribute("font-family", "Roboto-Bold");
                     this.digit1Bot.textContent = "-";
@@ -242,7 +248,7 @@ class HudAirspeedIndicator extends HTMLElement {
                     this.digit2Top = document.createElementNS(Avionics.SVG.NS, "text");
                     this.digit2Top.setAttribute("x", "70");
                     this.digit2Top.setAttribute("y", "-1");
-                    this.digit2Top.setAttribute("fill", "white");
+                    this.digit2Top.setAttribute("fill", "#00ff00");
                     this.digit2Top.setAttribute("font-size", "50");
                     this.digit2Top.setAttribute("font-family", "Roboto-Bold");
                     this.digit2Top.textContent = "-";
@@ -250,7 +256,7 @@ class HudAirspeedIndicator extends HTMLElement {
                     this.digit2Bot = document.createElementNS(Avionics.SVG.NS, "text");
                     this.digit2Bot.setAttribute("x", "70");
                     this.digit2Bot.setAttribute("y", "55");
-                    this.digit2Bot.setAttribute("fill", "white");
+                    this.digit2Bot.setAttribute("fill", "#00ff00");
                     this.digit2Bot.setAttribute("font-size", "50");
                     this.digit2Bot.setAttribute("font-family", "Roboto-Bold");
                     this.digit2Bot.textContent = "-";
@@ -271,7 +277,7 @@ class HudAirspeedIndicator extends HTMLElement {
                         let digit = document.createElementNS(Avionics.SVG.NS, "text");
                         digit.setAttribute("x", "0");
                         digit.setAttribute("y", (15 + 45 * i).toString());
-                        digit.setAttribute("fill", "white");
+                        digit.setAttribute("fill", "#00ff00");
                         digit.setAttribute("font-size", "50");
                         digit.setAttribute("font-family", "Roboto-Bold");
                         digit.textContent = i == 0 ? "-" : " ";
@@ -287,8 +293,10 @@ class HudAirspeedIndicator extends HTMLElement {
             this.bottomBackground.setAttribute("y", "600");
             this.bottomBackground.setAttribute("width", "200");
             this.bottomBackground.setAttribute("height", "50");
-            this.bottomBackground.setAttribute("fill", "#1a1d21");
+            this.bottomBackground.setAttribute("fill", "#000000");
+            this.bottomBackground.setAttribute("fill-opacity", "0");
             this.root.appendChild(this.bottomBackground);
+            /*
             let maMaText = document.createElementNS(Avionics.SVG.NS, "text");
             maMaText.setAttribute("x", "5");
             maMaText.setAttribute("y", "638");
@@ -298,11 +306,12 @@ class HudAirspeedIndicator extends HTMLElement {
             maMaText.setAttribute("text-anchor", "start");
             maMaText.textContent = "Ma";
             this.root.appendChild(maMaText);
+            */
             this.maText = document.createElementNS(Avionics.SVG.NS, "text");
-            this.maText.setAttribute("x", "195");
+            this.maText.setAttribute("x", "165");
             this.maText.setAttribute("y", "638");
             this.maText.setAttribute("fill", "#00ff00");
-            this.maText.setAttribute("font-size", "35");
+            this.maText.setAttribute("font-size", "42");
             this.maText.setAttribute("font-family", "Roboto-Bold");
             this.maText.setAttribute("text-anchor", "end");
             this.maText.textContent = "0.000";

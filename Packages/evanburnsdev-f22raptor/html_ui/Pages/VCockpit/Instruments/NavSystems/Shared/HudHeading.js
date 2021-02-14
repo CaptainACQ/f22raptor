@@ -19,7 +19,7 @@ class HudHeadingIndicator extends HTMLElement {
             background.setAttribute("y", "0");
             background.setAttribute("width", "160");
             background.setAttribute("height", "46");
-            background.setAttribute("fill", "#1a1d21");
+            background.setAttribute("fill", "#000100");
             background.setAttribute("fill-opacity", "1");
             this.root.appendChild(background);
             this.hdgText = document.createElementNS(Avionics.SVG.NS, "text");

@@ -83,7 +83,7 @@ KollsmanSetting=29.977560043334960938
 BleedAirSource=0
 
 [Switches.0]
-PitotHeat=False
+PitotHeat=True
 BeaconLights=False
 LandingLights=False
 LogoLights=False

@@ -151,7 +151,7 @@ EngineRecievesAPUAirBleed.1=0
 EngineRecievesAPUAirBleed.2=0
 
 [Switches.0]
-PitotHeat=False
+PitotHeat=True
 PitotHeat_EX1=2
 WindshieldDeice=2
 BeaconLights=True

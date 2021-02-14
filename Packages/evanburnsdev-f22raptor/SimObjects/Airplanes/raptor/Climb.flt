@@ -149,7 +149,7 @@ EngineRecievesAPUAirBleed.1=0
 EngineRecievesAPUAirBleed.2=0
 
 [Switches.0]
-PitotHeat=False
+PitotHeat=True
 BeaconLights=True
 LandingLights=False
 LogoLights=True

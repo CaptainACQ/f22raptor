@@ -42,12 +42,12 @@ class HudAttitudeIndicator extends HTMLElement {
         let unusualAttitudeLowerLimit = -30;
         let unusualAttitudeUpperLimit = 50;
         let bigWidth = 60;
-        let bigHeight = 3;
-        let mediumWidth = 30;
-        let mediumHeight = 3;
+        let bigHeight = 2;
+        let mediumWidth = 60;
+        let mediumHeight = 2;
         let smallWidth = 20;
         let smallHeight = 2;
-        let fontSize = 20;
+        let fontSize = 14;
         let angle = -maxDash;
         let nextAngle;
         let width;
@@ -89,7 +89,7 @@ class HudAttitudeIndicator extends HTMLElement {
             }
             if (angle != 0) {
                 let rect = document.createElementNS(Avionics.SVG.NS, "rect");
-                rect.setAttribute("fill", "white");
+                rect.setAttribute("fill", "#00ff00");
                 rect.setAttribute("x", (-width / 2).toString());
                 rect.setAttribute("y", (this.bankSizeRatio * angle - height / 2).toString());
                 rect.setAttribute("width", width.toString());
@@ -103,7 +103,7 @@ class HudAttitudeIndicator extends HTMLElement {
                     leftText.setAttribute("text-anchor", "end");
                     leftText.setAttribute("font-size", fontSize.toString());
                     leftText.setAttribute("font-family", "Roboto-Bold");
-                    leftText.setAttribute("fill", "white");
+                    leftText.setAttribute("fill", "#00ff00");
                     this.attitude_pitch.appendChild(leftText);
                     let rightText = document.createElementNS(Avionics.SVG.NS, "text");
                     rightText.textContent = Math.abs(angle).toString();
@@ -112,7 +112,7 @@ class HudAttitudeIndicator extends HTMLElement {
                     rightText.setAttribute("text-anchor", "start");
                     rightText.setAttribute("font-size", fontSize.toString());
                     rightText.setAttribute("font-family", "Roboto-Bold");
-                    rightText.setAttribute("fill", "white");
+                    rightText.setAttribute("fill", "#00ff00");
                     this.attitude_pitch.appendChild(rightText);
                 }
                 if (angle < unusualAttitudeLowerLimit) {
@@ -122,7 +122,7 @@ class HudAttitudeIndicator extends HTMLElement {
                     path += "L0 " + (this.bankSizeRatio * nextAngle + 20) + " ";
                     path += "L" + (-bigWidth / 2 + smallWidth) + " " + (this.bankSizeRatio * angle - bigHeight / 2) + " l" + -smallWidth + " 0 Z";
                     chevron.setAttribute("d", path);
-                    chevron.setAttribute("fill", "red");
+                    chevron.setAttribute("fill", "#00ff00");
                     this.attitude_pitch.appendChild(chevron);
                 }
                 if (angle >= unusualAttitudeUpperLimit && nextAngle <= maxDash) {
@@ -132,7 +132,7 @@ class HudAttitudeIndicator extends HTMLElement {
                     path += "L0 " + (this.bankSizeRatio * angle - 20) + " ";
                     path += "L" + (-bigWidth / 2 + smallWidth) + " " + (this.bankSizeRatio * nextAngle + bigHeight / 2) + " l" + -smallWidth + " 0 Z";
                     chevron.setAttribute("d", path);
-                    chevron.setAttribute("fill", "red");
+                    chevron.setAttribute("fill", "#00ff00");
                     this.attitude_pitch.appendChild(chevron);
                 }
             }
@@ -168,7 +168,7 @@ class HudAttitudeIndicator extends HTMLElement {
             this.horizonBottom.setAttribute("height", "3000");
             this.bottomPart.appendChild(this.horizonBottom);
             let separator = document.createElementNS(Avionics.SVG.NS, "rect");
-            separator.setAttribute("fill", "#e0e0e0");
+            separator.setAttribute("fill", "#00ff00");
             separator.setAttribute("x", "-1500");
             separator.setAttribute("y", "-1");
             separator.setAttribute("width", "3000");
@@ -309,23 +309,9 @@ class HudAttitudeIndicator extends HTMLElement {
             this.root.appendChild(cursors);
             let centerCursor = document.createElementNS(Avionics.SVG.NS, "path");
             centerCursor.setAttribute("d", "M 0 0 l 15 -10 h 20 v 4 h -20 l -15 10 l -15 -10 h -20 v -4 h 20 Z");
-            //centerCursor = setAttribute("d", "M-45 15 l15 0 L0 0 Z");
-            //centerCursor.setAttribute("fill", "#00ff00");
             centerCursor.setAttribute("stroke", "#00ff00");
             centerCursor.setAttribute("stroke-width", "1");
             cursors.appendChild(centerCursor);
-            //let triangleInnerLeft = document.createElementNS(Avionics.SVG.NS, "path");
-            //triangleInnerLeft.setAttribute("d", "M-45 15 l15 0 L0 0 Z");
-            //triangleInnerLeft.setAttribute("fill", "#00ff00");
-            //cursors.appendChild(triangleInnerLeft);
-            //let triangleInnerRight = document.createElementNS(Avionics.SVG.NS, "path");
-            //triangleInnerRight.setAttribute("d", "M45 15 l-15 0 L0 0 Z");
-            //triangleInnerRight.setAttribute("fill", "#00ff00");
-            //cursors.appendChild(triangleInnerRight);
-            this.slipSkid = document.createElementNS(Avionics.SVG.NS, "path");
-            this.slipSkid.setAttribute("d", "M-20 -140 L-16 -146 L16 -146 L20 -140 Z");
-            this.slipSkid.setAttribute("fill", "white");
-            this.root.appendChild(this.slipSkid);
         }
         this.applyAttributes();
     }
@@ -383,9 +369,6 @@ class HudAttitudeIndicator extends HTMLElement {
             this.attitude_pitch.setAttribute("transform", "rotate(" + this.bank + ", 0, 0) translate(0," + (this.pitch * this.bankSizeRatio) + ")");
         if (this.attitude_bank)
             this.attitude_bank.setAttribute("transform", "rotate(" + this.bank + ", 0, 0)");
-        //if (this.slipSkid)
-            //this.slipSkid.setAttribute("transform", "translate(" + (this.slipSkidValue * 40) + ", 0)");
-        //    this.movableCursor.setAttribute("transform", "translate(" + (this.slipSkidValue * 40) + " " + (-1 * this.aoa * this.bankSizeRatio) + ")");
         if (this.aoa){
             this.movableCursor.setAttribute("transform", "translate(" + (this.slipSkidValue * 40) + " " + (-1 * this.aoa * this.bankSizeRatio) + ")");
         }

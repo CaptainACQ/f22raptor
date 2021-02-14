@@ -23,6 +23,37 @@ class PMFD extends NavSystem {
     disconnectedCallback() {
         super.disconnectedCallback();
     }
+    CanUpdate() {
+        super.CanUpdate();
+        var quality = Quality.medium;
+        if (quality == Quality.ultra) {
+            return true;
+        }
+        else if (quality == Quality.high) {
+            if ((this.frameCount % 2) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.medium) {
+            if ((this.frameCount % 4) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.low) {
+            if ((this.frameCount % 32) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.hidden) {
+            if ((this.frameCount % 128) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.disabled) {
+            return false;
+        }
+        return true;
+    }
     parseXMLConfig() {
         super.parseXMLConfig();
         let syntheticVision = null;

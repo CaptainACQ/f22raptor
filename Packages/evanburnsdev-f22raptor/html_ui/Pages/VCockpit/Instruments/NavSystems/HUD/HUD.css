@@ -186,15 +186,15 @@ hud-element {
       hud-element #Mainframe #InstrumentsContainer #Altimeter {
         transform: rotateX(0);
         position: absolute;
-        bottom: 28%;
-        width: 38%;
-        left: 62%; }
+        bottom: 37%;
+        width: 30%;
+        right: 0%; }
       hud-element #Mainframe #InstrumentsContainer #Airspeed {
         transform: rotateX(0);
         position: absolute;
-        bottom: 28%;
-        width: 25%;
-        right: 62%; }
+        bottom: 37%;
+        width: 20%;
+        left: 10%; }
 
       hud-element #Mainframe #InstrumentsContainer #RadarAltitude {
         position: absolute;
