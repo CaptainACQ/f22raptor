@@ -70,6 +70,7 @@ class HUD_MainPage extends NavSystemPage {
         this.element = new NavSystemElementGroup([
             this.attitude,
 			new HUD_Heading(),
+			new HUD_GForce(),
             new HUD_Airspeed(),
             new HUD_Altimeter(),
             new HUD_RadarAltitude()
@@ -109,6 +110,26 @@ class HUD_Heading extends NavSystemElement {
         var heading = SimVar.GetSimVarValue("PLANE HEADING DEGREES TRUE", "degree");
         if (heading) {
             this.svg.setAttribute("heading", heading.toString());
+        }
+    }
+    onExit() {
+    }
+    onEvent(_event) {
+    }
+}
+class HUD_GForce extends NavSystemElement {
+    constructor() {
+        super(...arguments);
+    }
+    init(root) {
+        this.svg = this.gps.getChildById("GForce");
+    }
+    onEnter() {
+    }
+    onUpdate(_deltaTime) {
+        var gforce = SimVar.GetSimVarValue("G FORCE", "GForce");
+        if (gforce) {
+            this.svg.setAttribute("gforce", gforce.toString());
         }
     }
     onExit() {

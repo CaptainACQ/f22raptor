@@ -178,6 +178,12 @@ hud-element {
         top: 2%;
         width: 15%;
         left: 43%; }
+      hud-element #Mainframe #HorizonContainer #GForce {
+        transform: rotateX(0);
+        position: absolute;
+        top: 13%;
+        width: 15%;
+        right: 18%; }
     hud-element #Mainframe #InstrumentsContainer {
       transform: rotateX(0);
       width: 100%;

@@ -127,3 +127,4 @@ yaw damper.  Landings with FBW are now possible.
 * 2/9 - FBW PID Adjustments, Roll input now a curve instead of linear.
 * 2/13 - Improved MFD Performance(Frame rate increase).  Multiple HUD Improvements.
 * 2/14 - More HUD Work, Performance fixes.
+* 2/15 - HUD, Flight Model, and FBW changes.
