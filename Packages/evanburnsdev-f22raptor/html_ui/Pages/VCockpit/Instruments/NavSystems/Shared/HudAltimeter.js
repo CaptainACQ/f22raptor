@@ -8,7 +8,7 @@ class HudAltimeter extends HTMLElement {
         return [
             "altitude",
             "radar-altitude",
-            //"reference-altitude",
+            "reference-altitude",
             "minimum-altitude",
             "minimum-altitude-state",
             //"pressure",
@@ -81,6 +81,24 @@ class HudAltimeter extends HTMLElement {
             this.hollowDiamondBug.setAttribute("points", "-40,250 -25,235 -10,250 -25,265 -25,255 -20,250 -25,245 -30,250 -25,255 -25,265");
             this.hollowDiamondBug.setAttribute("fill", "#00df00");
             this.verticalDeviationGroup.appendChild(this.hollowDiamondBug);
+        }
+        {
+            this.selectedAltitudeBackground = document.createElementNS(Avionics.SVG.NS, "rect");
+            this.selectedAltitudeBackground.setAttribute("x", "0");
+            this.selectedAltitudeBackground.setAttribute("y", "-100");
+            this.selectedAltitudeBackground.setAttribute("width", this.compactVs ? "250" : "200");
+            this.selectedAltitudeBackground.setAttribute("height", "50");
+            this.selectedAltitudeBackground.setAttribute("fill", "#000100");
+            this.root.appendChild(this.selectedAltitudeBackground);
+            this.selectedAltText = document.createElementNS(Avionics.SVG.NS, "text");
+            this.selectedAltText.setAttribute("x", "10");
+            this.selectedAltText.setAttribute("y", "-60");
+            this.selectedAltText.setAttribute("fill", "#00ff00");
+            this.selectedAltText.setAttribute("font-size", "45");
+            this.selectedAltText.setAttribute("font-family", "Roboto");
+            this.selectedAltText.setAttribute("text-anchor", "left");
+            this.selectedAltText.textContent = "-----";
+            this.root.appendChild(this.selectedAltText);
         }
         {
             let background = document.createElementNS(Avionics.SVG.NS, "rect");
@@ -452,13 +470,25 @@ class HudAltimeter extends HTMLElement {
             case "radar-altitude":
                 this.groundLine.setAttribute("transform", "translate(0," + Math.min(300 + parseFloat(newValue) * 160 / 100, 700) + ")");
                 break;
+            case "reference-altitude":
+                this.selectedAltText.textContent = newValue;
+                if (newValue != "----") {
+                    this.selectedAltitude = parseFloat(newValue);
+                    //this.selectedAltitudeBug.setAttribute("transform", "translate(0, " + (Math.round(this.altitude / 100) * 100 - this.selectedAltitude) * 160 / 100 + ")");
+                    //this.selectedAltitudeBug.setAttribute("display", "");
+                }
+                else {
+                    //this.selectedAltitudeBug.setAttribute("display", "none");
+                }
+                break;
             case "vspeed":
                 let vSpeed = parseFloat(newValue);
 				this.indicator.setAttribute("transform", "translate(0, " + -Math.max(Math.min(vSpeed, 2500), -2500) / 10 + ")");
                 let trendValue = Math.min(Math.max(250 + (vSpeed / 10) * -1.5, -50), 550);
                 this.trendElement.setAttribute("y", Math.min(trendValue, 250).toString());
                 this.trendElement.setAttribute("height", Math.abs(trendValue - 250).toString());
-                this.vsNumber.textContent = fastToFixed(vSpeed, 0).toString();
+                let vSpeedRounded = Math.round(vSpeed / 50)*50;
+                this.vsNumber.textContent = fastToFixed(vSpeedRounded, 0).toString();
                 break;
             case "vertical-deviation-mode":
                 switch (newValue) {

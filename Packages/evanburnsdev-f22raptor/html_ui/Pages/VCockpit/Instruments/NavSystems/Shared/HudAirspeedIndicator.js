@@ -52,20 +52,22 @@ class HudAirspeedIndicator extends HTMLElement {
             background.setAttribute("y", "-50");
             background.setAttribute("width", "200");
             background.setAttribute("height", "50");
-            background.setAttribute("fill", "#1a1d21");
+            background.setAttribute("fill", "#000100");
             background.setAttribute("fill-opacity", "1");
             this.airspeedReferenceGroup.appendChild(background);
+            /*
             this.selectedSpeedFixedBug = document.createElementNS(Avionics.SVG.NS, "polygon");
             this.selectedSpeedFixedBug.setAttribute("points", "190,-40 180,-40 180,-30 185,-25 180,-20 180,-10 190,-10 ");
-            this.selectedSpeedFixedBug.setAttribute("fill", "#36c8d2");
+            this.selectedSpeedFixedBug.setAttribute("fill", "#00ff00");
             this.airspeedReferenceGroup.appendChild(this.selectedSpeedFixedBug);
+            */
             this.selectedSpeedText = document.createElementNS(Avionics.SVG.NS, "text");
-            this.selectedSpeedText.setAttribute("x", "20");
+            this.selectedSpeedText.setAttribute("x", "190");
             this.selectedSpeedText.setAttribute("y", "-10");
-            this.selectedSpeedText.setAttribute("fill", "#36c8d2");
+            this.selectedSpeedText.setAttribute("fill", "#00ff00");
             this.selectedSpeedText.setAttribute("font-size", "45");
-            this.selectedSpeedText.setAttribute("font-family", "Roboto-Bold");
-            this.selectedSpeedText.setAttribute("text-anchor", "start");
+            this.selectedSpeedText.setAttribute("font-family", "Roboto");
+            this.selectedSpeedText.setAttribute("text-anchor", "end");
             this.selectedSpeedText.textContent = "---";
             this.airspeedReferenceGroup.appendChild(this.selectedSpeedText);
         }
@@ -296,17 +298,7 @@ class HudAirspeedIndicator extends HTMLElement {
             this.bottomBackground.setAttribute("fill", "#000000");
             this.bottomBackground.setAttribute("fill-opacity", "0");
             this.root.appendChild(this.bottomBackground);
-            /*
-            let maMaText = document.createElementNS(Avionics.SVG.NS, "text");
-            maMaText.setAttribute("x", "5");
-            maMaText.setAttribute("y", "638");
-            maMaText.setAttribute("fill", "#00ff00");
-            maMaText.setAttribute("font-size", "35");
-            maMaText.setAttribute("font-family", "Roboto-Bold");
-            maMaText.setAttribute("text-anchor", "start");
-            maMaText.textContent = "Ma";
-            this.root.appendChild(maMaText);
-            */
+            
             this.maText = document.createElementNS(Avionics.SVG.NS, "text");
             this.maText.setAttribute("x", "165");
             this.maText.setAttribute("y", "638");
@@ -478,10 +470,10 @@ class HudAirspeedIndicator extends HTMLElement {
                         this.centerSvg.appendChild(newRef.group);
                         newRef.bug = document.createElementNS(Avionics.SVG.NS, "polygon");
                         newRef.bug.setAttribute("points", "200,300 210,315 250,315 250,285 210,285");
-                        newRef.bug.setAttribute("fill", "#1a1d21");
+                        newRef.bug.setAttribute("fill", "#000100");
                         newRef.group.appendChild(newRef.bug);
                         newRef.text = document.createElementNS(Avionics.SVG.NS, "text");
-                        newRef.text.setAttribute("fill", "aqua");
+                        newRef.text.setAttribute("fill", "#00ff00");
                         newRef.text.setAttribute("x", "230");
                         newRef.text.setAttribute("y", "310");
                         newRef.text.setAttribute("font-size", "25");

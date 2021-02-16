@@ -181,7 +181,7 @@ hud-element {
       hud-element #Mainframe #HorizonContainer #GForce {
         transform: rotateX(0);
         position: absolute;
-        top: 13%;
+        top: 14%;
         width: 15%;
         right: 18%; }
     hud-element #Mainframe #InstrumentsContainer {
@@ -201,7 +201,6 @@ hud-element {
         bottom: 37%;
         width: 20%;
         left: 10%; }
-
       hud-element #Mainframe #InstrumentsContainer #RadarAltitude {
         position: absolute;
         left: 60%;
@@ -228,4 +227,13 @@ hud-element {
           line-height: 5vh; }
         hud-element #Mainframe #InstrumentsContainer #RadarAltitude[state=Inactive] {
           display: none; }
+      hud-element #Mainframe #InstrumentsContainer #Compass {
+        transform: rotateX(0);
+        position: absolute;
+        border: none;
+        width: 100%;
+        left: 0%;
+        right: 0%;
+        bottom: 15%;
+        z-index: 1; }
 

@@ -2,11 +2,13 @@ class HUD extends NavSystem {
     constructor() {
         super();
         this.initDuration = 100;
+        this.mainFrame = null;
     }
     get IsGlassCockpit() { return true; }
     get templateID() { return "HUD"; }
     connectedCallback() {
         super.connectedCallback();
+        this.mainFrame = document.getElementById("Mainframe");
 
         this.mainPage = new HUD_MainPage();
         this.pageGroups = [
@@ -56,6 +58,18 @@ class HUD extends NavSystem {
     }
     onUpdate(_deltaTime) {
         super.onUpdate(_deltaTime);
+
+        /**
+         * If Asobo ever gets camera position info working
+         * This is where the HUD will shift depending on eyepoint
+         */
+
+        //let xyzPos = SimVar.GetSimVarValue("EYEPOINT POSITION", "XYZ");
+
+
+        //console.log("XYZ", xyzPos.toString())
+        //let yPos = xyzPos.y;
+        //this.mainFrame.style.top = (yPos*2).toString() + "%";
     }
     reboot() {
         super.reboot();
@@ -73,7 +87,8 @@ class HUD_MainPage extends NavSystemPage {
 			new HUD_GForce(),
             new HUD_Airspeed(),
             new HUD_Altimeter(),
-            new HUD_RadarAltitude()
+            new HUD_RadarAltitude(),
+            new HUD_Compass()
         ]);
     }
     init() {
@@ -170,7 +185,7 @@ class HUD_Airspeed extends NavSystemElement {
         this.lastMachSpeed = -10000;
         this.acceleration = 0;
         this.lastSpeed = null;
-        this.alwaysDisplaySpeed = false;
+        this.alwaysDisplaySpeed = true;
     }
     init(root) {
         this.airspeedElement = this.gps.getChildById("Airspeed");
@@ -221,7 +236,8 @@ class HUD_Airspeed extends NavSystemElement {
             this.airspeedElement.setAttribute("mach-airspeed", machSpeed.toFixed(3));
             this.lastMachSpeed = machSpeed;
         }
-        this.airspeedElement.setAttribute("display-ref-speed", "False");
+        this.airspeedElement.setAttribute("display-ref-speed", "True");
+        this.airspeedElement.setAttribute("ref-speed", SimVar.GetSimVarValue("AUTOPILOT AIRSPEED HOLD VAR", "knots"));
         if (this.acceleration == NaN) {
             this.acceleration = 0;
         }
@@ -282,6 +298,79 @@ class HUD_Altimeter extends NavSystemElement {
             this.lastAltitude = altitude;
         }
         this.altimeterElement.setAttribute("vspeed", fastToFixed(Simplane.getVerticalSpeed(), 1));
+        
+        let altitudeRefActive = true;
+        if (altitudeRefActive) {
+            if (selectedAltitude != this.lastSelectedAltitude) {
+                this.altimeterElement.setAttribute("reference-altitude", selectedAltitude.toFixed(0));
+                this.lastSelectedAltitude = selectedAltitude;
+                this.selectedAltWasCaptured = false;
+            }
+            if (!this.selectedAltWasCaptured) {
+                if (Math.abs(altitude - selectedAltitude) <= 200) {
+                    this.selectedAltWasCaptured = true;
+                    if (this.alertState < 2) {
+                        this.blinkTime = 5000;
+                    }
+                    if (this.blinkTime > 0) {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "BlueText" : "Empty");
+                        this.blinkTime -= _deltaTime;
+                    }
+                    else {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
+                    }
+                }
+                else if (Math.abs(altitude - selectedAltitude) <= 1000) {
+                    if (this.alertState < 1) {
+                        this.blinkTime = 5000;
+                    }
+                    if (this.blinkTime > 0) {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "BlueBackground" : "BlueText");
+                        this.blinkTime -= _deltaTime;
+                    }
+                    else {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueBackground");
+                    }
+                }
+                else {
+                    this.alertState = 0;
+                    Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
+                }
+            }
+            else {
+                if (Math.abs(altitude - selectedAltitude) <= 200) {
+                    if (this.alertState != 2) {
+                        this.blinkTime = 5000;
+                        this.alertState = 2;
+                    }
+                    if (this.blinkTime > 0) {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "BlueText" : "Empty");
+                        this.blinkTime -= _deltaTime;
+                    }
+                    else {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
+                    }
+                }
+                else {
+                    if (this.alertState != 3) {
+                        this.blinkTime = 5000;
+                        this.gps.playInstrumentSound("tone_altitude_alert_default");
+                        this.alertState = 3;
+                    }
+                    if (this.blinkTime > 0) {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", Math.floor(this.blinkTime / 250) % 2 == 0 ? "YellowText" : "Empty");
+                        this.blinkTime -= _deltaTime;
+                    }
+                    else {
+                        Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "YellowText");
+                    }
+                }
+            }
+        }
+        else {
+            Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "reference-altitude", "----");
+            Avionics.Utils.diffAndSetAttribute(this.altimeterElement, "selected-altitude-alert", "BlueText");
+        }
         let cdiSource = SimVar.GetSimVarValue("GPS DRIVES NAV1", "Bool") ? 3 : SimVar.GetSimVarValue("AUTOPILOT NAV SELECTED", "Number");
         switch (cdiSource) {
             case 1:
@@ -368,6 +457,121 @@ class HUD_RadarAltitude extends NavSystemElement {
     onExit() {
     }
     onEvent(_event) {
+    }
+}
+class HUD_Compass extends NavSystemElement {
+    constructor(_hsiElemId = null, _arcHsiElemId = null) {
+        super();
+        //this.displayArc = true;
+        this.hasLocBeenEntered = false;
+        this.hasLocBeenActivated = false;
+        this.ifTimer = 0;
+        this.hsiElemId = _hsiElemId;
+        this.arcHsiElemId = _arcHsiElemId;
+    }
+    init(root) {
+        this.hsi = this.gps.getChildById(this.hsiElemId ? this.hsiElemId : "Compass");
+        this.arcHsi = this.gps.getChildById(this.arcHsiElemId ? this.arcHsiElemId : "ArcCompass");
+        this.nearestAirport = new NearestAirportList(this.gps);
+        //this.displayArc = SimVar.GetSimVarValue("L:Glasscockpit_HSI_Arc", "number") != 0;
+    }
+    onEnter() {
+        if (this.hsi) {
+            this.hsi.init();
+        }
+        /*if (this.arcHsi) {
+            this.arcHsi.init();
+        }*/
+    }
+    onUpdate(_deltaTime) {
+        /*if (this.displayArc) {
+            Avionics.Utils.diffAndSetAttribute(this.hsi, "state", "Inactive");
+            Avionics.Utils.diffAndSetAttribute(this.arcHsi, "state", "Active");
+            this.arcHsi.update(_deltaTime);
+        }
+        else {*/
+        Avionics.Utils.diffAndSetAttribute(this.hsi, "state", "Active");
+        Avionics.Utils.diffAndSetAttribute(this.arcHsi, "state", "Inactive");
+        this.hsi.update(_deltaTime);
+        //}
+        this.nearestAirport.Update(25, 200);
+        if (this.nearestAirport.airports.length == 0) {
+            SimVar.SetSimVarValue("L:GPS_Current_Phase", "number", 4);
+        }
+        else {
+            SimVar.SetSimVarValue("L:GPS_Current_Phase", "number", 3);
+        }
+        if (this.ifTimer <= 0) {
+            this.ifTimer = 2000;
+            if (this.gps.currFlightPlanManager.isActiveApproach()) {
+                this.gps.currFlightPlanManager.getApproachIfIcao((value) => {
+                    this.ifIcao = value;
+                });
+            }
+        }
+        else {
+            this.ifTimer -= this.gps.deltaTime;
+        }
+        if (this.gps.currFlightPlanManager.isActiveApproach() && this.gps.currFlightPlanManager.getActiveWaypointIndex() != -1 && Simplane.getAutoPilotApproachType() == 4) {
+            let approachWPNb = this.gps.currFlightPlanManager.getApproachWaypoints().length;
+            let activeWP = this.gps.currFlightPlanManager.getActiveWaypoint();
+            if (((this.ifIcao && this.ifIcao != "" && activeWP && this.ifIcao == activeWP.icao) || (approachWPNb > 0 && this.gps.currFlightPlanManager.getActiveWaypointIndex() >= approachWPNb - 2)) && !this.hasLocBeenEntered) {
+                let approachFrequency = this.gps.currFlightPlanManager.getApproachNavFrequency();
+                if (!isNaN(approachFrequency)) {
+                    SimVar.SetSimVarValue("K:NAV1_RADIO_SWAP", "number", 0);
+                    SimVar.SetSimVarValue("K:NAV1_RADIO_SET_HZ", "hertz", approachFrequency * 1000000);
+                }
+                this.hasLocBeenEntered = true;
+            }
+            else {
+                let approachWP;
+                let wpIndex = this.gps.currFlightPlanManager.getActiveWaypointIndex() - 1;
+                if (wpIndex >= 0 && wpIndex < approachWPNb) {
+                    approachWP = this.gps.currFlightPlanManager.getApproachWaypoints()[wpIndex];
+                }
+                if (((this.ifIcao && this.ifIcao != "" && approachWP && this.ifIcao == approachWP.icao && this.hasLocBeenEntered) || (approachWPNb > 0 && this.gps.currFlightPlanManager.getActiveWaypointIndex() == approachWPNb - 1)) && !this.hasLocBeenActivated) {
+                    if (SimVar.GetSimVarValue("GPS DRIVES NAV1", "boolean")) {
+                        SimVar.SetSimVarValue("K:TOGGLE_GPS_DRIVES_NAV1", "number", 0);
+                    }
+                    SimVar.SetSimVarValue("K:AP_NAV_SELECT_SET", "number", 1);
+                    this.hasLocBeenActivated = true;
+                }
+            }
+        }
+        else {
+            this.hasLocBeenEntered = false;
+            this.hasLocBeenActivated = false;
+        }
+    }
+    onExit() {
+    }
+    get cdiSource() {
+        if (this.hsi)
+            return this.hsi.logic_cdiSource;
+        return 0;
+    }
+    set cdiSource(_val) {
+        if (this.hsi)
+            this.hsi.logic_cdiSource = _val;
+    }
+    get dmeSource() {
+        return SimVar.GetSimVarValue("L:Glasscockpit_DmeSource", "Number");
+    }
+    set dmeSource(_val) {
+        SimVar.SetSimVarValue("L:Glasscockpit_DmeSource", "Number", _val);
+    }
+    onEvent(_event) {
+        this.hsi.onEvent(_event);
+        /*switch (_event) {
+            case "SoftKeys_HSI_360":
+                this.displayArc = false;
+                SimVar.SetSimVarValue("L:Glasscockpit_HSI_Arc", "number", 0);
+                break;
+            case "SoftKeys_HSI_ARC":
+                this.displayArc = true;
+                SimVar.SetSimVarValue("L:Glasscockpit_HSI_Arc", "number", 1);
+                break;
+        }*/
     }
 }
 registerInstrument("hud-element", HUD);
