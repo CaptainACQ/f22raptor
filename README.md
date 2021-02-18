@@ -130,3 +130,4 @@ yaw damper.  Landings with FBW are now possible.
 * 2/15 - HUD, Flight Model, and FBW changes.
 * 2/18 - FBW Changes(Disabled rudder above 35kft). Major HUD Changes.  Cockpit view now closer to 
  HUD.  Flight Path Indicator more accurate.
+ * 2/18-2 - More HUD Changes.

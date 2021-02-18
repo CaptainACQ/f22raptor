@@ -78,7 +78,7 @@ class HudAltimeter extends HTMLElement {
             this.diamondBug.setAttribute("fill", "#00ff00");
             this.verticalDeviationGroup.appendChild(this.diamondBug);
             this.hollowDiamondBug = document.createElementNS(Avionics.SVG.NS, "polygon");
-            this.hollowDiamondBug.setAttribute("points", "-40,275 -25,260 -10,275 -25,280 -25,280 -20,275 -25,270 -30,275 -25,280 -25,290");
+            this.hollowDiamondBug.setAttribute("points", "-40,275 -25,260 -10,275 -25,290 -25,280 -20,275 -25,270 -30,275 -25,280 -25,290");
             this.hollowDiamondBug.setAttribute("fill", "#00df00");
             this.verticalDeviationGroup.appendChild(this.hollowDiamondBug);
         }
@@ -160,11 +160,24 @@ class HudAltimeter extends HTMLElement {
             }
             this.trendElement = document.createElementNS(Avionics.SVG.NS, "rect");
             this.trendElement.setAttribute("x", "15");
-            this.trendElement.setAttribute("y", "-50");
+            this.trendElement.setAttribute("y", "0");
             this.trendElement.setAttribute("width", "5");
             this.trendElement.setAttribute("height", "0");
             this.trendElement.setAttribute("fill", "#00ff00");
             this.root.appendChild(this.trendElement);
+			{
+				this.trendCursor = document.createElementNS(Avionics.SVG.NS, "path");
+				this.trendCursor.setAttribute("d", "M 15 0 l -10 -10 l -30 0 l 0 20 l 30 0 Z");
+				//this.trendCursor.setAttribute("x", "210");
+				//this.trendCursor.setAttribute("y", "265");
+				//this.trendCursor.setAttribute("height", "20");
+				//this.trendCursor.setAttribute("width", "60");
+				this.trendCursor.setAttribute("fill", "000100");
+                this.trendCursor.setAttribute("stroke", "#00ff00");
+                this.trendCursor.setAttribute("stroke-width", "4");
+				//this.trendCursor.setAttribute("fill", "#00ff00");
+				this.root.appendChild(this.trendCursor);
+			}
             this.groundLine = document.createElementNS(Avionics.SVG.NS, "g");
             this.groundLine.setAttribute("transform", "translate(0, 700)");
             graduationSvg.appendChild(this.groundLine);
@@ -292,6 +305,7 @@ class HudAltimeter extends HTMLElement {
 			//background.setAttribute("fill", "#000100");
 			//background.setAttribute("fill-opacity", "0.25");
 			//verticalSpeedGroup.appendChild(background);
+            /*
 			let dashes = [-200, -100, 0, 100, 200];
 			let height = 20;
 			let width = 10;
@@ -307,18 +321,6 @@ class HudAltimeter extends HTMLElement {
                 rect.setAttribute("stroke", "#00ff00");
                 rect.setAttribute("stroke-width", "4");
 				verticalSpeedGroup.appendChild(rect);
-                /*
-				if ((dashes[i] % 100) == 0) {
-					let text = document.createElementNS(Avionics.SVG.NS, "text");
-					text.textContent = (dashes[i] / 100).toString();
-					text.setAttribute("y", ((250 - dashes[i] - height / 2) + fontSize / 3).toString());
-					text.setAttribute("x", (200 + 3 * width).toString());
-					text.setAttribute("fill", "white");
-					text.setAttribute("font-size", fontSize.toString());
-					text.setAttribute("font-family", "Roboto-Bold");
-					verticalSpeedGroup.appendChild(text);
-				}
-                */
 			}
 			{
 				this.indicator = document.createElementNS(Avionics.SVG.NS, "g");
@@ -356,6 +358,7 @@ class HudAltimeter extends HTMLElement {
                 this.root.appendChild(vsText);
 
             }
+            */
 		}
     }
     attributeChangedCallback(name, oldValue, newValue) {
@@ -493,12 +496,15 @@ class HudAltimeter extends HTMLElement {
                 break;
             case "vspeed":
                 let vSpeed = parseFloat(newValue);
-				this.indicator.setAttribute("transform", "translate(0, " + -Math.max(Math.min(vSpeed, 2500), -2500) / 10 + ")");
-                let trendValue = Math.min(Math.max(275 + (vSpeed / 10) * -1.5, 0), 550);
+				//this.indicator.setAttribute("transform", "translate(0, " + -Math.max(Math.min(vSpeed, 2500), -2500) / 10 + ")");
+                let fpm = 2000;
+                let fpmScalar = fpm/25;
+                let trendValue = Math.min(Math.max(275 + (vSpeed / fpmScalar) * -2.5, 0), 550);
                 this.trendElement.setAttribute("y", Math.min(trendValue, 275).toString());
                 this.trendElement.setAttribute("height", Math.abs(trendValue - 275).toString());
-                let vSpeedRounded = Math.round(vSpeed / 50)*50;
-                this.vsNumber.textContent = fastToFixed(vSpeedRounded, 0).toString();
+				this.trendCursor.setAttribute("transform", "translate(0, " + Math.min(trendValue, 550).toString() + ")");
+                //let vSpeedRounded = Math.round(vSpeed / 50)*50;
+                //this.vsNumber.textContent = fastToFixed(vSpeedRounded, 0).toString();
                 break;
             case "vertical-deviation-mode":
                 switch (newValue) {

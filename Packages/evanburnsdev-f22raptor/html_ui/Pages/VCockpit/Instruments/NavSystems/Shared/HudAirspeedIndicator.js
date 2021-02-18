@@ -77,11 +77,16 @@ class HudAirspeedIndicator extends HTMLElement {
             background.setAttribute("y", "0");
             background.setAttribute("width", "200");
             background.setAttribute("height", "600");
-            background.setAttribute("stroke", "#00ff00");
-            background.setAttribute("stroke-width", "5");
+            //background.setAttribute("stroke", "#00ff00");
+            //background.setAttribute("stroke-width", "5");
             background.setAttribute("fill", "#000100");
-            //background.setAttribute("fill-opacity", "0");
             this.root.appendChild(background);
+            let backgroundLine = document.createElementNS(Avionics.SVG.NS, "path");
+            backgroundLine.setAttribute("d", "M 0 -5 l 200 0 l 0 605 l -200 0");
+            backgroundLine.setAttribute("fill", "transparent");
+            backgroundLine.setAttribute("stroke", "#00ff00");
+            backgroundLine.setAttribute("stroke-width", "5");
+            this.root.appendChild(backgroundLine);
             this.centerSvg = document.createElementNS(Avionics.SVG.NS, "svg");
             this.centerSvg.setAttribute("x", "0");
             this.centerSvg.setAttribute("y", "0");
@@ -103,23 +108,23 @@ class HudAirspeedIndicator extends HTMLElement {
                         this.redElement.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(this.redElement);
                         this.yellowElement = document.createElementNS(Avionics.SVG.NS, "rect");
-                        this.yellowElement.setAttribute("x", "175");
+                        this.yellowElement.setAttribute("x", "190");
                         this.yellowElement.setAttribute("y", "-1");
-                        this.yellowElement.setAttribute("width", "12.5");
+                        this.yellowElement.setAttribute("width", "10");
                         this.yellowElement.setAttribute("height", "0");
                         this.yellowElement.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(this.yellowElement);
                         this.greenElement = document.createElementNS(Avionics.SVG.NS, "rect");
                         this.greenElement.setAttribute("x", "193.75");
                         this.greenElement.setAttribute("y", "-1");
-                        this.greenElement.setAttribute("width", "6.25");
+                        this.greenElement.setAttribute("width", "0");
                         this.greenElement.setAttribute("height", "0");
-                        this.greenElement.setAttribute("fill", "#003f00");
+                        this.greenElement.setAttribute("fill", "#00ef00");
                         this.centerGroup.appendChild(this.greenElement);
                         this.flapsElement = document.createElementNS(Avionics.SVG.NS, "rect");
-                        this.flapsElement.setAttribute("x", "187.5");
+                        this.flapsElement.setAttribute("x", "193.75");
                         this.flapsElement.setAttribute("y", "-1");
-                        this.flapsElement.setAttribute("width", "6.25");
+                        this.flapsElement.setAttribute("width", "0");
                         this.flapsElement.setAttribute("height", "0");
                         this.flapsElement.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(this.flapsElement);
@@ -138,14 +143,14 @@ class HudAirspeedIndicator extends HTMLElement {
                         startBg.setAttribute("y", "-935");
                         startBg.setAttribute("width", "25");
                         startBg.setAttribute("height", "800");
-                        startBg.setAttribute("fill", "#00ff00");
+                        startBg.setAttribute("fill", "#000000");
                         this.startElement.appendChild(startBg);
                         for (let i = 0; i <= 32; i++) {
                             let redLine = document.createElementNS(Avionics.SVG.NS, "rect");
                             redLine.setAttribute("x", "0");
-                            redLine.setAttribute("y", (-125 - 25 * i).toString());
-                            redLine.setAttribute("width", "25");
-                            redLine.setAttribute("height", "12.5");
+                            redLine.setAttribute("y", (-130 - 20 * i).toString());
+                            redLine.setAttribute("width", "20");
+                            redLine.setAttribute("height", "10");
                             redLine.setAttribute("transform", "skewY(-30)");
                             redLine.setAttribute("fill", "#00ff00");
                             this.startElement.appendChild(redLine);
@@ -157,7 +162,7 @@ class HudAirspeedIndicator extends HTMLElement {
                         endBg.setAttribute("y", "-900");
                         endBg.setAttribute("width", "25");
                         endBg.setAttribute("height", "800");
-                        endBg.setAttribute("fill", "#00ff00");
+                        endBg.setAttribute("fill", "#000000");
                         this.endElement.appendChild(endBg);
                         for (let i = 0; i <= 32; i++) {
                             let redLine = document.createElementNS(Avionics.SVG.NS, "rect");
@@ -173,56 +178,70 @@ class HudAirspeedIndicator extends HTMLElement {
                     else {
                         this.nocolor = true;
                     }
+                    let AScenter = 298;
                     for (let i = -4; i <= 4; i++) {
                         let grad = document.createElementNS(Avionics.SVG.NS, "rect");
-                        grad.setAttribute("x", "150");
-                        grad.setAttribute("y", (298 + 100 * i).toString());
+                        grad.setAttribute("x", "180");
+                        grad.setAttribute("y", (AScenter + 100 * i).toString());
                         grad.setAttribute("height", "4");
-                        grad.setAttribute("width", "50");
+                        grad.setAttribute("width", "20");
                         grad.setAttribute("fill", "#00ff00");
                         this.centerGroup.appendChild(grad);
                         if (i != 0) {
                             let halfGrad = document.createElementNS(Avionics.SVG.NS, "rect");
-                            halfGrad.setAttribute("x", "175");
-                            halfGrad.setAttribute("y", (298 + 100 * i + (i < 0 ? 50 : -50)).toString());
+                            halfGrad.setAttribute("x", "180");
+                            halfGrad.setAttribute("y", (AScenter + 100 * i + (i < 0 ? 50 : -50)).toString());
                             halfGrad.setAttribute("height", "4");
-                            halfGrad.setAttribute("width", "25");
+                            halfGrad.setAttribute("width", "20");
                             halfGrad.setAttribute("fill", "#00ff00");
                             this.centerGroup.appendChild(halfGrad);
                         }
                         let gradText = document.createElementNS(Avionics.SVG.NS, "text");
-                        gradText.setAttribute("x", "140");
-                        gradText.setAttribute("y", (320 + 100 * i).toString());
+                        gradText.setAttribute("x", "175");
+                        gradText.setAttribute("y", (315 + 100 * i).toString());
                         gradText.setAttribute("fill", "#00ff00");
                         gradText.setAttribute("font-size", "40");
                         gradText.setAttribute("text-anchor", "end");
-                        gradText.setAttribute("font-family", "Roboto-Bold");
+                        gradText.setAttribute("font-family", "Roboto");
                         gradText.setAttribute("letter-spacing", "12");
                         gradText.textContent = "XXX";
                         this.gradTexts.push(gradText);
                         this.centerGroup.appendChild(gradText);
                     }
-                    let center = 300;
+                    /*let center = 300;
                     this.selectedSpeedBug = document.createElementNS(Avionics.SVG.NS, "polygon");
                     this.selectedSpeedBug.setAttribute("points", "200, " + (center - 20) + " 180, " + (center - 20) + " 180, " + (center - 15) + " 190, " + center + " 180, " + (center + 15) + " 180, " + (center + 20) + " 200, " + (center + 20));
                     //this.selectedSpeedBug.setAttribute("fill", "#36c8d2");
                     //this.selectedSpeedBug.setAttribute("stroke", "#00ff00");
                     //this.selectedSpeedBug.setAttribute("stroke-width", "1");
-                    this.centerSvg.appendChild(this.selectedSpeedBug);
+                    this.centerSvg.appendChild(this.selectedSpeedBug);*/
                 }
                 let cursor = document.createElementNS(Avionics.SVG.NS, "path");
-                cursor.setAttribute("d", "M 200 300 L 170 260 L 150 260 L 150 240 L 100 240 L 100 260 L 0 260 L 0 340 L 100 340 L 100 360 L 150 360 L 150 340 L 170 340 Z");
+                cursor.setAttribute("d", "M 180 300 L 160 270 L 150 270 L 150 240 L 100 240 L 100 270 L 0 270 L 0 330 L 100 330 L 100 360 L 150 360 L 150 330 L 160 330 Z");
                 cursor.setAttribute("stroke", "#00ff00");
                 cursor.setAttribute("stroke-width", "2");
                 cursor.setAttribute("fill", "#000100");
                 this.root.appendChild(cursor);
                 this.trendElement = document.createElementNS(Avionics.SVG.NS, "rect");
-                this.trendElement.setAttribute("x", "200");
+                this.trendElement.setAttribute("x", "180");
                 this.trendElement.setAttribute("y", "-1");
-                this.trendElement.setAttribute("width", "8");
+                this.trendElement.setAttribute("width", "5");
                 this.trendElement.setAttribute("height", "0");
                 this.trendElement.setAttribute("fill", "#00ff00");
                 this.root.appendChild(this.trendElement);
+                {
+                    this.trendCursor = document.createElementNS(Avionics.SVG.NS, "path");
+                    this.trendCursor.setAttribute("d", "M 180 0 l 10 -10 l 30 0 l 0 20 l -30 0 Z");
+                    //this.trendCursor.setAttribute("x", "210");
+                    //this.trendCursor.setAttribute("y", "265");
+                    //this.trendCursor.setAttribute("height", "20");
+                    //this.trendCursor.setAttribute("width", "60");
+                    this.trendCursor.setAttribute("fill", "000100");
+                    this.trendCursor.setAttribute("stroke", "#00ff00");
+                    this.trendCursor.setAttribute("stroke-width", "4");
+                    //this.trendCursor.setAttribute("fill", "#00ff00");
+                    this.root.appendChild(this.trendCursor);
+                }
                 let baseCursorSvg = document.createElementNS(Avionics.SVG.NS, "svg");
                 baseCursorSvg.setAttribute("x", "0");
                 baseCursorSvg.setAttribute("y", "260");
@@ -304,7 +323,7 @@ class HudAirspeedIndicator extends HTMLElement {
             this.maText.setAttribute("y", "638");
             this.maText.setAttribute("fill", "#00ff00");
             this.maText.setAttribute("font-size", "42");
-            this.maText.setAttribute("font-family", "Roboto-Bold");
+            this.maText.setAttribute("font-family", "Roboto");
             this.maText.setAttribute("text-anchor", "end");
             this.maText.textContent = "0.000";
             this.root.appendChild(this.maText);
@@ -316,50 +335,44 @@ class HudAirspeedIndicator extends HTMLElement {
         switch (name) {
             case "airspeed":
                 this.value = Math.max(parseFloat(newValue), 20);
-                let center = Math.max(Math.round(this.value / 10) * 10, 60);
-                if (!this.nocolor && ((this.minValue > 0) && (this.value < this.minValue)) || ((this.maxValue > 0) && (this.value > this.maxValue))) {
-                    Avionics.Utils.diffAndSetAttribute(this.cursor, "fill", "red");
-                    Avionics.Utils.diffAndSetAttribute(this.bottomBackground, "fill", "red");
-                }
-                else {
-                    Avionics.Utils.diffAndSetAttribute(this.cursor, "fill", "#1a1d21");
-                    Avionics.Utils.diffAndSetAttribute(this.bottomBackground, "fill", "#1a1d21");
-                }
-                this.centerGroup.setAttribute("transform", "translate(0, " + ((this.value - center) * 10) + ")");
+                let center = Math.max(Math.round(this.value / 20) * 20, 120);
+                Avionics.Utils.diffAndSetAttribute(this.cursor, "fill", "#000100");
+                Avionics.Utils.diffAndSetAttribute(this.bottomBackground, "fill", "#000100");
+                this.centerGroup.setAttribute("transform", "translate(0, " + ((this.value - center) * 5) + ")");
                 if (!this.nocolor) {
                     if (this.minValue > 0) {
-                        var val = 835 + ((center + 40 - this.minValue) * 10) + ((this.value - center) * 10);
+                        var val = 835 + ((center + 80 - this.minValue) * 5) + ((this.value - center) * 5);
                         this.startElement.setAttribute("transform", "translate(0," + val + ")");
                     }
                     if (this.maxValue > 0) {
-                        var val = ((Math.min(Math.max(center + 40 - this.maxValue, -10), 80) * 10) + (this.value - center) * 10);
+                        var val = ((Math.min(Math.max(center + 80 - this.maxValue, -5), 160) * 5) + (this.value - center) * 5);
                         this.endElement.setAttribute("transform", "translate(0," + val + ")");
                     }
                 }
                 for (let i = 0; i < this.referenceBugs.length; i++) {
-                    this.referenceBugs[i].group.setAttribute("transform", "translate(0," + ((this.value - this.referenceBugs[i].value) * 10) + ")");
+                    this.referenceBugs[i].group.setAttribute("transform", "translate(0," + ((this.value - this.referenceBugs[i].value) * 5) + ")");
                 }
-                this.selectedSpeedBug.setAttribute("transform", "translate(0," + ((this.value - this.selectedSpeedBugValue) * 10) + ")");
+                //this.selectedSpeedBug.setAttribute("transform", "translate(0," + ((this.value - this.selectedSpeedBugValue) * 10) + ")");
                 if (this.currentCenterGrad != center) {
                     this.currentCenterGrad = center;
                     for (let i = 0; i < this.gradTexts.length; i++) {
-                        this.gradTexts[i].textContent = fastToFixed(((4 - i) * 10) + center, 0);
+                        this.gradTexts[i].textContent = fastToFixed(((4 - i) * 20) + center, 0);
                     }
                     if (!this.nocolor) {
-                        let greenEnd = Math.min(Math.max(-100, (300 + (-10 * (this.greenEnd - center)))), 700);
-                        let greenBegin = Math.min(Math.max(-100, (300 + (-10 * (this.greenBegin - center)))), 700);
+                        let greenEnd = Math.min(Math.max(-100, (300 + (-5 * (this.greenEnd - center)))), 700);
+                        let greenBegin = Math.min(Math.max(-100, (300 + (-5 * (this.greenBegin - center)))), 700);
                         this.greenElement.setAttribute("y", greenEnd.toString());
                         this.greenElement.setAttribute("height", (greenBegin - greenEnd).toString());
-                        let yellowEnd = Math.min(Math.max(-100, (300 + (-10 * (this.yellowEnd - center)))), 700);
-                        let yellowBegin = Math.min(Math.max(-100, (300 + (-10 * (this.yellowBegin - center)))), 700);
+                        let yellowEnd = Math.min(Math.max(-100, (300 + (-5 * (this.yellowEnd - center)))), 700);
+                        let yellowBegin = Math.min(Math.max(-100, (300 + (-5 * (this.yellowBegin - center)))), 700);
                         this.yellowElement.setAttribute("y", yellowEnd.toString());
                         this.yellowElement.setAttribute("height", (yellowBegin - yellowEnd).toString());
-                        let redEnd = Math.min(Math.max(-100, (300 + (-10 * (this.redEnd - center)))), 700);
-                        let redBegin = Math.min(Math.max(-100, (300 + (-10 * (this.redBegin - center)))), 700);
+                        let redEnd = Math.min(Math.max(-100, (300 + (-5 * (this.redEnd - center)))), 700);
+                        let redBegin = Math.min(Math.max(-100, (300 + (-5 * (this.redBegin - center)))), 700);
                         this.redElement.setAttribute("y", redEnd.toString());
                         this.redElement.setAttribute("height", (redBegin - redEnd).toString());
-                        let flapsEnd = Math.min(Math.max(-100, (300 + (-10 * (this.flapsEnd - center)))), 700);
-                        let flapsBegin = Math.min(Math.max(-100, (300 + (-10 * (this.flapsBegin - center)))), 700);
+                        let flapsEnd = Math.min(Math.max(-100, (300 + (-5 * (this.flapsEnd - center)))), 700);
+                        let flapsBegin = Math.min(Math.max(-100, (300 + (-5 * (this.flapsBegin - center)))), 700);
                         this.flapsElement.setAttribute("y", flapsEnd.toString());
                         this.flapsElement.setAttribute("height", (flapsBegin - flapsEnd).toString());
                     }
@@ -418,9 +431,10 @@ class HudAirspeedIndicator extends HTMLElement {
                 }
                 break;
             case "airspeed-trend":
-                this.trendValue = Math.min(Math.max(300 + parseFloat(newValue) * 6 * -10, 0), 600);
+                this.trendValue = Math.min(Math.max(300 + parseFloat(newValue) * 6 * -5, 0), 600);
                 this.trendElement.setAttribute("y", Math.min(this.trendValue, 300).toString());
                 this.trendElement.setAttribute("height", Math.abs(this.trendValue - 300).toString());
+				this.trendCursor.setAttribute("transform", "translate(0, " + Math.min(this.trendValue, 600).toString() + ")");
                 break;
             case "min-speed":
                 this.minValue = parseFloat(newValue);
@@ -494,7 +508,7 @@ class HudAirspeedIndicator extends HTMLElement {
                 break;
             case "display-ref-speed":
                 this.airspeedReferenceGroup.setAttribute("display", newValue == "True" ? "" : "none");
-                this.selectedSpeedBug.setAttribute("display", newValue == "True" ? "" : "none");
+                //this.selectedSpeedBug.setAttribute("display", newValue == "True" ? "" : "none");
                 break;
             case "ref-speed":
                 this.selectedSpeedBugValue = parseFloat(newValue);
