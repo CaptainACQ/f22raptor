@@ -23,7 +23,7 @@ class HudAltimeter extends HTMLElement {
         this.root = document.createElementNS(Avionics.SVG.NS, "svg");
         this.root.setAttribute("width", "100%");
         this.root.setAttribute("height", "100%");
-        this.root.setAttribute("viewBox", "-50 -100 380 700");
+        this.root.setAttribute("viewBox", "-50 -50 380 650");
         this.appendChild(this.root);
         {
             this.verticalDeviationGroup = document.createElementNS(Avionics.SVG.NS, "g");
@@ -31,17 +31,17 @@ class HudAltimeter extends HTMLElement {
             this.root.appendChild(this.verticalDeviationGroup);
             let background = document.createElementNS(Avionics.SVG.NS, "rect");
             background.setAttribute("x", "-50");
-            background.setAttribute("y", "50");
+            background.setAttribute("y", "-5");
             background.setAttribute("width", "50");
-            background.setAttribute("height", "400");
-            background.setAttribute("stroke", "#00ff00");
-            background.setAttribute("stroke-width", "5");
+            background.setAttribute("height", "555");
+            //background.setAttribute("stroke", "#00ff00");
+            //background.setAttribute("stroke-width", "5");
             background.setAttribute("fill", "#000f00");
             //background.setAttribute("fill-opacity", "0.25");
             this.verticalDeviationGroup.appendChild(background);
             let topBackground = document.createElementNS(Avionics.SVG.NS, "rect");
             topBackground.setAttribute("x", "-50");
-            topBackground.setAttribute("y", "0");
+            topBackground.setAttribute("y", "-55");
             topBackground.setAttribute("width", "50");
             topBackground.setAttribute("height", "50");
             topBackground.setAttribute("stroke", "#00ff00");
@@ -50,7 +50,7 @@ class HudAltimeter extends HTMLElement {
             this.verticalDeviationGroup.appendChild(topBackground);
             this.verticalDeviationText = document.createElementNS(Avionics.SVG.NS, "text");
             this.verticalDeviationText.setAttribute("x", "-25");
-            this.verticalDeviationText.setAttribute("y", "40");
+            this.verticalDeviationText.setAttribute("y", "-10");
             this.verticalDeviationText.setAttribute("fill", "#00ff00");
             this.verticalDeviationText.setAttribute("font-size", "45");
             this.verticalDeviationText.setAttribute("font-family", "Roboto-Bold");
@@ -61,7 +61,7 @@ class HudAltimeter extends HTMLElement {
                 if (i != 0) {
                     let grad = document.createElementNS(Avionics.SVG.NS, "circle");
                     grad.setAttribute("cx", "-25");
-                    grad.setAttribute("cy", (250 + 66 * i).toString());
+                    grad.setAttribute("cy", (275 + 66 * i).toString());
                     grad.setAttribute("r", "6");
                     grad.setAttribute("stroke", "#00ff00");
                     grad.setAttribute("stroke-width", "3");
@@ -70,29 +70,29 @@ class HudAltimeter extends HTMLElement {
                 }
             }
             this.chevronBug = document.createElementNS(Avionics.SVG.NS, "polygon");
-            this.chevronBug.setAttribute("points", "-45,250 -10,230 -10,240 -25,250 -10,260 -10,270");
+            this.chevronBug.setAttribute("points", "-45,275 -10,255 -10,265 -25,275 -10,285 -10,295");
             this.chevronBug.setAttribute("fill", "#00ff00");
             this.verticalDeviationGroup.appendChild(this.chevronBug);
             this.diamondBug = document.createElementNS(Avionics.SVG.NS, "polygon");
-            this.diamondBug.setAttribute("points", "-40,250 -25,235 -10,250 -25,265");
+            this.diamondBug.setAttribute("points", "-40,275 -25,260 -10,275 -25,290");
             this.diamondBug.setAttribute("fill", "#00ff00");
             this.verticalDeviationGroup.appendChild(this.diamondBug);
             this.hollowDiamondBug = document.createElementNS(Avionics.SVG.NS, "polygon");
-            this.hollowDiamondBug.setAttribute("points", "-40,250 -25,235 -10,250 -25,265 -25,255 -20,250 -25,245 -30,250 -25,255 -25,265");
+            this.hollowDiamondBug.setAttribute("points", "-40,275 -25,260 -10,275 -25,280 -25,280 -20,275 -25,270 -30,275 -25,280 -25,290");
             this.hollowDiamondBug.setAttribute("fill", "#00df00");
             this.verticalDeviationGroup.appendChild(this.hollowDiamondBug);
         }
         {
             this.selectedAltitudeBackground = document.createElementNS(Avionics.SVG.NS, "rect");
             this.selectedAltitudeBackground.setAttribute("x", "0");
-            this.selectedAltitudeBackground.setAttribute("y", "-100");
-            this.selectedAltitudeBackground.setAttribute("width", this.compactVs ? "250" : "200");
+            this.selectedAltitudeBackground.setAttribute("y", "-50");
+            this.selectedAltitudeBackground.setAttribute("width", "200");
             this.selectedAltitudeBackground.setAttribute("height", "50");
             this.selectedAltitudeBackground.setAttribute("fill", "#000100");
             this.root.appendChild(this.selectedAltitudeBackground);
             this.selectedAltText = document.createElementNS(Avionics.SVG.NS, "text");
             this.selectedAltText.setAttribute("x", "10");
-            this.selectedAltText.setAttribute("y", "-60");
+            this.selectedAltText.setAttribute("y", "-10");
             this.selectedAltText.setAttribute("fill", "#00ff00");
             this.selectedAltText.setAttribute("font-size", "45");
             this.selectedAltText.setAttribute("font-family", "Roboto");
@@ -103,45 +103,51 @@ class HudAltimeter extends HTMLElement {
         {
             let background = document.createElementNS(Avionics.SVG.NS, "rect");
             background.setAttribute("x", "0");
-            background.setAttribute("y", "-50");
+            background.setAttribute("y", "0");
             background.setAttribute("width", "200");
-            background.setAttribute("height", "600");
+            background.setAttribute("height", "550");
             background.setAttribute("fill", "#000100");
-            background.setAttribute("stroke", "#00ff00");
-            background.setAttribute("stroke-width", "5");
+            //background.setAttribute("stroke", "#00ff00");
+            //background.setAttribute("stroke-width", "5");
             //background.setAttribute("fill-opacity", "0.25");
             this.root.appendChild(background);
+            let backgroundLine = document.createElementNS(Avionics.SVG.NS, "path");
+            backgroundLine.setAttribute("d", "M 200 -5 l -200 0 l 0 555 l 200 0");
+            backgroundLine.setAttribute("fill", "transparent");
+            backgroundLine.setAttribute("stroke", "#00ff00");
+            backgroundLine.setAttribute("stroke-width", "5");
+            this.root.appendChild(backgroundLine);
             let graduationSvg = document.createElementNS(Avionics.SVG.NS, "svg");
             graduationSvg.setAttribute("x", "0");
-            graduationSvg.setAttribute("y", "-50");
+            graduationSvg.setAttribute("y", "0");
             graduationSvg.setAttribute("width", "200");
-            graduationSvg.setAttribute("height", "600");
-            graduationSvg.setAttribute("viewBox", "0 0 200 600");
+            graduationSvg.setAttribute("height", "550");
+            graduationSvg.setAttribute("viewBox", "0 0 200 550");
             this.root.appendChild(graduationSvg);
-            let center = 300;
+            let center = 275;
             this.graduationGroup = document.createElementNS(Avionics.SVG.NS, "g");
             graduationSvg.appendChild(this.graduationGroup);
             {
-                let graduationSize = 160;
+                let graduationSize = 62;
                 this.graduationTexts = [];
-                for (let i = -3; i <= 3; i++) {
+                for (let i = -6; i <= 6; i++) {
                     let mainGrad = document.createElementNS(Avionics.SVG.NS, "rect");
                     mainGrad.setAttribute("x", "0");
                     mainGrad.setAttribute("y", fastToFixed(center - 2 + i * graduationSize, 0));
                     mainGrad.setAttribute("height", "4");
-                    mainGrad.setAttribute("width", "40");
+                    mainGrad.setAttribute("width", "20");
                     mainGrad.setAttribute("fill", "#00ff00");
                     this.graduationGroup.appendChild(mainGrad);
                     let gradText = document.createElementNS(Avionics.SVG.NS, "text");
-                    gradText.setAttribute("x", "50");
+                    gradText.setAttribute("x", "30");
                     gradText.setAttribute("y", fastToFixed(center + 16 + i * graduationSize, 0));
                     gradText.setAttribute("fill", "#00ff00");
                     gradText.setAttribute("font-size", "45");
-                    gradText.setAttribute("font-family", "Roboto-Bold");
+                    gradText.setAttribute("font-family", "Roboto");
                     gradText.textContent = "XXXX";
                     this.graduationGroup.appendChild(gradText);
                     this.graduationTexts.push(gradText);
-                    for (let j = 1; j < 5; j++) {
+                    /*for (let j = 1; j < 5; j++) {
                         let grad = document.createElementNS(Avionics.SVG.NS, "rect");
                         grad.setAttribute("x", "0");
                         grad.setAttribute("y", fastToFixed(center - 2 + i * graduationSize + j * (graduationSize / 5), 0));
@@ -149,13 +155,13 @@ class HudAltimeter extends HTMLElement {
                         grad.setAttribute("width", "15");
                         grad.setAttribute("fill", "#00ff00");
                         this.graduationGroup.appendChild(grad);
-                    }
+                    }*/
                 }
             }
             this.trendElement = document.createElementNS(Avionics.SVG.NS, "rect");
-            this.trendElement.setAttribute("x", "0");
+            this.trendElement.setAttribute("x", "15");
             this.trendElement.setAttribute("y", "-50");
-            this.trendElement.setAttribute("width", "8");
+            this.trendElement.setAttribute("width", "5");
             this.trendElement.setAttribute("height", "0");
             this.trendElement.setAttribute("fill", "#00ff00");
             this.root.appendChild(this.trendElement);
@@ -170,14 +176,14 @@ class HudAltimeter extends HTMLElement {
                 background.setAttribute("x", "0");
                 background.setAttribute("y", "0");
                 background.setAttribute("width", "196");
-                background.setAttribute("height", "600");
+                background.setAttribute("height", "550");
                 this.groundLine.appendChild(background);
                 let groundLineSvg = document.createElementNS(Avionics.SVG.NS, "svg");
                 groundLineSvg.setAttribute("x", "0");
                 groundLineSvg.setAttribute("y", "0");
                 groundLineSvg.setAttribute("width", "200");
-                groundLineSvg.setAttribute("height", "600");
-                groundLineSvg.setAttribute("viewBox", "0 0 200 600");
+                groundLineSvg.setAttribute("height", "550");
+                groundLineSvg.setAttribute("viewBox", "0 0 200 550");
                 this.groundLine.appendChild(groundLineSvg);
                 for (let i = -5; i <= 25; i++) {
                     let line = document.createElementNS(Avionics.SVG.NS, "rect");
@@ -191,7 +197,7 @@ class HudAltimeter extends HTMLElement {
                 }
             }
             let cursor = document.createElementNS(Avionics.SVG.NS, "path");
-            cursor.setAttribute("d", "M0 " + center + " L30 " + (center - 40) + " L130 " + (center - 40) + " L130 " + (center - 60) + " L200 " + (center - 60) + " L200 " + (center + 60) + " L130 " + (center + 60) + " L130 " + (center + 40) + " L30 " + (center + 40) + "Z");
+            cursor.setAttribute("d", "M20 " + center + " L40 " + (center - 30) + " L130 " + (center - 30) + " L130 " + (center - 60) + " L200 " + (center - 60) + " L200 " + (center + 60) + " L130 " + (center + 60) + " L130 " + (center + 30) + " L40 " + (center + 30) + "Z");
             cursor.setAttribute("fill", "#000100");
             cursor.setAttribute("stroke", "#00ff00");
             cursor.setAttribute("stroke-width", "2");
@@ -294,7 +300,7 @@ class HudAltimeter extends HTMLElement {
 				let rect = document.createElementNS(Avionics.SVG.NS, "rect");
 				//rect.setAttribute("x", (-40-((dashes[i] % 100) == 0 ? 2 * width : width)).toString());
 				rect.setAttribute("x", "230");
-				rect.setAttribute("y", (250 - dashes[i] - height / 2).toString());
+				rect.setAttribute("y", (275 - dashes[i] - height / 2).toString());
 				rect.setAttribute("height", height.toString());
 				rect.setAttribute("width", ((dashes[i] % 100) == 0 ? 2 * width : width).toString());
 				rect.setAttribute("fill", "000f00");
@@ -319,7 +325,7 @@ class HudAltimeter extends HTMLElement {
 				verticalSpeedGroup.appendChild(this.indicator);
 				let indicatorBackground = document.createElementNS(Avionics.SVG.NS, "rect");
 				indicatorBackground.setAttribute("x", "210");
-				indicatorBackground.setAttribute("y", "240");
+				indicatorBackground.setAttribute("y", "265");
 				indicatorBackground.setAttribute("height", "20");
 				indicatorBackground.setAttribute("width", "60");
 				indicatorBackground.setAttribute("fill", "000f00");
@@ -360,18 +366,22 @@ class HudAltimeter extends HTMLElement {
                 let value = parseFloat(newValue);
                 this.altitude = value;
                 let center = Math.round(value / 100) * 100;
-                this.graduationGroup.setAttribute("transform", "translate(0, " + ((value - center) * 160 / 100) + ")");
+                this.graduationGroup.setAttribute("transform", "translate(0, " + ((value - center) * 62 / 100) + ")");
                 if (this.currentCenterGrad != center) {
                     this.currentCenterGrad = center;
                     for (let i = 0; i < this.graduationTexts.length; i++) {
-                        this.graduationTexts[i].textContent = fastToFixed(((3 - i) * 100) + center, 0);
+                        if((((6-i)*100)+center) % 200){
+                            this.graduationTexts[i].textContent = "";
+                        } else {
+                            this.graduationTexts[i].textContent = fastToFixed(((6 - i) * 100) + center, 0);
+                        }
                     }
                 }
                 let endValue = value % 100;
-                let endCenter = Math.round(endValue / 10) * 10;
-                this.endDigitsGroup.setAttribute("transform", "translate(0, " + ((endValue - endCenter) * 45 / 10) + ")");
+                let endCenter = Math.round(endValue / 20) * 20;
+                this.endDigitsGroup.setAttribute("transform", "translate(0, " + ((endValue - endCenter) * 45 / 20) + ")");
                 for (let i = 0; i < this.endDigits.length; i++) {
-                    let digitValue = Math.round((((2 - i) * 10) + value) % 100 / 10) * 10;
+                    let digitValue = Math.round((((2 - i) * 20) + value) % 100 / 20) * 20;
                     this.endDigits[i].textContent = fastToFixed(Math.abs((digitValue % 100) / 10), 0) + "0";
                 }
                 if (Math.abs(value) >= 90) {
@@ -484,9 +494,9 @@ class HudAltimeter extends HTMLElement {
             case "vspeed":
                 let vSpeed = parseFloat(newValue);
 				this.indicator.setAttribute("transform", "translate(0, " + -Math.max(Math.min(vSpeed, 2500), -2500) / 10 + ")");
-                let trendValue = Math.min(Math.max(250 + (vSpeed / 10) * -1.5, -50), 550);
-                this.trendElement.setAttribute("y", Math.min(trendValue, 250).toString());
-                this.trendElement.setAttribute("height", Math.abs(trendValue - 250).toString());
+                let trendValue = Math.min(Math.max(275 + (vSpeed / 10) * -1.5, 0), 550);
+                this.trendElement.setAttribute("y", Math.min(trendValue, 275).toString());
+                this.trendElement.setAttribute("height", Math.abs(trendValue - 275).toString());
                 let vSpeedRounded = Math.round(vSpeed / 50)*50;
                 this.vsNumber.textContent = fastToFixed(vSpeedRounded, 0).toString();
                 break;

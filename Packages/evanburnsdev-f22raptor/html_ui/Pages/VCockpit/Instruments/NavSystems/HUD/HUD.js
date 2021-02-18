@@ -167,7 +167,9 @@ class HUD_Attitude extends NavSystemElement {
             this.svg.setAttribute("pitch", (xyz.pitch / Math.PI * 180).toString());
             this.svg.setAttribute("bank", (xyz.bank / Math.PI * 180).toString());
             this.svg.setAttribute("slip_skid", Simplane.getInclinometer().toString());
-            this.svg.setAttribute("aoa", Simplane.getAngleOfAttack().toString());
+            this.svg.setAttribute("slip_skid", SimVar.GetSimVarValue("INCIDENCE BETA", "radians"));
+            //this.svg.setAttribute("aoa", Simplane.getAngleOfAttack().toString());
+            this.svg.setAttribute("aoa", SimVar.GetSimVarValue("INCIDENCE ALPHA", "radians"));
             this.svg.setAttribute("flight_director-active", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR ACTIVE", "Bool") ? "true" : "false");
             this.svg.setAttribute("flight_director-pitch", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR PITCH", "degree"));
             this.svg.setAttribute("flight_director-bank", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR BANK", "degree"));

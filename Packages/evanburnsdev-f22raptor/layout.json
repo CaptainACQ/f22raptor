@@ -3,27 +3,27 @@
     {
       "path": "en-US.locPak",
       "size": 264,
-      "date": 132579075216873735
+      "date": 132580981457100229
     },
     {
       "path": "fbw/WASM_fbw.conf",
-      "size": 2319,
-      "date": 132578378558795481
+      "size": 2567,
+      "date": 132579135163747621
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.css",
-      "size": 6430,
-      "date": 132578985699323083
+      "size": 6419,
+      "date": 132580969373087361
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.html",
-      "size": 4278,
-      "date": 132578820552657800
+      "size": 4102,
+      "date": 132580735746965339
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/HUD.js",
-      "size": 24599,
-      "date": 132579041033977407
+      "size": 24798,
+      "date": 132580963568420750
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/HUD/mapConfig.json",
@@ -107,13 +107,13 @@
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/Shared/HudAltimeter.js",
-      "size": 32394,
-      "date": 132579042736266818
+      "size": 32976,
+      "date": 132580914995561446
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/Shared/HudAttitudeIndicator.js",
-      "size": 20406,
-      "date": 132577388698749818
+      "size": 18300,
+      "date": 132580980233088410
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/Shared/HudGIndicator.js",
@@ -123,7 +123,7 @@
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/Shared/HudHeading.js",
       "size": 2515,
-      "date": 132577519885179287
+      "date": 132580705012277055
     },
     {
       "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/Shared/HudHSIndicator.js",
@@ -223,7 +223,7 @@
     {
       "path": "SimObjects/Airplanes/raptor/cameras.cfg",
       "size": 29292,
-      "date": 132559954470029071
+      "date": 132580974067020810
     },
     {
       "path": "SimObjects/Airplanes/raptor/Climb.flt",
@@ -268,12 +268,12 @@
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.bin",
       "size": 2836542,
-      "date": 132579075205258364
+      "date": 132580981441385651
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.gltf",
       "size": 261411,
-      "date": 132579075208575537
+      "date": 132580981445129909
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/cockpit.xml",
@@ -283,12 +283,12 @@
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.bin",
       "size": 5019794,
-      "date": 132579075193976665
+      "date": 132580981429137122
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.gltf",
       "size": 174649,
-      "date": 132579075197500015
+      "date": 132580981432948246
     },
     {
       "path": "SimObjects/Airplanes/raptor/model/F22Raptor.xml",
@@ -312,8 +312,8 @@
     },
     {
       "path": "SimObjects/Airplanes/raptor/panel/WASM_fbw.wasm",
-      "size": 820670,
-      "date": 132578371237035257
+      "size": 824016,
+      "date": 132579119737339799
     },
     {
       "path": "SimObjects/Airplanes/raptor/runway.FLT",
