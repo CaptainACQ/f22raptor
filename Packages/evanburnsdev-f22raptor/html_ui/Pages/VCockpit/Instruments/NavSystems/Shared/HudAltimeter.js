@@ -338,15 +338,6 @@ class HudAltimeter extends HTMLElement {
 				this.indicator.appendChild(indicatorBackground);
 			}
             {
-                this.vsNumber = document.createElementNS(Avionics.SVG.NS, "text");
-                this.vsNumber.textContent = "----";
-                this.vsNumber.setAttribute("y", "590");
-                this.vsNumber.setAttribute("x", "140");
-                this.vsNumber.setAttribute("fill", "#00ff00");
-                this.vsNumber.setAttribute("font-size", "42");
-                this.vsNumber.setAttribute("font-family", "Roboto-Bold");
-                this.vsNumber.setAttribute("text-anchor", "end");
-                this.root.appendChild(this.vsNumber);
                 let vsText = document.createElementNS(Avionics.SVG.NS, "text");
                 vsText.textContent = "VS";
                 vsText.setAttribute("y", "590");
@@ -359,6 +350,15 @@ class HudAltimeter extends HTMLElement {
 
             }
             */
+            this.vsNumber = document.createElementNS(Avionics.SVG.NS, "text");
+            this.vsNumber.textContent = "----";
+            this.vsNumber.setAttribute("y", "590");
+            this.vsNumber.setAttribute("x", "140");
+            this.vsNumber.setAttribute("fill", "#00ff00");
+            this.vsNumber.setAttribute("font-size", "42");
+            this.vsNumber.setAttribute("font-family", "Roboto-Bold");
+            this.vsNumber.setAttribute("text-anchor", "end");
+            this.root.appendChild(this.vsNumber);
 		}
     }
     attributeChangedCallback(name, oldValue, newValue) {
@@ -503,8 +503,8 @@ class HudAltimeter extends HTMLElement {
                 this.trendElement.setAttribute("y", Math.min(trendValue, 275).toString());
                 this.trendElement.setAttribute("height", Math.abs(trendValue - 275).toString());
 				this.trendCursor.setAttribute("transform", "translate(0, " + Math.min(trendValue, 550).toString() + ")");
-                //let vSpeedRounded = Math.round(vSpeed / 50)*50;
-                //this.vsNumber.textContent = fastToFixed(vSpeedRounded, 0).toString();
+                let vSpeedRounded = Math.round(vSpeed / 50)*50;
+                this.vsNumber.textContent = fastToFixed(vSpeedRounded, 0).toString();
                 break;
             case "vertical-deviation-mode":
                 switch (newValue) {
