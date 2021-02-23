@@ -132,3 +132,4 @@ yaw damper.  Landings with FBW are now possible.
  HUD.  Flight Path Indicator more accurate.
  * 2/18-2 - More HUD Changes.
  * 2/20 - FBW Bug Fixes
+ * 2/22 - HUD Flight Director off by default.  Added HUD Menu to PMFD.  Performance improvements.

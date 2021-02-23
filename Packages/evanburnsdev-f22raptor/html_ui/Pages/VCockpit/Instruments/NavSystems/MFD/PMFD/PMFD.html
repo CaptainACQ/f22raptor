@@ -5,7 +5,7 @@
             <div id="Console">Initializing System...</div>
             <img id="Splash" src="/Pages/VCockpit/Instruments/NavSystems/Shared/Images/Logo/Garmin.svg" />
             <div id="HorizonContainer">
-                <map-instrument id="SyntheticVision" bing-mode="horizon" bing-id="PFD_SyntheticVision" show-overlay="false" config-path="/Pages/VCockpit/Instruments/NavSystems/AS3000/PFD/"></map-instrument>
+                <!--<map-instrument id="SyntheticVision" bing-mode="horizon" bing-id="PFD_SyntheticVision" show-overlay="false" config-path="/Pages/VCockpit/Instruments/NavSystems/AS3000/PFD/"></map-instrument>-->
                 <glasscockpit-attitude-indicator id="Horizon" background="false"></glasscockpit-attitude-indicator>
             </div>
 
@@ -184,9 +184,12 @@
 
 <link rel="stylesheet" href="PMFD.css" />
 
+<script type="text/html" import-script="/JS/common.js"></script>
 <script type="text/html" import-script="/JS/SimPlane.js"></script>
 
-<script type="text/html" import-template="/Pages/VCockpit/Instruments/Shared/Map/MapInstrument.html"></script>
+
+
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/Shared/Map/EBDMapInstrument.html"></script>
 
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/HSIndicator/HSIndicator.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/Altimeter/Altimeter.js"></script>
@@ -203,4 +206,5 @@
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/NavSystem.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/CommonPFD_MFD.js"></script>
 
+<!--<script type="text/html" import-script="/JS/debug.js"></script>-->
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/MFD/PMFD/PMFD.js"></script>

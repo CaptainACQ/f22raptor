@@ -83,7 +83,6 @@ class SMFD extends NavSystem {
         this.addIndependentElementContainer(new NavSystemElementContainer("SoftKeys", "SoftKeys", new TwentySoftKeys(SMFD_SoftKeyHtmlElement)));
         this.addIndependentElementContainer(this.engines);
         this.addIndependentElementContainer(this.fuel);
-        onQualityChanged(Quality.low);
     }
     disconnectedCallback() {
         super.disconnectedCallback();

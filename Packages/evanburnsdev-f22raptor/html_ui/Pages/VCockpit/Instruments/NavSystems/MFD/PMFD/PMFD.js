@@ -14,18 +14,49 @@ class PMFD extends NavSystem {
                 this.mainPage
             ]),
         ];
+        this.horizElem = this.getChildById("HorizonContainer");
+        this.mapHtmlElem = document.createElement("ebd-map-instrument");
+        this.mapHtmlElem.setAttribute("id", "SyntheticVision");
+        this.mapHtmlElem.setAttribute("bing-id", "PFD_SyntheticVision");
+        this.mapHtmlElem.setAttribute("bing-mode", "horizon");
+        this.mapHtmlElem.setAttribute("show-overlay", "false");
+        this.mapHtmlElem.setAttribute("config-path", "/Pages/VCockpit/Instruments/NavSystems/AS3000/PFD/");
+        this.horizElem.appendChild(this.mapHtmlElem);
         this.warnings = new PFD_Warnings();
         this.addIndependentElementContainer(new NavSystemElementContainer("WindData", "WindData", new PFD_WindData()));
         this.addIndependentElementContainer(new NavSystemElementContainer("Warnings", "Warnings", this.warnings));
         this.addIndependentElementContainer(new NavSystemElementContainer("SoftKeys", "SoftKeys", new SoftKeys(PMFD_SoftKeyHtmlElement)));
         this.maxUpdateBudget = 12;
+        SimVar.SetSimVarValue("L:XMLVAR_EBD_PMFD_QUALITY", "number", 3);
+        SimVar.SetSimVarValue("L:XMLVAR_EBD_HUD_FD", "boolean", false);
     }
     disconnectedCallback() {
         super.disconnectedCallback();
     }
     CanUpdate() {
         super.CanUpdate();
-        var quality = Quality.medium;
+        var quality; // = Quality.medium;
+        var qualityInt = parseInt(SimVar.GetSimVarValue("L:XMLVAR_EBD_PMFD_QUALITY", "number"));
+        switch (qualityInt) {
+            case 5:
+                quality = Quality.ultra;
+                break;
+            case 4:
+                quality = Quality.high;
+                break;
+            case 3:
+                quality = Quality.medium;
+                break;
+            case 2:
+                quality = Quality.low;
+                break;
+            case 1:
+                quality = Quality.hidden;
+                break;
+            case 0:
+                quality = Quality.disabled;
+                break;
+        }
         if (quality == Quality.ultra) {
             return true;
         }
@@ -66,7 +97,10 @@ class PMFD extends NavSystem {
             if (this.mainPage.attitude.svg) {
                 this.mainPage.attitude.svg.setAttribute("background", "false");
             }
-            this.getChildById("SyntheticVision").style.display = "block";
+            let syntheticVisDiv = this.getChildById("SyntheticVision");
+            if(syntheticVisDiv){
+                this.getChildById("SyntheticVision").style.display = "block";
+            }
             this.mainPage.syntheticVision = true;
         }
         else {
@@ -141,12 +175,12 @@ class PMFD_MainPage extends NavSystemPage {
         this.syntheticVision = false;
         this.rootMenu = new SoftKeysMenu();
         this.pfdMenu = new SoftKeysMenu();
-        this.simMenu = new SoftKeysMenu();
+        this.hudMenu = new SoftKeysMenu();
         this.otherPfdMenu = new SoftKeysMenu();
         this.windMenu = new SoftKeysMenu();
         this.annunciations = new PFD_Annunciations();
         this.attitude = new PFD_Attitude();
-        this.mapInstrument = new MapInstrumentElement();
+        this.mapInstrument = new PMFD_MapElement();
         this.aoaIndicator = new PMFD_AngleOfAttackIndicator();
 		this.pfd_airspeed = new PFD_Airspeed();
 		this.pfd_airspeed.alwaysDisplaySpeed = true;
@@ -191,19 +225,19 @@ class PMFD_MainPage extends NavSystemPage {
             new PMFD_SoftKeyElement("Active&nbsp;NAV", this.gps.computeEvent.bind(this.gps, "SoftKey_CDI"), null, this.navStatus.bind(this)),
             new PMFD_SoftKeyElement("Traffic Inset", null, this.constElement.bind(this, false)),
             new PMFD_SoftKeyElement(""),
-            new PMFD_SoftKeyElement(""), //new PMFD_SoftKeyElement("Sim Settings", this.switchToMenu.bind(this, this.simMenu)),
+            new PMFD_SoftKeyElement("HUD Settings", this.switchToMenu.bind(this, this.hudMenu)),
             new PMFD_SoftKeyElement("PFD Settings", this.switchToMenu.bind(this, this.pfdMenu))
         ];
-        this.simMenu.elements = [
+        this.hudMenu.elements = [
             new PMFD_SoftKeyElement(""),
             new PMFD_SoftKeyElement(""),
             new PMFD_SoftKeyElement(""),
             new PMFD_SoftKeyElement(""),
             new PMFD_SoftKeyElement(""),
 			
-            new PMFD_SoftKeyElement("Lights Dim", this.changeBrightness.bind(this, 0.1)),
-            new PMFD_SoftKeyElement("Lights Mid", this.changeBrightness.bind(this, 0.5)),
-            new PMFD_SoftKeyElement("Lights High", this.changeBrightness.bind(this, 1.0)),
+            new PMFD_SoftKeyElement("FD", this.toggleHudFD.bind(this), null, this.hudFdStatus.bind(this)),
+            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement(""),
             new PMFD_SoftKeyElement(""),
             new PMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.rootMenu))
         ];
@@ -229,9 +263,9 @@ class PMFD_MainPage extends NavSystemPage {
 			
             new PMFD_SoftKeyElement("Wind", this.switchToMenu.bind(this, this.windMenu)),
             new PMFD_SoftKeyElement("AOA", this.gps.computeEvent.bind(this.gps, "SoftKey_PFD_AoAMode"), null, this.aoaStatus.bind(this)),
-            new PMFD_SoftKeyElement(""),
+            new PMFD_SoftKeyElement("R. Rate", this.setRefreshRate.bind(this), null, this.getRefreshRate.bind(this)),
             new PMFD_SoftKeyElement("COM1 121.5", null, this.constElement.bind(this, false)),
-            new PMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.rootMenu))
+            new PMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.pfdMenu))
         ];
         this.windMenu.elements = [
             new PMFD_SoftKeyElement(""),
@@ -284,22 +318,52 @@ class PMFD_MainPage extends NavSystemPage {
         switch (this.aoaIndicator.AoaMode) {
             case 0:
                 return "OFF";
-                break;
             case 1:
                 return "ON";
-                break;
             case 2:
                 return "AUTO";
-                break;
         }
     }
-	changeBrightness(_brightness){
-        SimVar.SetSimVarValue("A:LIGHT POTENTIOMETER:50", "Percent over 100", _brightness);
-		//Coherent.call("K:2:LIGHT_POTENTIOMETER_SET", 50, _brightness);
-		//Coherent.call("setValue_Number", name, unit, value, dataSource);
-		//Coherent.call("setValue_Number", "A:LIGHT POTENTIOMETER:50", "percent over 100", _brightness);
-		//console.log(SimVar.GetSimVarValue("A:LIGHT POTENTIOMETER:50", "number"));
-	}
+    hudFdStatus(){
+        var fdisOn = SimVar.GetSimVarValue("L:XMLVAR_EBD_HUD_FD", "boolean");
+        if(fdisOn)
+            return "ON";
+        return "OFF";
+    }
+    toggleHudFD(){
+        var fdisOn = SimVar.GetSimVarValue("L:XMLVAR_EBD_HUD_FD", "boolean");
+        SimVar.SetSimVarValue("L:XMLVAR_EBD_HUD_FD", "boolean", !fdisOn);
+    }
+    getRefreshRate(){
+        var qualityInt = parseInt(SimVar.GetSimVarValue("L:XMLVAR_EBD_PMFD_QUALITY", "number"));
+        var qualityString;
+        switch (qualityInt) {
+            case 5:
+                qualityString = "Ultra";
+                break;
+            case 4:
+                qualityString = "High";
+                break;
+            case 3:
+                qualityString = "Medium";
+                break;
+            case 2:
+                qualityString = "Low";
+                break;
+            case 1:
+                qualityString = "Hidden";
+                break;
+            case 0:
+                qualityString = "Disabled";
+                break;
+        }
+        return qualityString;
+    }
+    setRefreshRate(){
+        var qualityInt = parseInt(SimVar.GetSimVarValue("L:XMLVAR_EBD_PMFD_QUALITY", "number")) + 1;
+        qualityInt == 6 ? qualityInt = 2 : qualityInt = qualityInt;
+        SimVar.SetSimVarValue("L:XMLVAR_EBD_PMFD_QUALITY", "number", qualityInt);
+    }
 }
 class PMFD_MainElement extends NavSystemElement {
     init(root) {
@@ -432,6 +496,171 @@ class PMFD_AngleOfAttackIndicator extends NavSystemElement {
         }
         SimVar.SetSimVarValue("L:Glasscockpit_AOA_Mode", "number", this.AoaMode);
     }
+}
+class PMFD_MapElement extends MapInstrumentElement {
+    constructor() {
+        super(...arguments);
+        this.wasOverride = false;
+        this.lastMapMode = 0;
+        this.lastWeatherMapMode = 0;
+		this.showRoads = false;
+		this.showBing = true;
+		this.showTraffic = false;
+        this.refreshRate = 1;
+        this.frameCount = 0;
+    }
+    canUpdate(){
+        this.frameCount++;
+        if (this.frameCount >= Number.MAX_SAFE_INTEGER)
+            this.frameCount = 0;
+        //console.log("Refresh Rate:" + this.refreshRate);
+        //console.log("Framecount:" + this.frameCount);
+        //var qualityInt = parseInt(SimVar.GetSimVarValue("L:XMLVAR_EBD_PMFD_QUALITY", "number"));
+        var quality;
+        switch (this.refreshRate) {
+            case 5:
+                quality = Quality.ultra;
+                break;
+            case 4:
+                quality = Quality.high;
+                break;
+            case 3:
+                quality = Quality.medium;
+                break;
+            case 2:
+                quality = Quality.low;
+                break;
+            case 1:
+                quality = Quality.hidden;
+                break;
+            case 0:
+                quality = Quality.disabled;
+                break;
+        }
+        //console.log("String: " + quality);
+        if (quality == Quality.ultra) {
+            return true;
+        }
+        else if (quality == Quality.high) {
+            if ((this.frameCount % 2) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.medium) {
+            if ((this.frameCount % 4) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.low) {
+            if ((this.frameCount % 32) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.hidden) {
+            if ((this.frameCount % 128) != 0) {
+                return false;
+            }
+        }
+        else if (quality == Quality.disabled) {
+            return false;
+        }
+        return true;
+    }
+    onUpdate(_deltaTime) {
+        //console.log("Test5");
+        if(!this.canUpdate()){
+            return;
+        }
+        //console.log("Update");
+        super.onUpdate(_deltaTime);
+        let isPositionOverride = SimVar.GetSimVarValue("L:AS3000_MFD_IsPositionOverride", "number") != 0;
+        if (isPositionOverride) {
+            if (!this.wasOverride) {
+                this.instrument.setAttribute("bing-mode", "ifr");
+                this.wasOverride = true;
+            }
+            this.instrument.setCenter(new LatLong(SimVar.GetSimVarValue("L:AS3000_MFD_OverrideLatitude", "number"), SimVar.GetSimVarValue("L:AS3000_MFD_OverrideLongitude", "number")));
+        }
+        else {
+            if (this.wasOverride) {
+                this.instrument.setCenteredOnPlane();
+                this.wasOverride = false;
+            }
+        }
+        let mapMode = SimVar.GetSimVarValue("L:AS3000_MFD_Current_Map", "number");
+        let weatherMapMode = SimVar.GetSimVarValue("L:AS3000_MFD_Current_WeatherMap", "number");
+        if (this.lastMapMode != mapMode || (mapMode == 2 && this.lastWeatherMapMode != weatherMapMode)) {
+            switch (mapMode) {
+                case 0:
+                    this.setWeather(EWeatherRadar.OFF);
+                    break;
+                case 2:
+                    switch (weatherMapMode) {
+                        case 0:
+                            this.setWeather(EWeatherRadar.TOPVIEW);
+                            break;
+                        case 1:
+                            this.setWeather(EWeatherRadar.OFF);
+                            this.setWeather(EWeatherRadar.HORIZONTAL);
+                            break;
+                        case 2:
+                            this.setWeather(EWeatherRadar.OFF);
+                            this.setWeather(EWeatherRadar.VERTICAL);
+                            break;
+                    }
+                    break;
+            }
+            this.lastMapMode = mapMode;
+            this.lastWeatherMapMode = weatherMapMode;
+        }
+    }
+    init(root) {
+		//super.init(root);
+        this.instrument = root.querySelector("ebd-map-instrument");
+        if (this.instrument) {
+            TemplateElement.callNoBinding(this.instrument, () => {
+                this.onTemplateLoaded();
+            });
+        }
+    }
+    onTemplateLoaded() {
+		super.onTemplateLoaded();
+        if (this.instrument) {
+            if(this.instrument.roadNetwork){
+			    this.instrument.roadNetwork.setVisible(this.showRoads);
+            }
+			if(this.showBing)
+				this.instrument.bingMap.style.display = "block";
+			else
+				this.instrument.bingMap.style.display = "none";
+			this.instrument.showTraffic = this.showTraffic;
+            //this.instrument.quality = this.quality;
+        }
+    }
+	toggleRoads(){
+        if (this.instrument) {
+			this.showRoads = !this.showRoads;
+			this.instrument.roadNetwork.setVisible(this.showRoads);
+        }
+	}
+	toggleBing(){
+        if (this.instrument) {
+			this.showBing = !this.showBing;
+			if(this.showBing)
+				this.instrument.bingMap.style.display = "block";
+			else
+				this.instrument.bingMap.style.display = "none";
+        }
+	}
+	toggleTraffic(){
+        if (this.instrument) {
+			this.showTraffic = !this.showTraffic;
+			this.instrument.showTraffic = this.showTraffic;
+        }
+	}
+	trafficStatus(){
+		return this.instrument.showTraffic;
+	}
 }
 registerInstrument("pmfd-element", PMFD);
 //# sourceMappingURL=PMFD.js.map

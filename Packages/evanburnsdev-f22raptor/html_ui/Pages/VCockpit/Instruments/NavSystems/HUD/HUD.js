@@ -17,7 +17,6 @@ class HUD extends NavSystem {
             ]),
         ];
         this.maxUpdateBudget = 12;
-        onQualityChanged(Quality.ultra);
     }
     disconnectedCallback() {
         super.disconnectedCallback();
@@ -155,6 +154,8 @@ class HUD_GForce extends NavSystemElement {
 class HUD_Attitude extends NavSystemElement {
     constructor() {
         super(...arguments);
+        this.fdActive = false;
+        this.fdDisabled = true;
     }
     init(root) {
         this.svg = this.gps.getChildById("Horizon");
@@ -166,18 +167,25 @@ class HUD_Attitude extends NavSystemElement {
         if (xyz) {
             this.svg.setAttribute("pitch", (xyz.pitch / Math.PI * 180).toString());
             this.svg.setAttribute("bank", (xyz.bank / Math.PI * 180).toString());
-            this.svg.setAttribute("slip_skid", Simplane.getInclinometer().toString());
             this.svg.setAttribute("slip_skid", SimVar.GetSimVarValue("INCIDENCE BETA", "radians"));
-            //this.svg.setAttribute("aoa", Simplane.getAngleOfAttack().toString());
             this.svg.setAttribute("aoa", SimVar.GetSimVarValue("INCIDENCE ALPHA", "radians"));
-            this.svg.setAttribute("flight_director-active", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR ACTIVE", "Bool") ? "true" : "false");
-            this.svg.setAttribute("flight_director-pitch", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR PITCH", "degree"));
-            this.svg.setAttribute("flight_director-bank", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR BANK", "degree"));
+            this.fdActive = SimVar.GetSimVarValue("L:XMLVAR_EBD_HUD_FD", "boolean");
+
+            // The following should save performance by preventing unneeded calls to update svgs
+            // and unneeded SimVar calls.
+            if(this.fdActive){
+                this.fdDisabled = false;
+                this.svg.setAttribute("flight_director-active", "true");
+                this.svg.setAttribute("flight_director-pitch", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR PITCH", "degree"));
+                this.svg.setAttribute("flight_director-bank", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR BANK", "degree"));
+            }
+            else if(!this.fdDisabled){
+                this.svg.setAttribute("flight_director-active", "false");
+                this.fdDisabled = true;
+            }
         }
     }
     onExit() {
-    }
-    onEvent(_event) {
     }
 }
 class HUD_Airspeed extends NavSystemElement {
@@ -464,7 +472,6 @@ class HUD_RadarAltitude extends NavSystemElement {
 class HUD_Compass extends NavSystemElement {
     constructor(_hsiElemId = null, _arcHsiElemId = null) {
         super();
-        //this.displayArc = true;
         this.hasLocBeenEntered = false;
         this.hasLocBeenActivated = false;
         this.ifTimer = 0;
@@ -475,27 +482,16 @@ class HUD_Compass extends NavSystemElement {
         this.hsi = this.gps.getChildById(this.hsiElemId ? this.hsiElemId : "Compass");
         this.arcHsi = this.gps.getChildById(this.arcHsiElemId ? this.arcHsiElemId : "ArcCompass");
         this.nearestAirport = new NearestAirportList(this.gps);
-        //this.displayArc = SimVar.GetSimVarValue("L:Glasscockpit_HSI_Arc", "number") != 0;
     }
     onEnter() {
         if (this.hsi) {
             this.hsi.init();
         }
-        /*if (this.arcHsi) {
-            this.arcHsi.init();
-        }*/
     }
     onUpdate(_deltaTime) {
-        /*if (this.displayArc) {
-            Avionics.Utils.diffAndSetAttribute(this.hsi, "state", "Inactive");
-            Avionics.Utils.diffAndSetAttribute(this.arcHsi, "state", "Active");
-            this.arcHsi.update(_deltaTime);
-        }
-        else {*/
         Avionics.Utils.diffAndSetAttribute(this.hsi, "state", "Active");
         Avionics.Utils.diffAndSetAttribute(this.arcHsi, "state", "Inactive");
         this.hsi.update(_deltaTime);
-        //}
         this.nearestAirport.Update(25, 200);
         if (this.nearestAirport.airports.length == 0) {
             SimVar.SetSimVarValue("L:GPS_Current_Phase", "number", 4);
@@ -564,16 +560,6 @@ class HUD_Compass extends NavSystemElement {
     }
     onEvent(_event) {
         this.hsi.onEvent(_event);
-        /*switch (_event) {
-            case "SoftKeys_HSI_360":
-                this.displayArc = false;
-                SimVar.SetSimVarValue("L:Glasscockpit_HSI_Arc", "number", 0);
-                break;
-            case "SoftKeys_HSI_ARC":
-                this.displayArc = true;
-                SimVar.SetSimVarValue("L:Glasscockpit_HSI_Arc", "number", 1);
-                break;
-        }*/
     }
 }
 registerInstrument("hud-element", HUD);
