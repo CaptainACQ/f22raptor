@@ -183,6 +183,13 @@ class HUD_Attitude extends NavSystemElement {
                 this.svg.setAttribute("flight_director-active", "false");
                 this.fdDisabled = true;
             }
+            let gearPosition = SimVar.GetSimVarValue("GEAR CENTER POSITION", "percent");
+            if(gearPosition != 0){
+                this.svg.setAttribute("gear-down", "true");
+            }
+            else {
+                this.svg.setAttribute("gear-down", "false");
+            }
         }
     }
     onExit() {

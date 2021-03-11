@@ -130,7 +130,17 @@ yaw damper.  Landings with FBW are now possible.
 * 2/15 - HUD, Flight Model, and FBW changes.
 * 2/18 - FBW Changes(Disabled rudder above 35kft). Major HUD Changes.  Cockpit view now closer to 
  HUD.  Flight Path Indicator more accurate.
- * 2/18-2 - More HUD Changes.
- * 2/20 - FBW Bug Fixes
- * 2/22 - HUD Flight Director off by default.  Added HUD Menu to PMFD.  Performance improvements.
- * 2/23 - FBW Adjustments.  Changed Flaps settings.
+* 2/18-2 - More HUD Changes.
+* 2/20 - FBW Bug Fixes
+* 2/22 - HUD Flight Director off by default.  Added HUD Menu to PMFD.  Performance improvements.
+* 2/23 - FBW Adjustments.  Changed Flaps settings.
+* 3/11:
+  * Dakfly:
+    * Major flight model overhaul
+    * Engines overhaul
+	* Fuel system overhaul
+    * Fly-By-Wire tuning
+  * Evan:
+    * Converted exterior model to 3ds Max.
+	* Improvements to exterior model.
+	* Fly-By-Wire module rewrite

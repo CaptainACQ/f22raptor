@@ -507,6 +507,7 @@
 			</UseTemplate>
 			-->
 		</Component>
+		<!--
 		<Component ID="Fuel">
 			<Component ID="Fuel_Pumps">
 				<UseTemplate Name="EVANBURNSDEV_FUEL_Switch_Pump_Template">
@@ -562,8 +563,8 @@
 					<ID>12</ID>
 				</UseTemplate>
 			</Component>
-
 		</Component>
+		-->
 		<Component ID="Engines">
 			<Component ID="Ignition">
 				<UseTemplate Name="ASOBO_ENGINE_Switch_Ignition_Template">

@@ -3,6 +3,7 @@ FlapsDegree=0000.00
 Pitch=3.0
 ZVelBodyAxis=1600
 SimOnGround=False
+IAS=600
 
 [Avionics.0]
 Comm1Active=124.000
@@ -35,37 +36,17 @@ AudioAdf2Listen=False
 AvionicsSwitch=True
 
 [Engine Parameters.1.0]
-ThrottleLeverPct=1
+ThrottleLeverPct=0
 PropellerLeverPct=1
 MixtureLeverPct=1
-Pct Engine RPM=1
-MaxReachedEngineRPM=15000.0
-Pct N1=100
-Pct N2=100
+Pct Engine RPM=0.64930165515681026456
+MaxReachedEngineRPM=28088.712374471313524
+Pct N1=20
+Pct N2=60
 LeftMagneto=True
 RightMagneto=True
 GeneratorSwitch=True
-CowlFlapPct=0
-FuelPumpSwitch=False
-CarbHeat/DeiceSwitch=False
-EngineMasterSwitch=True
-GlowPlugTemperaturePct=1
-IgnitionSwitch=0
-Afterburner=0
-EGT_DegR=1200
-ITT_DegR=1500
-
-[Engine Parameters.2.0]
-ThrottleLeverPct=1
-PropellerLeverPct=1
-MixtureLeverPct=1
-Pct Engine RPM=1
-MaxReachedEngineRPM=15000.0
-Pct N1=100
-Pct N2=100
-LeftMagneto=True
-RightMagneto=True
-GeneratorSwitch=True
+FuelValveOpen=True
 CowlFlapPct=0
 FuelPumpSwitch=False
 CarbHeat/DeiceSwitch=False
@@ -76,25 +57,27 @@ Afterburner=0
 EGT_DegR=1200
 ITT_DegR=1500
 
-[FuelSystem.0]
-Valve.1=True
-Valve.3=False
-Valve.5=True
-Valve.7=False
-Valve.9=False
-Valve.11=False
-
-Valve.2=True
-Valve.4=False
-Valve.6=True
-Valve.8=False
-Valve.10=False
-Valve.12=False
-
-Pump.1=True
-Pump.2=True
-Pump.3=False
-Pump.4=False
+[Engine Parameters.2.0]
+ThrottleLeverPct=0
+PropellerLeverPct=1
+MixtureLeverPct=1
+Pct Engine RPM=0.64930165515681026456
+MaxReachedEngineRPM=28088.712374471313524
+Pct N1=20
+Pct N2=60
+LeftMagneto=False
+RightMagneto=False
+GeneratorSwitch=True
+FuelValveOpen=True
+CowlFlapPct=0
+FuelPumpSwitch=False
+CarbHeat/DeiceSwitch=False
+EngineMasterSwitch=True
+GlowPlugTemperaturePct=1
+IgnitionSwitch=1
+Afterburner=0
+EGT_DegR=1200
+ITT_DegR=1500
 
 [Electrical.0]
 bus.12=bus.7:0

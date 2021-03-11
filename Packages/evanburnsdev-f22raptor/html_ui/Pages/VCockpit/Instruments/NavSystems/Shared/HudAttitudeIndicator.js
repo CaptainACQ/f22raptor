@@ -2,7 +2,8 @@ class HudAttitudeIndicator extends HTMLElement {
     constructor() {
         super();
         //this.bankSizeRatio = -24;
-        this.bankSizeRatio = -16.5;
+        //this.bankSizeRatio = -16.5;
+        this.bankSizeRatio = -12.5;
         this.backgroundVisible = true;
         this.flightDirectorActive = false;
         this.flightDirectorPitch = 0;
@@ -11,6 +12,7 @@ class HudAttitudeIndicator extends HTMLElement {
         this.isBackup = false;
         this.horizonTopColor = "#00569d";
         this.horizonBottomColor = "#48432e";
+        this.gearDown = true;
     }
     static get observedAttributes() {
         return [
@@ -25,6 +27,7 @@ class HudAttitudeIndicator extends HTMLElement {
             "bank_size_ratio",
             "aspect-ratio",
             "is-backup",
+            "gear-down",
         ];
     }
     connectedCallback() {
@@ -196,7 +199,7 @@ class HudAttitudeIndicator extends HTMLElement {
         this.root.setAttribute("overflow", "visible");
         this.root.setAttribute("style", "position:absolute");
         attitudeContainer.appendChild(this.root);
-        var refHeight = 170;
+        var refHeight = 230;
         let attitude_pitch_container = document.createElementNS(Avionics.SVG.NS, "svg");
         attitude_pitch_container.setAttribute("width", "250");
         attitude_pitch_container.setAttribute("height", refHeight.toString());
@@ -302,6 +305,14 @@ class HudAttitudeIndicator extends HTMLElement {
                 dash.setAttribute("transform", "rotate(" + cursorLines[i] + ",0,0)");
                 this.movableCursor.appendChild(dash);
             }
+            this.aoaDevTape = document.createElementNS(Avionics.SVG.NS, "rect");
+            this.aoaDevTape.setAttribute("x", (-radius - (height / 2)).toString());
+            this.aoaDevTape.setAttribute("y", (-1).toString());
+            this.aoaDevTape.setAttribute("height", "1");
+            this.aoaDevTape.setAttribute("width", "2");
+            this.aoaDevTape.setAttribute("fill", "#00ff00");
+            this.movableCursor.appendChild(this.aoaDevTape)
+
             let cursors = document.createElementNS(Avionics.SVG.NS, "g");
             this.root.appendChild(cursors);
             let centerCursor = document.createElementNS(Avionics.SVG.NS, "path");
@@ -354,6 +365,9 @@ class HudAttitudeIndicator extends HTMLElement {
                 this.bankSizeRatio = parseFloat(newValue);
                 this.buildGraduations();
                 break;
+            case "gear-down":
+                this.gearDown = newValue == "true";
+                break;
             default:
                 return;
         }
@@ -386,6 +400,15 @@ class HudAttitudeIndicator extends HTMLElement {
             }
             else {
                 this.flightDirector.setAttribute("display", "none");
+            }
+        }
+        if (this.aoaDevTape) {
+            if (this.gearDown){
+                let tapeLength = (-1.0 * (this.aoa / Math.PI * 180)) + 11.0;
+                this.aoaDevTape.setAttribute("transform", "scale(1, " + tapeLength + ")");
+            }
+            else {
+                this.aoaDevTape.setAttribute("transform", "scale(1, 0)");
             }
         }
     }

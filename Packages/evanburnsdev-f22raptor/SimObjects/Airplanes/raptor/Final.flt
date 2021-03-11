@@ -8,7 +8,7 @@ ZVelBodyAxis=0
 SimOnGround=False
 
 [SimVarForSpawningInTheAir.0]
-IAS=110
+IAS=180
 FlapsDegree=0030.00
 
 [Avionics.0]
