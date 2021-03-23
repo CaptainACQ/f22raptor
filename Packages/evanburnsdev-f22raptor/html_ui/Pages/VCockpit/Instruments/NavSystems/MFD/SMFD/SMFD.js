@@ -136,6 +136,9 @@ class SMFD_MainPage extends NavSystemPage {
 		this.page = "EnginePage";
         this.rootMenu = new SoftKeysMenu();
         this.engine_rootMenu = new SoftKeysMenu();
+        this.engineMenu = new SoftKeysMenu();
+        this.eng1Menu = new SoftKeysMenu();
+        this.eng2Menu = new SoftKeysMenu();
         this.fuel_rootMenu = new SoftKeysMenu();
         this.map_rootMenu = new SoftKeysMenu();
         this.pageMenu = new SoftKeysMenu();
@@ -178,7 +181,7 @@ class SMFD_MainPage extends NavSystemPage {
 		this.fuelElement = this.gps.getChildById("FuelPage");
 		
         this.engine_rootMenu.elements = [
-            new SMFD_SoftKeyElement("Fly By<br/>Wire", this.fbwSet.bind(this), null, this.fbwStatus.bind(this)),
+            new SMFD_SoftKeyElement("MENU", this.switchToMenu.bind(this, this.engineMenu)),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement(""),
@@ -190,6 +193,49 @@ class SMFD_MainPage extends NavSystemPage {
             new SMFD_SoftKeyElement(""),
             new SMFD_SoftKeyElement("Page", this.switchToMenu.bind(this, this.pageMenu))
         ];
+        {
+            this.engineMenu.elements = [
+                new SMFD_SoftKeyElement("ENG 1<br>CNTL", this.switchToMenu.bind(this, this.eng1Menu)),
+                new SMFD_SoftKeyElement("ENG 2<br>CNTL", this.switchToMenu.bind(this, this.eng2Menu)),
+                new SMFD_SoftKeyElement(""),
+                new SMFD_SoftKeyElement(""),
+                new SMFD_SoftKeyElement("Fly By<br/>Wire", this.fbwSet.bind(this), null, this.fbwStatus.bind(this)),
+                
+                new SMFD_SoftKeyElement(""),
+                new SMFD_SoftKeyElement(""),
+                new SMFD_SoftKeyElement(""),
+                new SMFD_SoftKeyElement(""),
+                new SMFD_SoftKeyElement("Back", this.backToRootMenu.bind(this))
+            ];
+            {
+                this.eng1Menu.elements = [
+                    new SMFD_SoftKeyElement("FUEL<BR>VALVE", this.vlvSet.bind(this, "1"), null, this.vlvStatus.bind(this, "1")),
+                    new SMFD_SoftKeyElement("IGN", this.ignSet.bind(this, "1"), null, this.ignStatus.bind(this, "1")),
+                    new SMFD_SoftKeyElement("STARTER", this.starterSet.bind(this, "1"), null, this.starterStatus.bind(this, "1")),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.engineMenu))
+                ];
+                this.eng2Menu.elements = [
+                    new SMFD_SoftKeyElement("FUEL<BR>VALVE", this.vlvSet.bind(this, "2"), null, this.vlvStatus.bind(this, "2")),
+                    new SMFD_SoftKeyElement("IGN", this.ignSet.bind(this, "2"), null, this.ignStatus.bind(this, "2")),
+                    new SMFD_SoftKeyElement("STARTER", this.starterSet.bind(this, "2"), null, this.starterStatus.bind(this, "2")),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement(""),
+                    new SMFD_SoftKeyElement("Back", this.switchToMenu.bind(this, this.engineMenu))
+                ];
+            }
+        }
         this.fuel_rootMenu.elements = [
             new SMFD_SoftKeyElement("Fly By<br/>Wire", this.fbwSet.bind(this), null, this.fbwStatus.bind(this)),
             new SMFD_SoftKeyElement(""),
@@ -267,10 +313,10 @@ class SMFD_MainPage extends NavSystemPage {
 	fbwStatus(){
 		var fbwBool = SimVar.GetSimVarValue("L:XMLVAR_EBD_FBW_ENABLE", "Boolean");
 		if(fbwBool){
-			return "On";
+			return "ON";
 		}
 		else {
-			return "Off";
+			return "OFF";
 		}
 	}
 	fbwSet(){
@@ -370,15 +416,64 @@ class SMFD_MainPage extends NavSystemPage {
         }
 		this.softKeys = this.rootMenu;
     }
+    vlvStatus(eng){
+		var vlvBool = SimVar.GetSimVarValue("A:GENERAL ENG FUEL VALVE:" + eng, "Bool");
+		if(vlvBool){
+			return "OPEN";
+		}
+		else {
+			return "SHUT";
+		}
+    }
+    vlvSet(eng){
+		SimVar.SetSimVarValue(
+			"K:TOGGLE_FUEL_VALVE_ENG" + eng,
+			"Boolean", 
+			1
+		);
+    }
+    ignStatus(eng){
+		var ignBool = SimVar.GetSimVarValue("A:TURB ENG IGNITION SWITCH:" + eng, "Boolean");
+		if(ignBool){
+			return "AUTO";
+		}
+		else {
+			return "OFF";
+		}
+    }
+    ignSet(eng){
+        var ignBool = SimVar.GetSimVarValue("A:TURB ENG IGNITION SWITCH:" + eng, "Boolean");
+		SimVar.SetSimVarValue(
+			"A:TURB ENG IGNITION SWITCH EX1:" + eng,
+			"Boolean", 
+			!ignBool
+		);
+    }
+    starterStatus(eng){
+		var starterBool = SimVar.GetSimVarValue("A:GENERAL ENG STARTER:" + eng, "Boolean");
+		if(starterBool){
+			return "ON";
+		}
+		else {
+			return "OFF";
+		}
+    }
+    starterSet(eng){
+		SimVar.SetSimVarValue(
+			"K:TOGGLE_STARTER" + eng,
+			"Boolean", 
+			1
+		);
+    }
 	showRoads(){
 		this.map.toggleRoads();
 	}
 	showRoadsStatus(){
 		if(this.map.showRoads){
-			return "On";
+			return "ON";
 		}
 		else {
-			return "Off";
+			return "OFF";
 		}
 	}
 	showBing(){
@@ -386,17 +481,17 @@ class SMFD_MainPage extends NavSystemPage {
 	}
 	showBingStatus(){
 		if(this.map.showBing){
-			return "On";
+			return "ON";
 		}
 		else {
-			return "Off";
+			return "OFF";
 		}
 	}
 	showTrafficStatus(){
 		if(this.map.showTraffic)
-			return "On";
+			return "ON";
 		else
-			return "Off";
+			return "OFF";
 	}
 	toggleTraffic(){
 		this.map.toggleTraffic();

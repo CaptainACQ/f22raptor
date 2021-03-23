@@ -323,7 +323,7 @@
 							<Center fontsize="20">
 								<Content>
 									<ToFixed precision="0">
-										<Simvar name="ENG FUEL FLOW PPH:1" unit="pph"/>
+										<Simvar name="TURB ENG1 FUEL FLOW PPH" unit="Pounds per hour"/>
 									</ToFixed>
 								</Content>
 								<Color>green</Color>
@@ -375,7 +375,7 @@
 							<Center fontsize="20">
 								<Content>
 									<ToFixed precision="0">
-										<Simvar name="ENG FUEL FLOW PPH:2" unit="pph"/>
+										<Simvar name="TURB ENG2 FUEL FLOW PPH" unit="Pounds per hour"/>
 									</ToFixed>
 								</Content>
 								<Color>green</Color>

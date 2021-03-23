@@ -12,6 +12,34 @@
 			<UseTemplate Name="ASOBO_GEAR_Left_Tire_Template"/>
 			<UseTemplate Name="ASOBO_GEAR_Right_Tire_Template"/>
 		</Component>
+		<Component ID="RUDDER">
+			<Component ID="RUDDER_LEFT">
+				<DefaultTemplateParameters>
+					<ANIM_NAME>Rudder_Left</ANIM_NAME>
+					<ANIM_LENGTH>100</ANIM_LENGTH>
+				</DefaultTemplateParameters>
+				<UseTemplate Name = "ASOBO_GT_Anim_Code">
+					<ANIM_CODE>
+						(A:RUDDER DEFLECTION PCT, percent) 0.5 * 50 +
+						(A:SPOILERS LEFT POSITION, percent) 0.5 *
+						+
+					</ANIM_CODE>
+				</UseTemplate>
+			</Component>
+			<Component ID="RUDDER_RIGHT">
+				<DefaultTemplateParameters>
+					<ANIM_NAME>Rudder_Right</ANIM_NAME>
+					<ANIM_LENGTH>100</ANIM_LENGTH>
+				</DefaultTemplateParameters>
+				<UseTemplate Name = "ASOBO_GT_Anim_Code">
+					<ANIM_CODE>
+						(A:RUDDER DEFLECTION PCT, percent) 0.5 * 50 +
+						(A:SPOILERS RIGHT POSITION, percent) -0.5 *
+						+
+					</ANIM_CODE>
+				</UseTemplate>
+			</Component>
+		</Component>
 	</Behaviors>
 
 	<Animation guid="d7232f91-9713-4725-9f61-cdacb0409b52" name="Gear_Fwd_Turn" type="Sim" typeparam="AutoPlay"/>
@@ -31,9 +59,6 @@
 	
 	<Animation guid="bce400a7-8ced-40bb-b7b8-c4bab6674613" name="Left_Aileron" type="Sim" typeParam="AutoPlay"/>
 	<Animation guid="9aef2463-e33a-4ddd-8930-568b61d9c53a" name="Right_Aileron" type="Sim" typeParam="AutoPlay"/>
-	
-	<Animation guid="8f006acd-9850-4389-9312-f823785546a1" name="Rudder_Left" type="Sim" typeParam="AutoPlay"/>
-	<Animation guid="dfe5764f-7f76-4b27-9b2c-5d3829426ce6" name="Rudder_Right" type="Sim" typeParam="AutoPlay"/>
 	
 	<Animation guid="bd7e5faa-0d3c-4d11-b1bf-e7db7e349791" name="Slats_Left" type="Sim" typeparam="AutoPlay"/>
 	<Animation guid="f945aa4a-8213-4ae9-84b8-54b78d15a649" name="Slats_Right" type="Sim" typeparam="AutoPlay"/>
@@ -228,35 +253,7 @@
 			</Parameter>
 		</Animation>
 	</PartInfo>
-	
-	<PartInfo>
-		<Name>Rudder_Left</Name>
-		<AnimLength>100</AnimLength>
-		<Animation>
-			<Parameter>
-				<Sim>
-					<Variable>RUDDER DEFLECTION PCT</Variable>
-					<Units>percent</Units>
-					<Scale>0.5</Scale>
-					<Bias>50</Bias>
-				</Sim>
-			</Parameter>
-		</Animation>
-	</PartInfo>
-	<PartInfo>
-		<Name>Rudder_Right</Name>
-		<AnimLength>100</AnimLength>
-		<Animation>
-			<Parameter>
-				<Sim>
-					<Variable>RUDDER DEFLECTION PCT</Variable>
-					<Units>percent</Units>
-					<Scale>0.5</Scale>
-					<Bias>50</Bias>
-				</Sim>
-			</Parameter>
-		</Animation>
-	</PartInfo>
+
 	<PartInfo>
 		<Name>Slats_Left</Name>
 		<AnimLength>100</AnimLength>

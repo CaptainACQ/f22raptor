@@ -736,8 +736,13 @@
 			</UseTemplate>
 		</Component>
 		<Component ID="Debug">
-			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATORS"/>
+			<Component ID="Engines">
+				<UseTemplate Name="EVANBURNSDEV_DEBUG_ENGINES"/>
+			</Component>
 			<!--
+			<Component ID="Elevators">
+				<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATORS"/>
+			</Component>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_LIGHTING_TAXI"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_ELEVATOR_DEFL"/>
 			<UseTemplate Name="EVANBURNSDEV_DEBUG_AOA"/>

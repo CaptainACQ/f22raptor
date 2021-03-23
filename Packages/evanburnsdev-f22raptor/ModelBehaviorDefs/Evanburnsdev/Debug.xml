@@ -49,15 +49,17 @@
 		</DefaultTemplateParameters>
 		<OverrideTemplateParameters>
 			<LEFT_SINGLE_CODE>
-				(&gt;K:APU_STARTER)
+				(A:APU SWITCH, Bool) if{
+					(&gt;K:APU_OFF_SWITCH)
+					0 0 (&gt;K:2:APU_GENERATOR_SWITCH_SET)
+				}
+				els{
+					(&gt;K:APU_STARTER)
+					0 1 (&gt;K:2:APU_GENERATOR_SWITCH_SET)
+				}
 			</LEFT_SINGLE_CODE>
 			<ANIM_CODE>
-				(A:APU PCT RPM, Percent) 0 > 
-				(A:APU PCT RPM, Percent) 100 &lt; 
-				and 
-				(A:APU SWITCH, Bool) 0 > 
-				and 
-				100 *
+				(A:APU SWITCH, Bool) 100 *
 			</ANIM_CODE>
 		</OverrideTemplateParameters>
 		<Component ID="#NODE_ID#" Node="#NODE_ID#">
@@ -149,6 +151,52 @@
 			<FREQUENCY>10</FREQUENCY>
 			<UPDATE_CODE>
 				(A:TURB ENG CORRECTED N2:1, percent) (&gt;L:XMLVAR_EBD_CN2)
+			</UPDATE_CODE>
+		</UseTemplate>
+	</Template>
+	<Template Name="EVANBURNSDEV_DEBUG_ENGINES">
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>(A:TURB ENG THROTTLE COMMANDED N1:1, percent) (&gt;L:XMLVAR_EBD_ENGINE_THROTTLE_TURB_ENG_COMMANDED_N1)</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>(A:TURB ENG COMMANDED N1:1, percent) (&gt;L:XMLVAR_EBD_ENGINE_TURB_ENG_COMMANDED_N1)</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>
+				(A:TURB ENG N1:1, percent) (&gt;L:XMLVAR_EBD_ENGINE_N1)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>
+				(A:TURB ENG CORRECTED N1:1, percent) (&gt;L:XMLVAR_EBD_ENGINE_CORRECTED_N1)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>
+				(A:TURB ENG N2:1, percent) (&gt;L:XMLVAR_EBD_ENGINE_N2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>
+				(A:TURB ENG CORRECTED N2:1, percent) (&gt;L:XMLVAR_EBD_ENGINE_CORRECTED_N2)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>
+				(A:TURB ENG FUEL FLOW PPH:1, pph) (&gt;L:XMLVAR_EBD_ENGINE_FF)
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>10</FREQUENCY>
+			<UPDATE_CODE>
+				(A:TURB ENG CORRECTED FF:1, pph) (&gt;L:XMLVAR_EBD_ENGINE_CORRECTED_FF)
 			</UPDATE_CODE>
 		</UseTemplate>
 	</Template>

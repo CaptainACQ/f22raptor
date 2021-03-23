@@ -144,3 +144,10 @@ yaw damper.  Landings with FBW are now possible.
     * Converted exterior model to 3ds Max.
 	* Improvements to exterior model.
 	* Fly-By-Wire module rewrite
+* 3/22
+  * Dakfly:
+    * Updated flight physics
+  * Evan:
+    * APU Switch now functions to turn APU on and off
+    * Engine Controls added to Engine page in MFD's
+    * Cockpit camera zoomed out a bit
